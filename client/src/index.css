@@ -1,0 +1,31 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+    font-family: "Roboto", sans-serif;
+    font-style: normal;
+}
+
+.brand {
+    font-family: "Lobster", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+    letter-spacing: 2px;
+  }
+
+  /* .container {
+    display: flex;
+    height: 100vh;
+    overflow: hidden; 
+}
+
+.sidebar {
+    overflow-y: auto; 
+    background-color: #f9f9f9; 
+}
+
+.content {
+    overflow-y: auto; 
+    background-color: #ffffff; 
+} */

@@ -1,0 +1,34 @@
+const mongoose = require('mongoose');
+const Schema = mongoose.Schema;
+const passportLocalMongoose = require('passport-local-mongoose');
+
+const UserSchema = new Schema({
+    email: {
+        type: String,
+        required: true,
+        unique: true
+    },
+    verified: {
+        type: Boolean,
+        default: 'false',
+    },
+    business: Boolean,
+    reviews: [
+        {
+            type: Schema.Types.ObjectId,
+            ref: 'Review'
+        }
+    ],
+    canReview: [],
+    fname: String,
+    phone: String,
+    website: String,
+    resetPasswordToken: String,
+    resetPasswordExpires: Date,
+}, {
+    timestamps: true,
+});
+
+UserSchema.plugin(passportLocalMongoose, {usernameField: 'email'});
+
+module.exports = mongoose.model('User', UserSchema);
