@@ -1,22 +1,31 @@
 import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { FaUserLarge, FaDollarSign } from "react-icons/fa6";
-import { useSelector } from 'react-redux';
-import { MdMail } from 'react-icons/md';
+import { FaUserLarge, FaDollarSign, FaPowerOff } from "react-icons/fa6";
+import { useNavigate } from 'react-router-dom';
+import { logout, reset } from '../features/auth/authSlice';
+import { useDispatch, useSelector } from 'react-redux';
 
 
 function Navbar() {
 
-  const { user, isLoading } = useSelector((state) => state.auth);
+  const { user } = useSelector((state) => state.auth);
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   useEffect(() => {
     console.log(user)
   }, [])
 
+  const onLogout = () => {
+    dispatch(logout())
+    dispatch(reset())
+    navigate('/')
+  }
+
 
   return (
     <div className="navbar flex justify-between items-center px-6 py-4">
-        <Link to='/' className='brand text-2xl font-semibold text-fuchsia-700'>Shiftshop</Link>
+        <Link to='/' className='brand text-3xl font-semibold text-fuchsia-700'>peskaya</Link>
 
         <div>
             <Link to="/posts" className='hover:underline font-semibold'>Posts</Link>
@@ -24,13 +33,17 @@ function Navbar() {
 
         {user ? (
           <div className='flex items-center px-2 py-1'>
-            <Link to='/makepay' className='flex justify-center items-center mr-4 bg-black font-semibold text-white text-xs px-3 py-1 rounded-sm border-none'>
+            <Link to='/makepay' className='flex justify-center items-center mr-2 bg-black hover:bg-slate-600 font-semibold text-white text-xs px-3 py-1 rounded-sm border-none'>
               <FaDollarSign />
               <span>Pay</span>
             </Link>
-            <Link to={`/user/profile/${user._id}`}>
+            <Link to={`/user/profile/${user._id}`} className='mr-2 hover:bg-fuchsia-300 px-2 py-2 rounded-full'>
               <FaUserLarge className='text-fuchsia-700' />
             </Link>
+            <button onClick={onLogout} className='hover:bg-fuchsia-300 px-2 py-2 rounded-full'>
+              <FaPowerOff className='text-fuchsia-700' />
+            </button>
+            
           </div>
         ) : (
           <div>

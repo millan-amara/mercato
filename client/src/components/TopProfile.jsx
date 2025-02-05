@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { FaUserLarge } from 'react-icons/fa6';
 import Rating from '@mui/material/Rating';
 
-function TopProfile({ handleTabChange,activeTab,loggedInUser,onLogout }) {
+function TopProfile({ handleTabChange,isOwner,activeTab,profileData,loggedInUser,onLogout }) {
   return (
     <>
         <div className='relative flex flex-col items-center'>
@@ -11,44 +11,47 @@ function TopProfile({ handleTabChange,activeTab,loggedInUser,onLogout }) {
                 <FaUserLarge className='text-3xl' />
             </div>
 
-            <p className='mt-2 font-medium text-xl'>{loggedInUser.fname}</p>
-            <a href={`${loggedInUser.website}`} className='mb-1 text-lime-600'>{loggedInUser.website}</a>
+            <p className='mt-2 font-medium text-xl'>{profileData.fname}</p>
+            <a href={`${profileData.website}`} className='mb-1 text-lime-600'>{profileData.website}</a>
             <div className='flex'>
                 <Rating name="read-only" value={3} size='small' readOnly />
-                <span className='ml-2 text-sm'>500 Orders</span>
+                <span className='ml-2 text-sm'>{profileData.reviews.length} Review{profileData.reviews.length === 1 ? '' : 's'}</span>
             </div>
         </div> 
         <div></div>
         <div className='mt-6 mb-2 flex md:flex-col justify-center items-center py-2'>
+            {isOwner &&
             <button 
             onClick={() => handleTabChange('posts')} 
             className={`mr-4 px-2 py-1 ${activeTab === 'posts' ? 'border-b-4 border-b-lime-600 text-lime-600 font-semibold' : ''}`}
-            >POSTS</button>
+            >POSTS</button>}
+            {isOwner &&
             <button 
             onClick={() => handleTabChange('bids')} 
             className={`mr-4 px-2 py-1 ${activeTab === 'bids' ? 'border-b-4 border-b-lime-600 text-lime-600 font-semibold' : ''}`}
-            >BIDS</button>
+            >BIDS</button>}
             <button 
             onClick={() => handleTabChange('reviews')} 
             className={`mr-4 px-2 py-1 ${activeTab === 'reviews' ? 'border-b-4 border-b-lime-600 text-lime-600 font-semibold' : ''}`}
             >REVIEWS</button>
+            {isOwner &&
             <button 
             onClick={() => handleTabChange('editProfile')} 
             className={`mr-4 px-2 py-1 ${activeTab === 'editProfile' ? 'border-b-4 border-b-lime-600 text-lime-600 font-semibold' : ''}`}
-            >EDIT PROFILE</button>
-      
+            >EDIT PROFILE</button>}
+            {isOwner &&
             <Link 
                 to={`/user/profile/${loggedInUser._id}/earnings`}
-                className={`mr-4 px-2 py-1`}
+                className={`mr-4 px-2 py-1 hidden md:flex`}
                 >EARNINGS
-            </Link>
+            </Link>}
             </div>
-        
+        {/* {isOwner &&
         <div className='flex justify-center mt-8'>
-            <button onClick={onLogout} className='bg-red-600 text-sm w-1/2 text-white rounded-sm py-1 md:w-1/2'>
+            <button onClick={onLogout} className='bg-red-200 hover:bg-red-300 text-sm w-1/2  rounded-sm py-1 md:w-1/2'>
                 Log out!
             </button>
-        </div>
+        </div>} */}
 
     </>
   )

@@ -3,7 +3,6 @@ import { Link } from 'react-router-dom';
 import Navbar from '../components/Navbar';
 import { useDispatch, useSelector } from 'react-redux';
 import { servePosts, reset } from '../features/posts/postSlice';
-import Skeleton from '@mui/material/Skeleton';
 import SearchForm from '../components/SearchForm'
 import axios from 'axios';
 
@@ -70,9 +69,6 @@ function Posts() {
       setSearchLoading(false)
     })
   }
-
-
-
 
   return (
     <div>

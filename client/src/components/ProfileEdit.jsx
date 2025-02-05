@@ -4,7 +4,7 @@ import { useParams } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { updateUser } from '../features/auth/authSlice';
 
-function ProfileEdit({ loggedInUser }) {
+function ProfileEdit({ loggedInUser, isOwner }) {
 
     const dispatch = useDispatch();
     const { userId } = useParams();
@@ -50,6 +50,7 @@ function ProfileEdit({ loggedInUser }) {
 
     const onSubmit = async (e) => {
         e.preventDefault()
+        
         setLoading(true)
         const userData = {
             fname,
@@ -59,9 +60,14 @@ function ProfileEdit({ loggedInUser }) {
         }
     
         try {
-            await dispatch(updateUser({ userData, userId })).unwrap();
-            setLoading(false);
-            toast.success('Successfully updated');
+            if(loggedInUser._id === userId) {
+                await dispatch(updateUser({ userData, userId })).unwrap();
+                setLoading(false);
+                toast.success('Successfully updated');
+            } else {
+                setLoading(false);
+                toast.error('failed to update user')
+            }
         } catch (error) {
             setLoading(false);
             toast.error('Failed to update user');

@@ -40,6 +40,7 @@ function ShowPost() {
 
         dispatch(showPost(postId))
         dispatch(getBids(postId))
+        console.log(user)
     }, [isError, message, postId, dispatch])
 
     useEffect(() => {
@@ -151,10 +152,13 @@ function ShowPost() {
             </div>
             </>
           ) : (
-            <div className="flex flex-col items-center mt-4 pt-4">
-              <p className="w-3/4 mb-16">{post.description}</p>
-              <BidInput quillRef={quillRef} handleSubmit={handleSubmit} />
-            </div>
+            
+              <div className="flex flex-col items-center mt-4 pt-4">
+                <p className="w-3/4 mb-16">{post.description}</p>
+                {user.business &&
+                  <BidInput quillRef={quillRef} handleSubmit={handleSubmit} />
+                }
+              </div>
           )}
         </div>
       )}

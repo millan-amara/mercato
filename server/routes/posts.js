@@ -8,10 +8,10 @@ const { isLoggedIn, isPostAuthor, isBusiness } = require('../middleware');
 const bidRouter = require('./bids')
 router.use('/:postId/bids', bidRouter)
 
-router.get('/fetchposts', isLoggedIn, catchAsync(posts.fetchPosts));
+router.get('/fetchposts', catchAsync(posts.fetchPosts));
 router.post('/createpost', isLoggedIn, catchAsync(posts.createPost));
 
-router.post('/search', isLoggedIn, posts.fetchSearchPosts)
+router.post('/search', posts.fetchSearchPosts)
 router.post('/search/page', isLoggedIn, posts.fetchPagePosts)
 
 router.delete('/:id', isLoggedIn, isPostAuthor, catchAsync(posts.deletePost));

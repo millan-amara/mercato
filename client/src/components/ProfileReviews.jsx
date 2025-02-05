@@ -1,19 +1,87 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { Rating, Typography } from '@mui/material';
+import axios from 'axios';
 
-function ProfileReviews({ canReview,handleCanReview,infoText,reviews,value,setValue,description,onReviewChange,onSubmitReview,submitReviewLoading }) {
+function ProfileReviews({ userId, cacheRef }) {
 
+  const [reviews, setReviews] = useState(cacheRef.current.reviews || []);
+  const [canReview, setCanReview] = useState(false);
+  const [checking, setChecking] = useState(false);
+  const [infoText, setInfoText] = useState('');
+  const [value, setValue] = useState(5);
+  const [description, setDescription] = useState('');
+  const [submitReviewLoading, setSubmitReviewLoading] = useState(false);
+
+  useEffect(() => {
+    const fetchOwnReviews = async() => {
+      if (!cacheRef.current.reviews) {
+        const reviewsResponse = await axios.get(`/api/users/${userId}/reviews`);
+        cacheRef.current.reviews = reviewsResponse.data
+        setReviews(reviewsResponse.data);
+      }
+
+    }
+
+    fetchOwnReviews()
+
+  }, [userId, cacheRef])
+
+  const handleCanReview = async () => {
+    setChecking(true)
+    const currentUser = await axios.get(`/api/users/currentuser`)
+    const response = await axios.get(`/api/users/${userId}`) 
+    setChecking(false)
+    if(currentUser.data.includes(response.data.email)) {
+      setCanReview(true)
+    } else {
+      setInfoText('Sorry, you need to interact with them first!')
+    }
+  }
+
+  const onReviewChange = (e) => {
+    setDescription(e.target.value)
+  }
+
+  const onSubmitReview = async (e) => {
+    e.preventDefault();
+    try {
+      setSubmitReviewLoading(true)
+      const response = await axios.post(`/api/users/${userId}/reviews`, {value: value, description: description})
+      setReviews((prevState) => [...prevState, response.data]);
+      setSubmitReviewLoading(false);
+
+      // Refetch the latest reviews to ensure consistency
+      const { data: updatedReviews } = await axios.get(`/api/users/${userId}/reviews`);
+      setReviews(updatedReviews);
+      setCanReview(false)
+    } catch (error) {
+      console.log(error)
+    }
+
+  }
 
   return (
     <>
     <div className='flex justify-center flex-col items-center text-sm'>
       <button className='underline' onClick={handleCanReview}>Leave a review?</button>
-      <span className='mt-1 text-rose-500'>{infoText}</span>
+      {checking ? (
+        <div className='flex animate-pulse mt-8'>
+          <div className='bg-slate-300 rounded-full w-6 h-6 mr-1'></div>
+          <div className='bg-slate-300 rounded-full w-6 h-6 mr-1'></div>
+          <div className='bg-slate-300 rounded-full w-6 h-6 mr-1'></div>
+          <div className='bg-slate-300 rounded-full w-6 h-6 mr-1'></div>
+          <div className='bg-slate-300 rounded-full w-6 h-6 mr-1'></div>
+
+        </div>
+      ) : (
+        <span className='mt-1 text-rose-500'>{infoText}</span>
+      )}
+
     </div>
     {canReview &&
     <form className='flex flex-col py-2 items-center'>
       
-      <Typography component="legend">Leave a Review</Typography>
+      <Typography component="legend">What was your interaction like?</Typography>
       <div className='flex flex-col items-center w-full md:w-3/4 lg:w-1/2'>
         <div className='flex items-center justify-center mb-2'>
           <Rating 

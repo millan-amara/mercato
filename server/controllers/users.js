@@ -18,20 +18,20 @@ module.exports.register = async (req, res) => {
             const registeredUser = await User.register(user, password);
             req.login(registeredUser, err => {
                 if(err) {
-                    console.error('Login error after registration:', err.message);
                     return next(new ExpressError('Login failed after registration', 500));
                 }
-                console.log(registeredUser)
+
                 res.status(201).json({
                     _id: registeredUser._id,
                     email: registeredUser.email,
                     phone: registeredUser.phone,
                     business: registeredUser.business,
+                    reviews: registeredUser.reviews,
                 });
 
             });
         } catch (error) {
-            console.error('Registration error:', e.message);
+
             if (e.message === 'A user with the given username is already registered') {
                 return next(new ExpressError('User exists', 409));
             }
@@ -45,16 +45,13 @@ module.exports.register = async (req, res) => {
 module.exports.login = async (req, res, next) => {
     passport.authenticate('local', (err, user) => {
         if (err) {
-            console.error('Authentication error:', err.message);
             return next(new ExpressError('Authentication failed', 500));
         }
         if (!user) {
-            console.warn('Invalid credentials: No user found');
             return next(new ExpressError('Invalid credentials', 401));
         }
         req.logIn(user, (err) => {
             if (err) {
-                console.error('Login error:', err);
                 return next(new ExpressError('Login failed', 500));
             }
             res.status(200).json({
@@ -63,7 +60,8 @@ module.exports.login = async (req, res, next) => {
                 fname: user.fname,
                 phone: user.phone,
                 business: user.business,
-                website: user.website
+                website: user.website,
+                reviews: user.reviews,
             });
         });
     })(req, res, next);
@@ -87,12 +85,9 @@ module.exports.logout = async (req, res) => {
 
 module.exports.getOwnUserPosts = async (req, res) => {
     try {
-
         const user = await User.findById(req.user.id)
 
- 
         if(!user) {
-            console.log('error')
             throw new ExpressError('User not found', 401)
         }
     
@@ -113,7 +108,6 @@ module.exports.getOwnUserBids = async (req, res) => {
     }
 
     const bids = await Bid.find({author: user})
-
     res.status(200).json(bids)
 }
 
@@ -139,7 +133,6 @@ module.exports.createUserReview = async (req, res) => {
         
             res.status(201).json(review);
         } else {
-            console.log("can't add that review, sorry");
             throw new ExpressError('Not allowed to do that', 401);
         }
 
@@ -162,21 +155,24 @@ module.exports.getProfileOwner = async (req, res) => {
     const { userId } = req.params;
     const user = await User.findById(userId);
 
-    res.status(200).json(user.email)
+    res.status(200).json({
+        _id: user._id,
+        email: user.email,
+        fname: user.fname,
+        phone: user.phone,
+        reviews: user.reviews,
+        website: user.website
+    })
 }
 
 module.exports.getCurrentUser = async (req, res) => {
-
     const user = await User.findById(req.user.id);
-
     res.status(200).json(user.canReview)
 }
 
 module.exports.updateUser = async (req, res) => {
 
     try {
-        console.log(req.user.id)
-        console.log(req.params.userId)
         if(req.user.id === req.params.userId) {
             const user = await User.findByIdAndUpdate(req.user.id, {
                 ...req.body
@@ -195,6 +191,5 @@ module.exports.updateUser = async (req, res) => {
     } catch (error) {
         console.log(error)
     }
-
 
 }

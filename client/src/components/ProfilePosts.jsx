@@ -1,8 +1,26 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import { Skeleton } from '@mui/material'
 import { Link } from 'react-router-dom'
+import axios from 'axios';
 
-function ProfilePosts({ postsLoading, posts }) {
+function ProfilePosts({ userId, cacheRef, isOwner }) {
+  const [posts, setPosts] = useState(cacheRef.current.posts || []);
+  const [postsLoading, setPostsLoading] = useState(!cacheRef.current.posts);
+
+  useEffect(() => { 
+    const fetchOwnPosts = async() => {
+      if(!cacheRef.current.posts && isOwner) {
+        const postsResponse = await axios.get('/api/users/getownposts');
+        cacheRef.current.posts = postsResponse.data
+        setPosts(postsResponse.data)
+      }
+      setPostsLoading(false)
+    }
+
+    fetchOwnPosts()
+
+  }, [userId, cacheRef])
+
   return (
     <>
     {postsLoading ? (

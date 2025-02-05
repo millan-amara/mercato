@@ -4,7 +4,7 @@ const ExpressError = require('../utils/ExpressError');
 
 
 module.exports.fetchPosts = async (req, res) => {
-    const limit = 10;
+    const limit = 9;
     const posts = await Post.find({}).limit(limit);
 
     res.json(posts)

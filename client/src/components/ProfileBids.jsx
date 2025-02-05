@@ -1,6 +1,22 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react';
+import axios from 'axios';
 
-function ProfileBids({ bids }) {
+function ProfileBids({ userId, cacheRef, isOwner }) {
+  const [bids, setBids] = useState(cacheRef.current.bids || []);
+
+  useEffect(() => {
+    const fetchOwnBids = async() => {
+      if (!cacheRef.current.bids && isOwner) {
+        const bidsResponse = await axios.get('/api/users/getownbids');
+        cacheRef.current.bids = bidsResponse.data;
+        setBids(bidsResponse.data)
+      }
+
+    }
+
+    fetchOwnBids()
+  }, [userId, cacheRef])
+
   return (
     <div className="px-2 grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
         {bids.length !== 0 && bids.map((bid) => (

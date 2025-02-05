@@ -22,7 +22,7 @@ module.exports.getBids = async (req, res) => {
     }
     const bids = post.bids
 
-    console.log(bids)
+
     res.status(200).json(bids)
 }
 
