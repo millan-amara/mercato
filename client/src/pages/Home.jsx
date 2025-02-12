@@ -44,9 +44,9 @@ function Home() {
 
     
   return (
-    <div className='md:h-screen flex flex-col justify-between'>
+    <div className='h-screen flex flex-col justify-between'>
       <Navbar />
-      <div className='h-screen md:h-auto flex justify-center items-center'>
+      <div className='flex justify-center items-center'>
       <form onSubmit={handleSubmit} className='w-full md:w-3/5 flex md:flex-col items-center py-8 px-4 text-center'>
         <TextField
             id="description"
