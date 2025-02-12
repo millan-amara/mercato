@@ -31,11 +31,27 @@ db.once("open", () => {
 
 const app = express();
 
+const allowedOrigins = [
+    'http://localhost:5173', // Development
+    'https://peskaya-98bb2fd3d6e7.herokuapp.com' // Production
+];
+
 // Middleware
 app.use(cors({
     origin: "http://localhost:5173", // Client origin
     methods: ["GET", "POST"],
-    credentials: true
+    credentials: true,
+    origin: function (origin, callback) {
+        // Allow requests with no origin (like mobile apps or curl)
+        if (!origin) return callback(null, true);
+        if (allowedOrigins.indexOf(origin) === -1) {
+          const msg = 'The CORS policy for this site does not allow access from the specified origin.';
+          return callback(new Error(msg), false);
+        }
+        return callback(null, true);
+    },
+    methods: ['GET', 'POST', 'PUT', 'DELETE'],
+    credentials: true,
 }));
 
 if(process.env.NODE_ENV === 'production') {
