@@ -1,6 +1,6 @@
 import axios from "axios"
 
-const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3000/api/posts/';
+const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3000/api';
 
 const createPost = async (postData) => {
     const response = await axios.post(API_URL, postData)
@@ -9,14 +9,14 @@ const createPost = async (postData) => {
 
 // Serve all posts
 const servePosts = async () => {
-    const response = await axios.get(`${API_URL}fetchposts`)
+    const response = await axios.get(`${API_URL}/posts/fetchposts`)
     return response.data
 }
 
 // Go to specific post's show page
 
 const showPost = async (postId) => {
-    const response = await axios.get(API_URL + postId)
+    const response = await axios.get(API_URL + "/posts/" + postId)
     console.log(response)
     return response.data
 }
