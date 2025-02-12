@@ -29,13 +29,11 @@ function Profile() {
         if (userId && userId !== loggedInUser._id) {
           // Fetch the other user's profile data from your API
           setActiveTab('reviews')
-          const response = await axios.get(`/api/users/${userId}`);
-          setProfileData(response.data);
         } else {
           setActiveTab('posts')
-          setProfileData(loggedInUser);
-
         }
+        const response = await axios.get(`/api/users/${userId}`);
+        setProfileData(response.data);
       };
   
       fetchProfile();
@@ -75,7 +73,7 @@ function Profile() {
   
               {activeTab === 'bids' && <ProfileBids userId={userId} cacheRef={cacheRef} />}
   
-              {activeTab === 'reviews' && <ProfileReviews userId={userId} cacheRef={cacheRef} />}
+              {activeTab === 'reviews' && <ProfileReviews userId={userId} loggedInUser={loggedInUser} cacheRef={cacheRef} />}
   
               {activeTab === 'editProfile' && <ProfileEdit loggedInUser={loggedInUser} />}
             </div>

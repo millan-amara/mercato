@@ -3,15 +3,12 @@ import axios from 'axios';
 import {toast} from 'react-toastify';
 import { useEffect, useState } from 'react';
 import { showPost, reset } from '../features/posts/postSlice';
-import { createBid, getBids, reset as bidsReset } from '../features/bids/bidSlice';
+import { getBids, reset as bidsReset } from '../features/bids/bidSlice';
 import Navbar from '../components/Navbar';
 import { useDispatch, useSelector } from 'react-redux';
 import BidSidebarAll from '../components/BidSidebarAll';
 import BidContent from '../components/BidContent';
 import BidInput from '../components/BidInput';
-import { useQuill } from 'react-quilljs';
-import 'quill/dist/quill.snow.css'; // Add for 'snow' theme
-
 
 import Accordion from '@mui/material/Accordion';
 import AccordionActions from '@mui/material/AccordionActions';
@@ -20,7 +17,6 @@ import AccordionDetails from '@mui/material/AccordionDetails';
 import Typography from '@mui/material/Typography';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import Button from '@mui/material/Button';
-
 
 
 function ShowPost() {
@@ -58,33 +54,24 @@ function ShowPost() {
     }
     }, [dispatch, isSuccess])
 
-    const { quill, quillRef } = useQuill({
-      theme: 'snow',
-      modules: {
-        toolbar: [
-          ['bold', 'italic', 'underline', 'strike'],  // Custom toolbar options
-        ],
-      },
-      placeholder: 'Type your offer here...',
-    });
 
-    const handleSubmit = async (e) => {
-      e.preventDefault();
-      try {
-        if (quill) {
-          const bidText = quill.root.innerHTML; // Extract HTML content
-          console.log(`show post ${bidText}`)
+    // const handleSubmit = async (e) => {
+    //   e.preventDefault();
+    //   try {
+    //     if (quill) {
+    //       const bidText = quill.root.innerHTML; // Extract HTML content
+    //       console.log(`show post ${bidText}`)
   
-          dispatch(createBid({bidText, postId}))
-          toast.success('Saved successfully!');
-          navigate('/posts')
+    //       dispatch(createBid({bidText, postId}))
+    //       toast.success('Saved successfully!');
+    //       navigate('/posts')
         
-        }
+    //     }
 
-      } catch (error) {
-        console.log(error)
-      }
-    }
+    //   } catch (error) {
+    //     console.log(error)
+    //   }
+    // }
 
 
     const onDelete = async(postId) => {
@@ -104,7 +91,6 @@ function ShowPost() {
       e.preventDefault()
       const response = await axios.put(`/api/posts/${post._id}/bids/${activeBidId}`)
     }
- 
 
   return (
     <div>
@@ -156,8 +142,9 @@ function ShowPost() {
               <div className="flex flex-col items-center mt-4 pt-4">
                 <p className="w-3/4 mb-16">{post.description}</p>
                 {user.business &&
-                  <BidInput quillRef={quillRef} handleSubmit={handleSubmit} />
+                  <BidInput postId={postId} />
                 }
+                
               </div>
           )}
         </div>

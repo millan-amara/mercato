@@ -19,6 +19,9 @@ const UserSchema = new Schema({
             ref: 'Review'
         }
     ],
+    rating: { type: Number, default: 0 },
+    ratingSum: { type: Number, default: 0 },
+    ratingCount: { type: Number, default: 0 },
     canReview: [],
     fname: String,
     phone: String,

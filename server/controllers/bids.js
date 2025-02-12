@@ -21,31 +21,38 @@ module.exports.getBids = async (req, res) => {
         throw new ExpressError('Not authorized', 401)
     }
     const bids = post.bids
+    console.log('got em bids,')
 
 
     res.status(200).json(bids)
 }
 
 module.exports.addBid = async (req, res) => {
-    const user = await User.findById(req.user.id)
+    try {
+        console.log(req.body)
+        const user = await User.findById(req.user.id)
 
-    if(!user) {
-        throw new ExpressError('Not allwoed to do that', 401)
+        if(!user) {
+            throw new ExpressError('Not allwoed to do that', 401)
+        }
+    
+        const post = await Post.findById(req.params.postId)
+    
+        const bid = new Bid({
+            ...req.body,
+        });
+        bid.imgs = req.files.map(f => ({ url: f.path, filename: f.filename }));
+        bid.author = req.user._id;
+        post.bids.unshift(bid)
+        console.log(bid)
+    
+        await bid.save();
+        await post.save();
+    
+        res.status(200).json(bid);
+    } catch (error) {
+        console.log(error)
     }
-
-    const post = await Post.findById(req.params.postId)
-
-    const bid = new Bid({
-        ...req.body,
-    });
-    bid.author = req.user.id;
-    post.bids.unshift(bid)
-    console.log(bid)
-
-    await bid.save();
-    await post.save();
-
-    res.status(200).json(bid);
 }
 
 module.exports.updateBid = async (req, res) => {

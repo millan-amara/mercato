@@ -8,11 +8,9 @@ const getBids = async (postId) => {
     return response.data
 }
 
-const createBid = async (bidText, postId) => {
-    const response = await axios.post(API_URL + postId + '/bids', {text: bidText})
-    console.log(`serive bidtext ${bidText}`)
-    console.log(`service postId ${postId}`)
-
+const createBid = async (bidData) => {
+    const postId = bidData.get('postId');
+    const response = await axios.post(API_URL + postId + '/bids', bidData)
     return response.data
 }
 

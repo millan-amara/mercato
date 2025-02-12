@@ -3,6 +3,15 @@ import { Link } from 'react-router-dom';
 import Rating from '@mui/material/Rating';
 import { MdMail, MdVerified } from 'react-icons/md';
 import { FaRegBookmark } from 'react-icons/fa6';
+import { Navigation, Pagination, Scrollbar, A11y, EffectCoverflow } from 'swiper/modules';
+import { Swiper, SwiperSlide } from 'swiper/react';
+
+import 'swiper/css/bundle'
+import 'swiper/css';
+import 'swiper/css/effect-coverflow';
+import 'swiper/css/navigation'; 
+import 'swiper/css/pagination';
+import 'swiper/css/scrollbar'; 
 
 
 function BidContent({ bid, onBookmarkBid }) {
@@ -20,8 +29,8 @@ function BidContent({ bid, onBookmarkBid }) {
                 <MdVerified />
               </div>
 
-              <p className='text-sm'>{bid.author.reviews.length} orders</p>
-              <Rating name="read-only" value={3} size='small' readOnly />
+              <p className='text-sm'>{bid.author.reviews.length} order{bid.author.reviews.length === 1 ? '' : 's'}</p>
+              <Rating name="read-only" value={bid.author.rating} size='small' readOnly />
               
             </div>
             <div className='flex font-semibold'>
@@ -41,6 +50,45 @@ function BidContent({ bid, onBookmarkBid }) {
             dangerouslySetInnerHTML={{ __html: bid && bid.text }}
             className=''
         ></div>
+        {bid.imgs.length !== 0 &&
+   <>
+          <Swiper 
+            modules={[EffectCoverflow,Navigation, Pagination, Scrollbar, A11y]}
+            navigation
+            pagination={true}
+            effect={'coverflow'}
+            grabCursor={true}
+            centeredSlides={true}
+            slidesPerView={'auto'}
+            coverflowEffect={{
+              rotate: 50,
+              stretch: 0,
+              depth: 100,
+              modifier: 1,
+              slideShadows: true,
+            }}
+            className='md:w-full lg:w-3/4'
+          >
+            {bid.imgs.map((img, index) => (
+              <SwiperSlide key={index}>
+                  <div
+                    className="py-10 flex justify-center" 
+                  >
+                    <img src={img.url} className="h-56" alt="product" />
+                  </div>
+              </SwiperSlide>
+            ))}
+          </Swiper>
+          {/* <div className='grid grid-cols-2'>
+            {bid.imgs.map((img, index) => (
+              <img src={img.url} className="h-48" alt="product" />
+            ))}
+          </div> */}
+
+          </>
+
+
+        }
 
         </div>
       )}

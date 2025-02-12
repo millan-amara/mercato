@@ -24,20 +24,22 @@ function Navbar() {
 
 
   return (
-    <div className="navbar flex justify-between items-center px-6 py-4">
-        <Link to='/' className='brand text-3xl font-semibold text-fuchsia-700'>peskaya</Link>
-
+    <div className="navbar flex justify-between items-center px-2 md:px-6 py-4">
+        <Link to='/' className=' flex flex-col text-fuchsia-700'>
+          <span className='brand text-3xl font-semibold'>peskaya</span>
+          <span className='text-xs'>we gone fish it for you</span>
+        </Link>
         <div>
             <Link to="/posts" className='hover:underline font-semibold'>Posts</Link>
         </div>
 
         {user ? (
-          <div className='flex items-center px-2 py-1'>
+          <div className='flex items-center py-1'>
             <Link to='/makepay' className='flex justify-center items-center mr-2 bg-black hover:bg-slate-600 font-semibold text-white text-xs px-3 py-1 rounded-sm border-none'>
               <FaDollarSign />
               <span>Pay</span>
             </Link>
-            <Link to={`/user/profile/${user._id}`} className='mr-2 hover:bg-fuchsia-300 px-2 py-2 rounded-full'>
+            <Link to={`/user/profile/${user._id}`} className='md:mr-2 hover:bg-fuchsia-300 px-2 py-2 rounded-full'>
               <FaUserLarge className='text-fuchsia-700' />
             </Link>
             <button onClick={onLogout} className='hover:bg-fuchsia-300 px-2 py-2 rounded-full'>

@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import Rating from '@mui/material/Rating';
 import Skeleton from '@mui/material/Skeleton';
 import { MdKeyboardArrowRight } from "react-icons/md";
+import { Menu, X } from "lucide-react";
 
 
 import { FaCircleUser } from 'react-icons/fa6'
@@ -9,6 +10,7 @@ import { FaCircleUser } from 'react-icons/fa6'
 function BidSidebarAll({ bids, bookmarkedBids, bidsIsLoading, activeBidId, onBidClick }) {
 
     const [activeTab, setActiveTab] = useState('all');
+
 
     const handleTabChange = (tab) => {
         setActiveTab(tab)
@@ -52,7 +54,7 @@ function BidSidebarAll({ bids, bookmarkedBids, bidsIsLoading, activeBidId, onBid
                                     className='text-sm mb-1'
                                 ></div>
                                 <div>
-                                    <Rating name="read-only" value={3} readOnly size='small' />
+                                    <Rating name="read-only" value={bid.author.rating} readOnly size='small' />
                                 </div>
                             </div>
                             <div className='flex items-center pl-2'>

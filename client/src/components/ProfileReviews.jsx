@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { Rating, Typography } from '@mui/material';
 import axios from 'axios';
 
-function ProfileReviews({ userId, cacheRef }) {
+function ProfileReviews({ userId, cacheRef, loggedInUser }) {
 
   const [reviews, setReviews] = useState(cacheRef.current.reviews || []);
   const [canReview, setCanReview] = useState(false);
@@ -12,19 +12,25 @@ function ProfileReviews({ userId, cacheRef }) {
   const [description, setDescription] = useState('');
   const [submitReviewLoading, setSubmitReviewLoading] = useState(false);
 
+
   useEffect(() => {
     const fetchOwnReviews = async() => {
-      if (!cacheRef.current.reviews) {
+      if(loggedInUser._id === userId) {
+        if (!cacheRef.current.reviews) {
+          const reviewsResponse = await axios.get(`/api/users/${userId}/reviews`);
+          cacheRef.current.reviews = reviewsResponse.data
+          setReviews(reviewsResponse.data);
+        }
+      } else {
         const reviewsResponse = await axios.get(`/api/users/${userId}/reviews`);
-        cacheRef.current.reviews = reviewsResponse.data
         setReviews(reviewsResponse.data);
       }
-
     }
-
+  
     fetchOwnReviews()
-
+  
   }, [userId, cacheRef])
+
 
   const handleCanReview = async () => {
     setChecking(true)

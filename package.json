@@ -1,0 +1,23 @@
+{
+  "name": "peskaya",
+  "version": "1.0.0",
+  "description": "",
+  "homepage": "https://github.com/millan-amara/mercato#readme",
+  "bugs": {
+    "url": "https://github.com/millan-amara/mercato/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/millan-amara/mercato.git"
+  },
+  "license": "ISC",
+  "author": "",
+  "type": "commonjs",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "cd client && npm install && npm run build",
+    "start": "node server/app.js",
+    "heroku-postbuild": "npm run build"
+  }
+}

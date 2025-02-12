@@ -1,6 +1,11 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
+const ImageSchema = new Schema({
+    url: String,
+    filename: String
+});
+
 const BidSchema = new Schema({
     author: {
         type: mongoose.Schema.Types.ObjectId,
@@ -15,7 +20,7 @@ const BidSchema = new Schema({
         type: Boolean,
         default: "false",
     },
-
+    imgs: [ImageSchema],
 }, {
     timestamps: true,
 });

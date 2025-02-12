@@ -32,7 +32,7 @@ function Success() {
       </div>
       
       <div class="flex justify-center items-end h-1/4">
-        <p>&copy; Marketplace 2025. All rights reserved</p>
+        <p>&copy; Peskaya 2025. All rights reserved</p>
       </div>
       
     </div>

@@ -106,6 +106,7 @@ module.exports.createPost = async (req, res) => {
 
 module.exports.showPost = async (req, res) => {
     const post = await Post.findById(req.params.id);
+    console.log('this that, post')
     res.json(post)
 }
 

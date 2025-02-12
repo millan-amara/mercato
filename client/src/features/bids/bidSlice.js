@@ -14,11 +14,10 @@ const initialState = {
 }
 
 //Create a bid
-export const createBid = createAsyncThunk('bids/create', async ({bidText, postId}, thunkAPI) => {
+export const createBid = createAsyncThunk('bids/create', async (bidData, thunkAPI) => {
     try {
-        console.log(`slice bidtext ${bidText}`)
-        console.log(`slice postId ${postId}`)
-        return await bidService.createBid(bidText, postId);
+        console.log(bidData)
+        return await bidService.createBid(bidData);
     } catch (error) {
         const message = (error.response && error.response.data && error.response.data.message)
         || error.message || error.toString()

@@ -35,7 +35,7 @@ function ProfilePosts({ userId, cacheRef, isOwner }) {
           to={`/posts/post/${post._id}`}
           key={post._id}
           className='bg-slate-100 hover:bg-slate-200 px-2 py-4 rounded-xl md:h-48'
-        >
+        > 
           {post.description.substr(0, 174)}...
           <p 
             className='mt-2 text-center w-fit px-2 rounded-sm bg-fuchsia-800 text-white text-xs'

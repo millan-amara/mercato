@@ -8,14 +8,14 @@ function TopProfile({ handleTabChange,isOwner,activeTab,profileData,loggedInUser
     <>
         <div className='relative flex flex-col items-center'>
             <div className="w-20 h-20 rounded-full bg-gray-300 flex items-center justify-center text-gray-500 text-lg">
-                <FaUserLarge className='text-3xl' />
+                <FaUserLarge className='text-3xl' /> 
             </div>
 
             <p className='mt-2 font-medium text-xl'>{profileData.fname}</p>
             <a href={`${profileData.website}`} className='mb-1 text-lime-600'>{profileData.website}</a>
             <div className='flex'>
-                <Rating name="read-only" value={3} size='small' readOnly />
-                <span className='ml-2 text-sm'>{profileData.reviews.length} Review{profileData.reviews.length === 1 ? '' : 's'}</span>
+                <Rating name="read-only" value={profileData.rating} size='small' readOnly />
+                <span className='ml-2 text-sm'>{profileData.reviews} Review{profileData.reviews === 1 ? '' : 's'}</span>
             </div>
         </div> 
         <div></div>

@@ -27,6 +27,7 @@ module.exports.register = async (req, res) => {
                     phone: registeredUser.phone,
                     business: registeredUser.business,
                     reviews: registeredUser.reviews,
+                    rating: registeredUser.rating,
                 });
 
             });
@@ -61,8 +62,9 @@ module.exports.login = async (req, res, next) => {
                 phone: user.phone,
                 business: user.business,
                 website: user.website,
-                reviews: user.reviews,
-            });
+                reviews: user.reviews.length,
+                rating: user.rating
+            }); 
         });
     })(req, res, next);
 }
@@ -121,13 +123,18 @@ module.exports.createUserReview = async (req, res) => {
             const review = new Review(req.body);
             review.author = req.user._id;
             user.reviews.unshift(review);
-        
+            await review.save();
+            
+        // Update the user's rating incrementally
+            user.ratingSum += review.value;
+            user.ratingCount += 1;
+            user.rating = user.ratingSum / user.ratingCount;
+
             const index = loggedInUser.canReview.indexOf(user.email);
             if (index !== -1) {
                 loggedInUser.canReview.splice(index, 1);
             }
         
-            await review.save();
             await user.save();
             await loggedInUser.save();
         
@@ -160,8 +167,9 @@ module.exports.getProfileOwner = async (req, res) => {
         email: user.email,
         fname: user.fname,
         phone: user.phone,
-        reviews: user.reviews,
-        website: user.website
+        reviews: user.reviews.length,
+        website: user.website,
+        rating: user.rating,
     })
 }
 
