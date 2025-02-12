@@ -9,14 +9,14 @@ const createPost = async (postData) => {
 
 // Serve all posts
 const servePosts = async () => {
-    const response = await axios.get(`${API_URL}/fetchposts`)
+    const response = await axios.get(`${API_URL}/posts/fetchposts`)
     return response.data
 }
 
 // Go to specific post's show page
 
 const showPost = async (postId) => {
-    const response = await axios.get(API_URL + "/" + postId)
+    const response = await axios.get(API_URL + "/posts/" + postId)
     console.log(response)
     return response.data
 }
