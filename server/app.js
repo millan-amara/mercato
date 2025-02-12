@@ -91,9 +91,9 @@ app.use((req, res, next) => {
     next();
 })
 
-app.use('/', userRoutes);
-app.use('/posts', postRoutes);
-app.use('/payments', paymentRoutes);
+app.use('/api', userRoutes);
+app.use('/api/posts', postRoutes);
+app.use('/api/payments', paymentRoutes);
 
 
 if (process.env.NODE_ENV === "production") {

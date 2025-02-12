@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const API_URL = '/api'
+const API_URL = process.env.REACT_APP_API_URL || 'https://peskaya-98bb2fd3d6e7.herokuapp.com/api';
 
 //Register user
 const register = async (userData) => {
