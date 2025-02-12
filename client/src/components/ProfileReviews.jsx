@@ -11,18 +11,19 @@ function ProfileReviews({ userId, cacheRef, loggedInUser }) {
   const [value, setValue] = useState(5);
   const [description, setDescription] = useState('');
   const [submitReviewLoading, setSubmitReviewLoading] = useState(false);
+  const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3000/api';
 
 
   useEffect(() => {
     const fetchOwnReviews = async() => {
       if(loggedInUser._id === userId) {
         if (!cacheRef.current.reviews) {
-          const reviewsResponse = await axios.get(`/api/users/${userId}/reviews`);
+          const reviewsResponse = await axios.get(`${API_URL}/users/${userId}/reviews`);
           cacheRef.current.reviews = reviewsResponse.data
           setReviews(reviewsResponse.data);
         }
       } else {
-        const reviewsResponse = await axios.get(`/api/users/${userId}/reviews`);
+        const reviewsResponse = await axios.get(`${API_URL}/users/${userId}/reviews`);
         setReviews(reviewsResponse.data);
       }
     }
@@ -34,8 +35,8 @@ function ProfileReviews({ userId, cacheRef, loggedInUser }) {
 
   const handleCanReview = async () => {
     setChecking(true)
-    const currentUser = await axios.get(`/api/users/currentuser`)
-    const response = await axios.get(`/api/users/${userId}`) 
+    const currentUser = await axios.get(`${API_URL}/users/currentuser`)
+    const response = await axios.get(`${API_URL}/users/${userId}`) 
     setChecking(false)
     if(currentUser.data.includes(response.data.email)) {
       setCanReview(true)
@@ -52,12 +53,12 @@ function ProfileReviews({ userId, cacheRef, loggedInUser }) {
     e.preventDefault();
     try {
       setSubmitReviewLoading(true)
-      const response = await axios.post(`/api/users/${userId}/reviews`, {value: value, description: description})
+      const response = await axios.post(`${API_URL}/users/${userId}/reviews`, {value: value, description: description})
       setReviews((prevState) => [...prevState, response.data]);
       setSubmitReviewLoading(false);
 
       // Refetch the latest reviews to ensure consistency
-      const { data: updatedReviews } = await axios.get(`/api/users/${userId}/reviews`);
+      const { data: updatedReviews } = await axios.get(`${API_URL}/users/${userId}/reviews`);
       setReviews(updatedReviews);
       setCanReview(false)
     } catch (error) {

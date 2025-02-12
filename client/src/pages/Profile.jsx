@@ -19,7 +19,8 @@ function Profile() {
     const [activeTab, setActiveTab] = useState('');
     const [profileData, setProfileData] = useState(null);
     const { userId } = useParams();
-    const cacheRef = useRef({})
+    const cacheRef = useRef({});
+    const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3000/api';
 
     const { user: loggedInUser } = useSelector((state) => state.auth); // Logged-in user
     const isOwner = loggedInUser?._id === userId;
@@ -32,7 +33,7 @@ function Profile() {
         } else {
           setActiveTab('posts')
         }
-        const response = await axios.get(`/api/users/${userId}`);
+        const response = await axios.get(`${API_URL}/users/${userId}`);
         setProfileData(response.data);
       };
   

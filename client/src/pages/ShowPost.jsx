@@ -22,7 +22,8 @@ import Button from '@mui/material/Button';
 function ShowPost() {
     const {post, isLoading, isSuccess, isError, message} = useSelector((state) => state.posts);
     const {bids, isLoading: bidsIsLoading} = useSelector((state) => state.bids);
-    const {user} = useSelector((state) => state.auth)
+    const {user} = useSelector((state) => state.auth);
+    const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3000/api';
 
     const [activeBidId, setActiveBidId] = useState(null);
     const navigate = useNavigate();
@@ -77,7 +78,7 @@ function ShowPost() {
     const onDelete = async(postId) => {
         if(window.confirm('Are you sure you want to delete?')) {
             try {
-                await axios.delete(`/api/posts/${post._id}`)
+                await axios.delete(`${API_URL}/posts/${post._id}`)
                 toast.success('Successfully deleted listing')
                 navigate('/posts')
             } catch (error) {

@@ -14,6 +14,7 @@ function Pay() {
         item: '',
         amount: '',
     });
+    const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3000/api';
 
     const {seller,item,amount} = formData;
 
@@ -40,7 +41,7 @@ function Pay() {
         e.preventDefault()
         setLoading(true)
     
-        await axios.post(`/api/payments/makepay`, formData)
+        await axios.post(`${API_URL}/payments/makepay`, formData)
 
         navigate('/success-pay')
 

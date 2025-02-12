@@ -6,11 +6,12 @@ import axios from 'axios';
 function ProfilePosts({ userId, cacheRef, isOwner }) {
   const [posts, setPosts] = useState(cacheRef.current.posts || []);
   const [postsLoading, setPostsLoading] = useState(!cacheRef.current.posts);
+  const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3000/api';
 
   useEffect(() => { 
     const fetchOwnPosts = async() => {
       if(!cacheRef.current.posts && isOwner) {
-        const postsResponse = await axios.get('/api/users/getownposts');
+        const postsResponse = await axios.get(`${API_URL}/users/getownposts`);
         cacheRef.current.posts = postsResponse.data
         setPosts(postsResponse.data)
       }

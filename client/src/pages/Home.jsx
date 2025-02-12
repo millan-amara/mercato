@@ -8,6 +8,7 @@ import { IoMdSend } from "react-icons/io";
 
 function Home() {
 
+  const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3000/api';
   const navigate = useNavigate();
   
   const [formData, setFormData] = useState({
@@ -27,7 +28,7 @@ function Home() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post('/api/posts/createpost', formData);
+      const response = await axios.post(`${API_URL}/posts/createpost`, formData);
       console.log(response)
       if(response.data.error) {
         toast.error(response.data.error);
