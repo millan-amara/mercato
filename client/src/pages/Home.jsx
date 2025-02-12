@@ -57,6 +57,7 @@ function Home() {
             className='' 
             value={description} 
             onChange={onChange}
+            autoFocus
         />
         <button className='md:bg-fuchsia-900 border md:border-0 border-fuchsia-800 flex justify-center items-center text-white px-3 md:w-1/4 md:mt-4 md:hover:bg-fuchsia-800 py-1 md:py-2 rounded-md md:rounded-lg md:text-xs ml-1 md:ml-0'>
           <span className='mr-2 hidden md:flex'>Submit</span>
