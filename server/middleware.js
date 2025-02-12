@@ -2,13 +2,24 @@ const User = require('./models/user');
 const Post = require('./models/post');
 const ExpressError = require('./utils/ExpressError')
 
+// module.exports.isLoggedIn = (req, res, next) => {
+//     if (!req.isAuthenticated()) {
+//         req.session.returnTo = req.originalUrl;
+//         return res.redirect('/login');
+//     }
+//     next();
+// }
+
 module.exports.isLoggedIn = (req, res, next) => {
     if (!req.isAuthenticated()) {
-        req.session.returnTo = req.originalUrl;
-        return res.redirect('/login');
+      if (req.originalUrl.startsWith('/api')) {
+        return res.status(401).json({ message: 'Unauthorized' });
+      }
+      return res.redirect('/login');
     }
     next();
-}
+  };
+  
 
 module.exports.isPostAuthor = async (req, res, next) => {
     const { id } = req.params;

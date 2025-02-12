@@ -16,9 +16,20 @@ const servePosts = async () => {
 // Go to specific post's show page
 
 const showPost = async (postId) => {
-    const response = await axios.get(API_URL + "/posts/" + postId)
-    console.log(response)
-    return response.data
+    try {
+        const response = await axios.get(`${API_URL}/posts/${postId}`);
+        return response.data;
+      } catch (error) {
+        if (error.response && error.response.status === 401) {
+          console.error('User is not authorized');
+        } else {
+          console.error('An error occurred', error);
+        }
+      }
+      
+    // const response = await axios.get(API_URL + "/posts/" + postId)
+    // console.log(response)
+    // return response.data
 }
 
 // RESETTTTTTTTTTTTTTTT WHEN WE LEAVE

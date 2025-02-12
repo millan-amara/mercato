@@ -90,7 +90,7 @@ function ShowPost() {
 
     const onBookmarkBid = async (e) => {
       e.preventDefault()
-      const response = await axios.put(`/api/posts/${post._id}/bids/${activeBidId}`)
+      const response = await axios.put(`${API_URL}/posts/${post._id}/bids/${activeBidId}`)
     }
 
   return (
