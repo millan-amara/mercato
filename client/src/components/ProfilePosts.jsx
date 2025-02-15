@@ -7,7 +7,7 @@ function ProfilePosts({ userId, cacheRef, isOwner }) {
   const [posts, setPosts] = useState(cacheRef.current.posts || []);
   const [postsLoading, setPostsLoading] = useState(!cacheRef.current.posts);
   // const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000/api';
-  const API_URL = import.meta.env.VITE_API_URL || '/api';
+  const API_URL = import.meta.env.VITE_API_URL;
 
   useEffect(() => { 
     const fetchOwnPosts = async() => {
