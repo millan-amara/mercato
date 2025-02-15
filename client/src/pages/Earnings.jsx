@@ -10,7 +10,7 @@ function Earnings() {
     const [items, setItems] = useState([]);
     const [loading, setLoading] = useState(true);
     // const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000/api';
-    const API_URL = '/api';
+    const API_URL = import.meta.env.VITE_API_URL || '/api';
 
     useEffect(() => {
         const fetchPayments = async () => {

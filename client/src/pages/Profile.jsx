@@ -21,7 +21,7 @@ function Profile() {
     const { userId } = useParams();
     const cacheRef = useRef({});
     // const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000/api';
-    const API_URL = '/api';
+    const API_URL = import.meta.env.VITE_API_URL || '/api';
 
     const { user: loggedInUser } = useSelector((state) => state.auth); // Logged-in user
     const isOwner = loggedInUser?._id === userId;
