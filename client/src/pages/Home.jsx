@@ -8,7 +8,8 @@ import { IoMdSend } from "react-icons/io";
 
 function Home() {
 
-  const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3000/api';
+  // const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000/api';
+  const API_URL = '/api';
   const navigate = useNavigate();
   
   const [formData, setFormData] = useState({
@@ -22,7 +23,6 @@ function Home() {
       ...prevState,
       [e.target.id]: e.target.value
     }))
-
   }
 
   const handleSubmit = async (e) => {
@@ -39,10 +39,8 @@ function Home() {
     } catch (error) {
       console.log(error)
     }
-
   }
-
-    
+ 
   return (
     <div className='h-screen flex flex-col justify-between'>
       <Navbar />
@@ -68,7 +66,6 @@ function Home() {
       </div>
 
     </div>
-
   )
 }
 

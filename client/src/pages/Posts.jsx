@@ -19,6 +19,7 @@ function Posts() {
   const [activePage, setActivePage] = useState(1)
   const { posts, isLoading, isSuccess } = useSelector((state) => state.posts);
   const dispatch = useDispatch();
+  const API_URL = '/api';
 
   useEffect(() => {
     return () => {

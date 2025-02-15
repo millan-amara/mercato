@@ -38,9 +38,6 @@ const allowedOrigins = [
 
 // Middleware
 app.use(cors({
-    origin: "http://localhost:5173", // Client origin
-    methods: ["GET", "POST"],
-    credentials: true,
     origin: function (origin, callback) {
         // Allow requests with no origin (like mobile apps or curl)
         if (!origin) return callback(null, true);
@@ -53,6 +50,8 @@ app.use(cors({
     methods: ['GET', 'POST', 'PUT', 'DELETE'],
     credentials: true,
 }));
+
+
 
 if(process.env.NODE_ENV === 'production') {
     app.use((req, res, next) => {
@@ -89,6 +88,8 @@ const sessionConfig = session({
         maxAge: 1000 * 60 * 60 *24 * 7
     }
 })
+
+  
 
 app.use(sessionConfig);
 

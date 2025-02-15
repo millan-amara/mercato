@@ -20,20 +20,26 @@ function Profile() {
     const [profileData, setProfileData] = useState(null);
     const { userId } = useParams();
     const cacheRef = useRef({});
-    const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3000/api';
+    // const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000/api';
+    const API_URL = '/api';
 
     const { user: loggedInUser } = useSelector((state) => state.auth); // Logged-in user
     const isOwner = loggedInUser?._id === userId;
 
     useEffect(() => {
       const fetchProfile = async () => {
+        console.log('trying to fetch')
+        console.log(`user id ${userId}`)
+        console.log(`loggedInUser ${loggedInUser._id}`)
         if (userId && userId !== loggedInUser._id) {
           // Fetch the other user's profile data from your API
           setActiveTab('reviews')
         } else {
           setActiveTab('posts')
         }
+        console.log(`${API_URL}/users/${userId}`)
         const response = await axios.get(`${API_URL}/users/${userId}`);
+        console.log(`RESPONSE: ${response.data}`)
         setProfileData(response.data);
       };
   

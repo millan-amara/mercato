@@ -3,19 +3,28 @@ const Post = require('./models/post');
 const ExpressError = require('./utils/ExpressError')
 
 // module.exports.isLoggedIn = (req, res, next) => {
-//     if (!req.isAuthenticated()) {
-//         req.session.returnTo = req.originalUrl;
-//         return res.redirect('/login');
+//     try {
+//         console.log(req.params.id)
+//         console.log(req.user._id)
+
+//         if (!req.isAuthenticated()) {
+//             req.session.returnTo = req.originalUrl;
+//             return res.redirect('/login');
+//         }
+//         next()
+//     } catch (error) {
+//         console.log('gone wrong')
 //     }
-//     next();
+
+
 // }
 
 module.exports.isLoggedIn = (req, res, next) => {
     if (!req.isAuthenticated()) {
-      if (req.originalUrl.startsWith('/api')) {
+        if (req.originalUrl.startsWith('/api')) {
         return res.status(401).json({ message: 'Unauthorized' });
-      }
-      return res.redirect('/login');
+        }
+        return res.redirect('/login');
     }
     next();
   };

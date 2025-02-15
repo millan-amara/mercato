@@ -23,7 +23,8 @@ function ShowPost() {
     const {post, isLoading, isSuccess, isError, message} = useSelector((state) => state.posts);
     const {bids, isLoading: bidsIsLoading} = useSelector((state) => state.bids);
     const {user} = useSelector((state) => state.auth);
-    const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3000/api';
+    // const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000/api';
+    const API_URL = '/api';
 
     const [activeBidId, setActiveBidId] = useState(null);
     const navigate = useNavigate();
