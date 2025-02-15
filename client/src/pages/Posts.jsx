@@ -19,7 +19,7 @@ function Posts() {
   const [activePage, setActivePage] = useState(1)
   const { posts, isLoading, isSuccess } = useSelector((state) => state.posts);
   const dispatch = useDispatch();
-  const API_URL = '/api';
+  const API_URL = import.meta.env.VITE_API_URL || '/api';
 
   useEffect(() => {
     return () => {
@@ -31,6 +31,7 @@ function Posts() {
 
   useEffect(() => {
       dispatch(servePosts())
+      console.log("Using API URL:", API_URL);
   }, [dispatch])
 
 
