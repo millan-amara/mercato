@@ -38,7 +38,13 @@ const allowedOrigins = [
 
 // Middleware
 app.use(cors({
-    origin: true,
+    origin: function (origin, callback) {
+        if (!origin || allowedOrigins.includes(origin)) {
+            callback(null, true);
+        } else {
+            callback(new Error('Not allowed by CORS'));
+        }
+    },
     methods: ['GET', 'POST', 'PUT', 'DELETE'],
     credentials: true,
 }));
@@ -81,7 +87,7 @@ const sessionConfig = session({
     name: "session",
     secret,
     resave: false,
-    saveUninitialized: true,
+    saveUninitialized: false,
     cookie: {
         httpOnly: true,
         secure: process.env.NODE_ENV === "production", // Use secure cookies in production
