@@ -20,7 +20,7 @@ function Profile() {
     const [profileData, setProfileData] = useState(null);
     const { userId } = useParams();
     const cacheRef = useRef({});
-    // const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000/api';
+
     const API_URL = import.meta.env.VITE_API_URL;
 
     const { user: loggedInUser } = useSelector((state) => state.auth); // Logged-in user

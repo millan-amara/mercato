@@ -11,7 +11,7 @@ function ProfileReviews({ userId, cacheRef, loggedInUser }) {
   const [value, setValue] = useState(5);
   const [description, setDescription] = useState('');
   const [submitReviewLoading, setSubmitReviewLoading] = useState(false);
-  // const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000/api';
+
   const API_URL = import.meta.env.VITE_API_URL;
 
 
@@ -19,12 +19,12 @@ function ProfileReviews({ userId, cacheRef, loggedInUser }) {
     const fetchOwnReviews = async() => {
       if(loggedInUser._id === userId) {
         if (!cacheRef.current.reviews) {
-          const reviewsResponse = await axios.get(`${API_URL}/users/${userId}/reviews`);
+          const reviewsResponse = await axios.get(`${API_URL}/users/${userId}/reviews`, { withCredentials: true });
           cacheRef.current.reviews = reviewsResponse.data
           setReviews(reviewsResponse.data);
         }
       } else {
-        const reviewsResponse = await axios.get(`${API_URL}/users/${userId}/reviews`);
+        const reviewsResponse = await axios.get(`${API_URL}/users/${userId}/reviews`, { withCredentials: true });
         setReviews(reviewsResponse.data);
       }
     }
@@ -36,8 +36,8 @@ function ProfileReviews({ userId, cacheRef, loggedInUser }) {
 
   const handleCanReview = async () => {
     setChecking(true)
-    const currentUser = await axios.get(`${API_URL}/users/currentuser`)
-    const response = await axios.get(`${API_URL}/users/${userId}`) 
+    const currentUser = await axios.get(`${API_URL}/users/currentuser`, { withCredentials: true })
+    const response = await axios.get(`${API_URL}/users/${userId}`, { withCredentials: true }) 
     setChecking(false)
     if(currentUser.data.includes(response.data.email)) {
       setCanReview(true)
@@ -54,12 +54,12 @@ function ProfileReviews({ userId, cacheRef, loggedInUser }) {
     e.preventDefault();
     try {
       setSubmitReviewLoading(true)
-      const response = await axios.post(`${API_URL}/users/${userId}/reviews`, {value: value, description: description})
+      const response = await axios.post(`${API_URL}/users/${userId}/reviews`, {value: value, description: description}, { withCredentials: true })
       setReviews((prevState) => [...prevState, response.data]);
       setSubmitReviewLoading(false);
 
       // Refetch the latest reviews to ensure consistency
-      const { data: updatedReviews } = await axios.get(`${API_URL}/users/${userId}/reviews`);
+      const { data: updatedReviews } = await axios.get(`${API_URL}/users/${userId}/reviews`, { withCredentials: true });
       setReviews(updatedReviews);
       setCanReview(false)
     } catch (error) {

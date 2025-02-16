@@ -12,7 +12,7 @@ function ProfilePosts({ userId, cacheRef, isOwner }) {
   useEffect(() => { 
     const fetchOwnPosts = async() => {
       if(!cacheRef.current.posts && isOwner) {
-        const postsResponse = await axios.get(`${API_URL}/users/getownposts`);
+        const postsResponse = await axios.get(`${API_URL}/users/getownposts`, { withCredentials: true });
         cacheRef.current.posts = postsResponse.data
         setPosts(postsResponse.data)
       }

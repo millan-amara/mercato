@@ -2,14 +2,14 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 
 function ProfileBids({ userId, cacheRef, isOwner }) {
-  // const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000/api';
+
   const API_URL = import.meta.env.VITE_API_URL;
   const [bids, setBids] = useState(cacheRef.current.bids || []);
 
   useEffect(() => {
     const fetchOwnBids = async() => {
       if (!cacheRef.current.bids && isOwner) {
-        const bidsResponse = await axios.get(`/${API_URL}/users/getownbids`);
+        const bidsResponse = await axios.get(`/${API_URL}/users/getownbids`, { withCredentials: true });
         cacheRef.current.bids = bidsResponse.data;
         setBids(bidsResponse.data)
       }
