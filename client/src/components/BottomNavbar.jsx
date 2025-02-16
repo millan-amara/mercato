@@ -8,17 +8,17 @@ const BottomNavbar = ({ user }) => {
   return (
     <div className="fixed bottom-0 left-0 w-full bg-white shadow-md border-t flex justify-around items-center py-3 md:hidden">
       <Link to="/posts" className="flex flex-col items-center text-gray-700 hover:text-fuchsia-700">
-        <FaThList className="text-2xl" />
+        <FaThList className="text-xl" />
         <span className="text-xs">Posts</span>
       </Link>
 
       <Link to="/makepay" className="flex flex-col items-center text-gray-700 hover:text-fuchsia-700">
-        <FaDollarSign className="text-2xl" />
+        <FaDollarSign className="text-xl" />
         <span className="text-xs">Pay</span>
       </Link>
 
       <Link to={`/user/profile/${user._id}`} className="flex flex-col items-center text-gray-700 hover:text-fuchsia-700">
-        <FaUserLarge className="text-2xl" />
+        <FaUserLarge className="text-xl" />
         <span className="text-xs">Profile</span>
       </Link>
     </div>
