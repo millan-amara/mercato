@@ -13,6 +13,7 @@ import Success from './pages/Success';
 import Pay from './pages/Pay';
 import SuccessPay from './pages/SuccessPay';
 import Earnings from './pages/Earnings';
+import Landing from './pages/Landing';
 
 
 function App() {
@@ -20,10 +21,11 @@ function App() {
     <>
     <Router>
     <Routes>
-      <Route path='/' element={<Home />} />
+      <Route path='/' element={<Landing />} />
       <Route path='/posts' element={<Posts />} />
       <Route path='/register' element={<Register />} />
       <Route path='/login' element={<Login />} />
+      <Route path='/create' element={<Home />} />
       <Route path='/user/profile/:userId/earnings' element={<PrivateRoute />} >
         <Route path='/user/profile/:userId/earnings' element={<Earnings />} />
       </Route>

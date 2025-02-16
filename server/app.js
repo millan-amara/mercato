@@ -43,18 +43,6 @@ app.use(cors({
     credentials: true,
 }));
 
-// function (origin, callback) {
-//     // Allow requests with no origin (like mobile apps or curl)
-//     if (!origin) return callback(null, true);
-//     if (allowedOrigins.indexOf(origin) === -1) {
-//       const msg = 'The CORS policy for this site does not allow access from the specified origin.';
-//       return callback(new Error(msg), false);
-//     }
-//     return callback(null, true);
-// },
-
-
-
 if(process.env.NODE_ENV === 'production') {
     app.use((req, res, next) => {
       if (req.header('x-forwarded-proto') !== 'https')
@@ -62,21 +50,20 @@ if(process.env.NODE_ENV === 'production') {
       else
         next()
     })
-  }
+}
 
 app.use(express.urlencoded({extended: true, limit: '25mb'}));
 app.use(methodOverride('_method'));
 app.use(mongoSanitize());
 app.use(express.json({ limit: '25mb'}));
 app.set('trust proxy', 1);
-const secret = process.env.SECRET || '85AGTHRHGYSH';
+const secret = process.env.SECRET || '85AGTHRHGYZZ';
 const store = new MongoStore({
     mongoUrl: dbUrl,
     secret,
     touchAfter: 24 * 60 * 60,
     autoRemove: 'interval',
     autoRemoveInterval: 10
-
 });
 
 const sessionConfig = session({
@@ -93,7 +80,6 @@ const sessionConfig = session({
         maxAge: 1000 * 60 * 60 *24 * 7
     }
 })
-
   
 
 app.use(sessionConfig);

@@ -25,7 +25,7 @@ function Navbar() {
 
   return (
     <div className="navbar flex justify-between items-center px-2 md:px-6 py-4">
-        <Link to='/' className=' flex flex-col text-fuchsia-700'>
+        <Link to='/create' className=' flex flex-col text-fuchsia-700'>
           <span className='brand text-3xl font-semibold'>peskaya</span>
           <span className='text-xs'>we gone fish it for you</span>
         </Link>
