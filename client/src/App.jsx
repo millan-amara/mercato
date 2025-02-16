@@ -1,4 +1,5 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 import {ToastContainer} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Home from './pages/Home';
@@ -7,25 +8,31 @@ import Login from './pages/Login';
 import Register from './pages/Register';
 import ShowPost from './pages/ShowPost';
 import PrivateRoute from './components/PrivateRoute';
-import BusinessRoute from './components/BusinessRoute';
 import Profile from './pages/Profile';
 import Success from './pages/Success';
 import Pay from './pages/Pay';
 import SuccessPay from './pages/SuccessPay';
 import Earnings from './pages/Earnings';
 import Landing from './pages/Landing';
+import BottomNavbar from './components/BottomNavbar.jsx';
 
 
 function App() {
+  const { user } = useSelector((state) => state.auth);
+
   return (
     <>
     <Router>
     <Routes>
       <Route path='/' element={<Landing />} />
-      <Route path='/posts' element={<Posts />} />
       <Route path='/register' element={<Register />} />
       <Route path='/login' element={<Login />} />
-      <Route path='/create' element={<Home />} />
+      <Route path='/create' element={<PrivateRoute />} >
+        <Route path='/create' element={<Home />} />
+      </Route>
+      <Route path='/posts' element={<PrivateRoute />} >
+        <Route path='/posts' element={<Posts />} />
+      </Route>
       <Route path='/user/profile/:userId/earnings' element={<PrivateRoute />} >
         <Route path='/user/profile/:userId/earnings' element={<Earnings />} />
       </Route>
@@ -45,6 +52,9 @@ function App() {
         <Route path='/success-pay' element={<SuccessPay />} />
       </Route>
     </Routes>
+    
+    {/* Show BottomNavbar only if user is logged in */}
+    {user && <BottomNavbar user={user} />}
     </Router>
       
     <ToastContainer />

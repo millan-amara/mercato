@@ -99,7 +99,7 @@ function Register() {
   }
 
   return (
-    <div className='h-screen md:h-auto'>
+    <div className='h-[100dvh] md:h-auto'>
       <div className='h-screen md:h-auto flex justify-center items-center'>
         <div className='md:h-auto flex items-center w-11/12 md:w-1/2 lg:w-1/3 xl:1/4'>
           <form onSubmit={handleSubmit} className='py-16 md:py-4 px-7 w-full'>
