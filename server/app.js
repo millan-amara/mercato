@@ -38,13 +38,7 @@ const allowedOrigins = [
 
 // Middleware
 app.use(cors({
-    origin: function (origin, callback) {
-        if (!origin || allowedOrigins.includes(origin)) {
-            callback(null, true);
-        } else {
-            callback(new Error('Not allowed by CORS'));
-        }
-    },
+    origin: allowedOrigins,
     methods: ['GET', 'POST', 'PUT', 'DELETE'],
     credentials: true,
 }));
@@ -74,12 +68,15 @@ app.use(express.urlencoded({extended: true, limit: '25mb'}));
 app.use(methodOverride('_method'));
 app.use(mongoSanitize());
 app.use(express.json({ limit: '25mb'}));
-
+app.set('trust proxy', 1);
 const secret = process.env.SECRET || '85AGTHRHGYSH';
 const store = new MongoStore({
     mongoUrl: dbUrl,
     secret,
-    touchAfter: 24 * 60 * 60
+    touchAfter: 24 * 60 * 60,
+    autoRemove: 'interval',
+    autoRemoveInterval: 10
+
 });
 
 const sessionConfig = session({
@@ -90,7 +87,7 @@ const sessionConfig = session({
     saveUninitialized: false,
     cookie: {
         httpOnly: true,
-        secure: false, // Use secure cookies in production
+        secure: process.env.NODE_ENV === "production", // Use secure cookies in production
         sameSite: process.env.NODE_ENV === "production" ? "none" : "lax", // Adjust for cross-origin
         expires: new Date(Date.now() + 1000 * 60 * 60 * 24 * 7),
         maxAge: 1000 * 60 * 60 *24 * 7
