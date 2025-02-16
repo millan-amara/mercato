@@ -48,7 +48,7 @@ function Posts() {
     setSearchLoading(true)
     console.log(search)
     
-    await axios.post(`${API_URL}/posts/search`, searchTerm)
+    await axios.post(`${API_URL}/posts/search`, searchTerm, { withCredentials: true })
     .then((response) => {
       setWascas(response.data.posts)
       const rows = Array.from({ length: response.data.pages}, (_, i) => i + 1);
@@ -64,7 +64,7 @@ function Posts() {
     e.preventDefault()
     setSearchLoading(true)
     const pageNumber = e.target.value;
-    await axios.post(`${API_URL}/posts/search/page`, { page: pageNumber, search: term })
+    await axios.post(`${API_URL}/posts/search/page`, { page: pageNumber, search: term }, { withCredentials: true })
     .then((response) => {
       setWascas(response.data.posts)
       setActivePage(pageNumber)

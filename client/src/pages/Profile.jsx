@@ -37,8 +37,8 @@ function Profile() {
         } else {
           setActiveTab('posts')
         }
-        console.log(`${API_URL}/users/${userId}`)
-        const response = await axios.get(`${API_URL}/users/${userId}`);
+        console.log(`${API_URL}/users/${userId}`, { withCredentials: true })
+        const response = await axios.get(`${API_URL}/users/${userId}`, { withCredentials: true });
         console.log(`RESPONSE: ${response.data}`)
         setProfileData(response.data);
       };

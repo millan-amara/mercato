@@ -79,7 +79,7 @@ function ShowPost() {
     const onDelete = async(postId) => {
         if(window.confirm('Are you sure you want to delete?')) {
             try {
-                await axios.delete(`${API_URL}/posts/${post._id}`)
+                await axios.delete(`${API_URL}/posts/${post._id}`, { withCredentials: true })
                 toast.success('Successfully deleted listing')
                 navigate('/posts')
             } catch (error) {
@@ -91,7 +91,7 @@ function ShowPost() {
 
     const onBookmarkBid = async (e) => {
       e.preventDefault()
-      const response = await axios.put(`${API_URL}/posts/${post._id}/bids/${activeBidId}`)
+      const response = await axios.put(`${API_URL}/posts/${post._id}/bids/${activeBidId}`, { withCredentials: true })
     }
 
   return (

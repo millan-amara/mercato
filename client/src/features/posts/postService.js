@@ -10,7 +10,7 @@ const createPost = async (postData) => {
 
 // Serve all posts
 const servePosts = async () => {
-    const response = await axios.get(`${API_URL}/posts/fetchposts`)
+    const response = await axios.get(`${API_URL}/posts/fetchposts`, { withCredentials: true })
     return response.data
 }
 
@@ -18,7 +18,7 @@ const servePosts = async () => {
 
 const showPost = async (postId) => {
     try {
-        const response = await axios.get(`${API_URL}/posts/${postId}`);
+        const response = await axios.get(`${API_URL}/posts/${postId}`, { withCredentials: true });
         return response.data;
       } catch (error) {
         if (error.response && error.response.status === 401) {
