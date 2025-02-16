@@ -77,7 +77,7 @@ function Login() {
             <div className='flex items-center border-b-2 px-2 relative'>
               <FaUser className='absolute left-4' />
               <input 
-                className='pl-8 border-0 px-2 py-1 focus:outline-none appearance-none w-full rounded-full h-8' 
+                className='pl-8 border-0 px-2 py-1 focus:outline-none appearance-none w-full rounded-md h-8' 
                 type="" name="email" id="email" value={email} onChange={onChange} placeholder='Type your email' />
             </div>
             
@@ -87,7 +87,7 @@ function Login() {
             <div className='flex items-center border-b-2 px-2 relative'>
               <FaLock className='absolute left-4' />
               <input 
-                className='text-sm pl-8 border-0 px-2 py-1 focus:outline-none appearance-none w-full rounded-full h-8' 
+                className='text-sm pl-8 border-0 px-2 py-1 focus:outline-none appearance-none w-full rounded-md h-8' 
                 type={showPassword === true ? "string" : "password"}
                 name="password" 
                 id="password" value={password} onChange={onChange} placeholder='Password' />
@@ -103,7 +103,7 @@ function Login() {
           <div className='text-xs mb-5 flex justify-end font-semibold'>
             <a href="/forgot">Forgot password?</a>
           </div>
-          <button type="submit" className='bg-gradient-to-r from-fuchsia-700 via-slate-800 to-gray-950 hover:bg-gradient-to-l w-full text-white text-bold rounded-full py-2'>Log In</button>
+          <button type="submit" className='bg-gradient-to-r from-fuchsia-700 via-slate-800 to-gray-950 hover:bg-gradient-to-l w-full text-white text-bold rounded-md py-2'>Log In</button>
 
           <div className='text-xs mb-5 flex justify-center mt-5 font-semibold'>
             <Link to="/register" className='underline-offset-3 underline'>Create Account</Link>

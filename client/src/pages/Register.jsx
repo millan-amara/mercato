@@ -112,7 +112,7 @@ function Register() {
               <div className='flex items-center border-b-2 px-2 relative'>
                 <FaUser className='absolute left-4' />
                 <input 
-                  className='pl-8 border-0 py-1 focus:outline-none appearance-none w-full rounded-full h-8' 
+                  className='pl-8 border-0 py-1 focus:outline-none appearance-none w-full rounded-md h-8' 
                   type="email" name="email" id="email" value={email} onChange={onChange} placeholder='Type your email' />
               </div>
             </div>
@@ -121,7 +121,7 @@ function Register() {
               <div className='flex items-center border-b-2 px-2 relative'>
                 <FaUser className='absolute left-4' />
                 <input 
-                  className='pl-8 border-0 py-1 focus:outline-none appearance-none w-full rounded-full h-8' 
+                  className='pl-8 border-0 py-1 focus:outline-none appearance-none w-full rounded-md h-8' 
                   type="number" name="phone" id="phone" value={phone} onChange={onChange} placeholder='07...' />
               </div>
             </div>
@@ -130,7 +130,7 @@ function Register() {
               <div className='flex items-center border-b-2 px-2 relative'>
                 <FaLock className='absolute left-4' />
                 <input 
-                  className='text-sm border-0 pl-8 h-8 px-2 py-1 focus:outline-none appearance-none w-full rounded-full' 
+                  className='text-sm border-0 pl-8 h-8 px-2 py-1 focus:outline-none appearance-none w-full rounded-md' 
                   type={showPassword === true ? "string" : "password"} 
                   name="password" id="password" value={password} onChange={onChange} placeholder='Password' />
                 {showPassword === true ? 
@@ -145,7 +145,7 @@ function Register() {
               <div className='flex items-center border-b-2 px-2 relative'>
                 <FaLock className='absolute left-4' />
                 <input 
-                  className='text-sm border-0 pl-8 h-8 px-2 py-1 focus:outline-none appearance-none w-full rounded-full' 
+                  className='text-sm border-0 pl-8 h-8 px-2 py-1 focus:outline-none appearance-none w-full rounded-md' 
                   type={showConfirmPassword === true ? "string" : "password"}
                   name="confirmPassword" id="confirmPassword" value={confirmPassword} onChange={onChange} placeholder='Password' />
                 {showConfirmPassword === true ? 
@@ -181,7 +181,7 @@ function Register() {
             <div className='text-xs mb-5 flex justify-end font-semibold'>
               <Link to="/login">Have an account?</Link>
             </div>
-            <button type="submit" className='bg-gradient-to-r from-fuchsia-700 via-slate-800 to-gray-950 hover:bg-gradient-to-l w-full text-white text-bold rounded-full py-3'>Sign Up</button>
+            <button type="submit" className='bg-gradient-to-r from-fuchsia-700 via-slate-800 to-gray-950 hover:bg-gradient-to-l w-full text-white text-bold rounded-md py-3'>Sign Up</button>
         
         
             </form>
