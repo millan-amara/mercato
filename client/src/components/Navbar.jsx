@@ -25,9 +25,12 @@ function Navbar() {
 
   return (
     <div className="navbar flex justify-between items-center px-2 md:px-6 py-4">
-        <Link to='/create' className=' flex flex-col text-fuchsia-700'>
+        {/* <Link to='/create' className=' flex flex-col text-fuchsia-700'>
           <span className='brand text-3xl font-semibold'>peskaya</span>
           <span className='text-xs'>we gone fish it for you</span>
+        </Link> */}
+        <Link to='/create' className='text-3xl'>
+            <span>PES<span className='text-fuchsia-700 font-bold text-6xl'>K</span>AYA</span>
         </Link>
         <div>
             <Link to="/posts" className='hover:underline font-semibold'>Posts</Link>

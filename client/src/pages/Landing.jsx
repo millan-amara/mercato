@@ -14,7 +14,7 @@ function Landing() {
                     <h1 className='text-3xl'>Buy or sell anything reliably and fast.</h1>
                 </div>
                 <div>
-                    <p className='text-xl'>Make a request for anything and get hundreds of deals to choose from.</p>
+                    <p className=''>Make a request for anything and get hundreds of deals to choose from.</p>
                 </div>
             </div>
 
