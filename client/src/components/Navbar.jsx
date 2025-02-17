@@ -19,6 +19,8 @@ function Navbar() {
     navigate('/')
   }
 
+  if (!user) return null;
+
 
   return (
     <nav className="flex justify-between items-center px-2 md:px-6 py-4">
@@ -26,7 +28,6 @@ function Navbar() {
             <span>PES<span className='text-fuchsia-700 font-bold text-3xl md:text-6xl'>K</span>AYA</span>
         </Link>
 
-        {/* Hamburger Button - Visible on Small Screens */}
         <button 
           onClick={() => setIsOpen(!isOpen)}
           className="md:hidden text-3xl focus:outline-none"
@@ -34,7 +35,8 @@ function Navbar() {
           {isOpen ? <FaTimes /> : <FaBars />}
         </button>
 
-        {/* Desktop Navigation */}
+
+        
         <div className='hidden md:flex items-center'>
             <div className='flex items-center py-1'>
               <div>
@@ -54,13 +56,13 @@ function Navbar() {
             </div>
         </div>
 
-      {/* Full-height Right Drawer */}
+
       <div 
         className={`fixed top-0 right-0 h-screen z-50 w-3/4 max-w-xs bg-white shadow-lg transform transition-transform duration-300 ease-in-out ${
           isOpen ? "translate-x-0" : "translate-x-full"
         } md:hidden`}
       >
-        {/* Close Button */}
+
         <button 
           onClick={() => setIsOpen(false)} 
           className="absolute top-4 right-4 text-3xl"
@@ -68,7 +70,7 @@ function Navbar() {
           <FaTimes />
         </button>
 
-        {/* Menu Content */}
+
         <div className="flex flex-col mx-auto p-6 mt-10">
           <Link to={`/user/profile/${user._id}`} className='flex items-center justify-center text-base hover:bg-fuchsia-300 py-2 rounded-md border'>
             <FaUserLarge className='text-fuchsia-700 inline-block mr-2' />
@@ -87,14 +89,13 @@ function Navbar() {
         </div>
       </div>
 
-      {/* Overlay (click to close) */}
+
       {isOpen && (
         <div 
           className="fixed top-0 left-0 w-full h-screen bg-black opacity-50 z-40 md:hidden"
           onClick={() => setIsOpen(false)}
         ></div>
       )}
-
     </nav>
   )
 }

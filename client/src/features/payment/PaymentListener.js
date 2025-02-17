@@ -5,7 +5,7 @@ import { updatePaymentStatus } from "./paymentSlice";
 
 const socket = io(import.meta.env.VITE_API_URL); // Replace with your backend URL
 
-const PaymentListener = () => {
+const PaymentListener = ({ invoiceId }) => {
     const dispatch = useDispatch();
     const [isListening, setIsListening] = useState(false);
 
