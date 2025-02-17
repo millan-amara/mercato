@@ -4,6 +4,8 @@ if (process.env.NODE_ENV !== "production") {
 
 const express = require('express');
 const cors = require('cors');
+const http = require("http");
+const { Server } = require("socket.io");
 
 const path = require('path');
 const mongoose = require('mongoose');
@@ -28,6 +30,7 @@ db.on("error", console.error.bind(console, "connection error:"));
 db.once("open", () => {
     console.log("Database Connected")
 });
+
 
 const app = express();
 
@@ -135,9 +138,44 @@ app.use((err, req, res, next) => {
     });
 });
 
+const server = http.createServer(app); // Create HTTP server
+
+const io = new Server(server, {
+    cors: {
+        origin: allowedOrigins,
+        methods: ["GET", "POST"],
+        credentials: true,
+    },
+});
+
+// Store user socket connections
+const users = {}; // userId -> socketId mapping
+
+io.on("connection", (socket) => {
+    console.log(`User connected: ${socket.id}`);
+
+    // Register user socket ID
+    socket.on("register", (userId) => {
+        users[userId] = socket.id;
+    });
+
+    // Remove user on disconnect
+    socket.on("disconnect", () => {
+        console.log("User disconnected:", socket.id);
+        Object.keys(users).forEach((userId) => {
+            if (users[userId] === socket.id) {
+                delete users[userId];
+            }
+        });
+    });
+});
+
+app.set("io", io);
+app.set("users", users);
+
 
 const port = process.env.PORT || 5000;
 
-app.listen(port, () => {
+server.listen(port, () => {
     console.log(`Backend running on ${port}`);
 });

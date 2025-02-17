@@ -3,13 +3,13 @@ import Navbar from '../components/Navbar';
 import axios from 'axios';
 import { toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
+import PaymentListener from '../features/payment/PaymentListener';
 
 function Pay() {
 
     const navigate = useNavigate();
     const [loading, setLoading] = useState(false);
     const [initiated, setInitiated] = useState('false');
-    const [paymentStatus, setPaymentStatus] = useState(null);
     const [invoiceId, setInvoiceId] = useState(null);
     const [formData, setFormData] = useState({
         seller: '',
@@ -28,29 +28,6 @@ function Pay() {
         }))
     }
 
-    // const handleInitiate = () => {
-    //     if(!seller) {
-    //         toast.error("Please include seller's email")
-    //     } else if (!item) {
-    //         toast.error("Please type what you're buying, e.g. shoes")
-    //     } else if(!amount) {
-    //         toast.error("Please include the amount")
-    //     } else {
-    //         setInitiated('true')
-    //     }
-    // }
-
-    // const onSubmit = async (e) => {
-    //     e.preventDefault()
-    //     setLoading(true)
-    
-    //     await axios.post(`${API_URL}/payments/makepay`, formData)
-
-    //     navigate('/success-pay')
-
-    //     setLoading(false);
-    // }
-
     const initiatePayment = async (e) => {
         e.preventDefault();
         if(!seller) {
@@ -64,45 +41,15 @@ function Pay() {
 
             try {
                 const response = await axios.post(`${API_URL}/payments/makepay`, formData)
-    
                 console.log("STK Push Response:", response.data);
                 setInvoiceId(response.data.invoice.invoice_id);
-                checkPaymentStatus(response.data.invoice.invoice_id);
             } catch (error) {
                 console.error("Payment error:", error);
-                setPaymentStatus("Error initiating payment.");
             }
     
             setLoading(false);
         }
 
-    };
-
-    const checkPaymentStatus = async (invoiceId) => {
-        let attempts = 0;
-        const interval = setInterval(async () => {
-            try {
-                const response = await axios.get(`${API_URL}/payments/payment-status/${invoiceId}`)
-
-                console.log("Payment Status Response:", response.data);
-
-                if (response.data.invoice.state === "COMPLETE") {
-                    setPaymentStatus("Payment Successful 🎉");
-                    clearInterval(interval);
-                } else if (response.data.invoice.state === "FAILED") {
-                    setPaymentStatus("Payment Failed ❌");
-                    clearInterval(interval);
-                } else if (attempts >= 10) {
-                    setPaymentStatus("Payment Pending... Check again later.");
-                    clearInterval(interval);
-                }
-
-                attempts++;
-            } catch (error) {
-                console.error("Error checking payment status:", error);
-                clearInterval(interval);
-            }
-        }, 5000); // Check status every 5 seconds
     };
 
     // if(loading) {
@@ -163,7 +110,7 @@ function Pay() {
             <button type='submit' onClick={initiatePayment} disabled={loading} className="mt-4 bg-gradient-to-r from-green-700 via-slate-800 to-gray-950 hover:bg-gradient-to-l w-full text-white text-bold py-3">
                 {loading ? "Processing..." : "Pay Now"}
             </button>
-            {paymentStatus && <p>{paymentStatus}</p>}
+            {invoiceId && <PaymentListener invoiceId={invoiceId} />}
 
 
 
