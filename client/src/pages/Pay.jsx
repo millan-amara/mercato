@@ -66,8 +66,8 @@ function Pay() {
                 const response = await axios.post(`${API_URL}/payments/makepay`, formData)
     
                 console.log("STK Push Response:", response.data);
-                setInvoiceId(data.response.invoice_id);
-                checkPaymentStatus(data.response.invoice_id);
+                setInvoiceId(response.data.invoice.invoice_id);
+                checkPaymentStatus(response.data.invoice.invoice_id);
             } catch (error) {
                 console.error("Payment error:", error);
                 setPaymentStatus("Error initiating payment.");
