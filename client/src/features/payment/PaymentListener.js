@@ -1,4 +1,4 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import io from "socket.io-client";
 import { updatePaymentStatus } from "./paymentSlice";
@@ -8,7 +8,6 @@ const socket = io(import.meta.env.VITE_API_URL); // Replace with your backend UR
 const PaymentListener = () => {
     const dispatch = useDispatch();
     const [isListening, setIsListening] = useState(false);
-    const socketRef = useRef(null); // Prevents multiple WebSocket instances
 
     useEffect(() => {
         if (invoiceId && !isListening) {
