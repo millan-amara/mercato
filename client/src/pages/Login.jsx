@@ -24,7 +24,7 @@ function Login() {
 
     //Redirect when logged in
     if(isSuccess || user) {
-        navigate('/create')
+        navigate('/')
     }
 
     dispatch(reset())

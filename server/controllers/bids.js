@@ -21,15 +21,12 @@ module.exports.getBids = async (req, res) => {
         throw new ExpressError('Not authorized', 401)
     }
     const bids = post.bids
-    console.log('got em bids,')
-
 
     res.status(200).json(bids)
 }
 
 module.exports.addBid = async (req, res) => {
     try {
-        console.log(req.body)
         const user = await User.findById(req.user.id)
 
         if(!user) {
@@ -44,7 +41,6 @@ module.exports.addBid = async (req, res) => {
         bid.imgs = req.files.map(f => ({ url: f.path, filename: f.filename }));
         bid.author = req.user._id;
         post.bids.unshift(bid)
-        console.log(bid)
     
         await bid.save();
         await post.save();
@@ -56,8 +52,6 @@ module.exports.addBid = async (req, res) => {
 }
 
 module.exports.updateBid = async (req, res) => {
-    console.log(req.params)
-
     const bid = await Bid.findByIdAndUpdate(req.params.bidId, {
         bookmarked: true
     });

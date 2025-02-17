@@ -6,7 +6,6 @@ const ExpressError = require('../utils/ExpressError');
 module.exports.fetchPosts = async (req, res) => {
     const limit = 9;
     const posts = await Post.find({}).limit(limit);
-    console.log(`USER: ${req.user}`)
 
     res.json(posts)
 }
@@ -56,8 +55,6 @@ module.exports.fetchSearchPosts = async (req, res) => {
             ]);
             const count = allPosts.length;
             const pages = Math.ceil(count / limit);
-            console.log(count)
-            console.log(pages)
 
             res.json({ posts: foundPosts, pages })
     }
@@ -67,7 +64,7 @@ module.exports.fetchPagePosts = async (req, res) => {
     const searchQuery = req.body.search;
     const limit = 1;
     const pageNumber = req.body.page - 1;
-    console.log(req.body)
+
     if(req.body.search) {
         const posts = await Post.aggregate([
             {
@@ -107,7 +104,6 @@ module.exports.createPost = async (req, res) => {
 
 module.exports.showPost = async (req, res) => {
     const post = await Post.findById(req.params.id);
-    console.log('this that, post')
     res.json(post)
 }
 

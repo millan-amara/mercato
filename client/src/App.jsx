@@ -24,11 +24,11 @@ function App() {
     <>
     <Router>
     <Routes>
-      <Route path='/' element={<Landing />} />
+      <Route path='/landing' element={<Landing />} />
       <Route path='/register' element={<Register />} />
       <Route path='/login' element={<Login />} />
-      <Route path='/create' element={<PrivateRoute />} >
-        <Route path='/create' element={<Home />} />
+      <Route path='/' element={<PrivateRoute />} >
+        <Route path='/' element={<Home />} />
       </Route>
       <Route path='/posts' element={<PrivateRoute />} >
         <Route path='/posts' element={<Posts />} />
