@@ -22,7 +22,7 @@ function Navbar() {
 
   return (
     <nav className="flex justify-between items-center px-2 md:px-6 py-4">
-        <Link to='/create' className='text-xl md:text-3xl'>
+        <Link to='/' className='text-xl md:text-3xl'>
             <span>PES<span className='text-fuchsia-700 font-bold text-3xl md:text-6xl'>K</span>AYA</span>
         </Link>
 

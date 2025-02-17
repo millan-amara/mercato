@@ -1,14 +1,13 @@
 const Payment = require('../models/payment');
 const User = require('../models/user');
-
 const IntaSend = require('intasend-node');
+const { v4: uuidv4 } = require('uuid');
 
-let intasend = new IntaSend(
+const intasend = new IntaSend(
   'ISPubKey_test_12d6d02b-fa7e-4f1e-b79f-b285af7c5331',
   'ISSecretKey_test_bad69278-9a8f-4741-b3f7-a8e3fcf8d15d',
   true, // Test ? Set true for test environment
 );
-
 
 
 module.exports.createPayment = async (req, res) => {
@@ -27,44 +26,57 @@ module.exports.createPayment = async (req, res) => {
     // await user.save();
 
     // res.status(201).json(payment);
-    let collection = intasend.collection();
-    collection
-    .mpesaStkPush({
+    try {
+        const uniqueId = `ORDER-${uuidv4()}`;
+        let collection = intasend.collection();
+    
+        const response = await collection.mpesaStkPush({
             first_name: 'Joe',
             last_name: 'Doe',
             email: 'joe@doe.com',
             host: 'https://peskaya-98bb2fd3d6e7.herokuapp.com/',
             amount: 10,
             phone_number: '254700487751',
-            api_ref: 'test',
-    })
-    .then((resp) => {
-        // Redirect user to URL to complete payment
-        console.log(`STK Push Resp:`,resp);
-        res.status(201).json(resp);
-        })
-    .catch((err) => {
-        console.error(`STK Push Resp error:`,err);
-    });
+            api_ref: uniqueId,
+        });
+    
+        console.log(`STK Push Resp:`, response);
+        res.status(201).json(response);  
+    } catch (error) {
+        console.error(`STK Push Resp error:`, error);
+        res.status(500).json(error)
+    }
+
 }
 
-module.exports.fetchBusinessPayments = async (req, res) => { 
-    const limit = 3;
-    const user = await User.findById(req.user._id);
-
-    if(req.body.page) {
-        const pageNumber = req.body.page - 1;
-        const payments = await Payment.find({ seller: user.email })
-            .populate('author')
-            .limit(limit)
-            .skip(limit * pageNumber)
-
-        const allPayments = await Payment.find({ seller: user.email }).populate('author');
-
-        const count = allPayments.length;
-        const pages = Math.ceil(count / limit);
-
-        res.status(200).json({ payments, pages })
-
+module.exports.getPaymentStatus = async (req, res) => {
+    try {
+        let collection = intasend.collection();
+        const response = await collection.status(req.params.invoiceId);
+        console.log(response);
+        res.status(200).json(response)
+    } catch (error) {
+        res.status(500).json(error)
     }
 }
+
+// module.exports.fetchBusinessPayments = async (req, res) => { 
+//     const limit = 3;
+//     const user = await User.findById(req.user._id);
+
+//     if(req.body.page) {
+//         const pageNumber = req.body.page - 1;
+//         const payments = await Payment.find({ seller: user.email })
+//             .populate('author')
+//             .limit(limit)
+//             .skip(limit * pageNumber)
+
+//         const allPayments = await Payment.find({ seller: user.email }).populate('author');
+
+//         const count = allPayments.length;
+//         const pages = Math.ceil(count / limit);
+
+//         res.status(200).json({ payments, pages })
+
+//     }
+// }

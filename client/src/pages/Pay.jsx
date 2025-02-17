@@ -9,6 +9,8 @@ function Pay() {
     const navigate = useNavigate();
     const [loading, setLoading] = useState(false);
     const [initiated, setInitiated] = useState('false');
+    const [paymentStatus, setPaymentStatus] = useState(null);
+    const [invoiceId, setInvoiceId] = useState(null);
     const [formData, setFormData] = useState({
         seller: '',
         item: '',
@@ -26,7 +28,31 @@ function Pay() {
         }))
     }
 
-    const handleInitiate = () => {
+    // const handleInitiate = () => {
+    //     if(!seller) {
+    //         toast.error("Please include seller's email")
+    //     } else if (!item) {
+    //         toast.error("Please type what you're buying, e.g. shoes")
+    //     } else if(!amount) {
+    //         toast.error("Please include the amount")
+    //     } else {
+    //         setInitiated('true')
+    //     }
+    // }
+
+    // const onSubmit = async (e) => {
+    //     e.preventDefault()
+    //     setLoading(true)
+    
+    //     await axios.post(`${API_URL}/payments/makepay`, formData)
+
+    //     navigate('/success-pay')
+
+    //     setLoading(false);
+    // }
+
+    const initiatePayment = async (e) => {
+        e.preventDefault();
         if(!seller) {
             toast.error("Please include seller's email")
         } else if (!item) {
@@ -34,32 +60,61 @@ function Pay() {
         } else if(!amount) {
             toast.error("Please include the amount")
         } else {
-            setInitiated('true')
-        }
-    }
+            setLoading(true);
 
-    const onSubmit = async (e) => {
-        e.preventDefault()
-        setLoading(true)
+            try {
+                const response = await axios.post(`${API_URL}/payments/makepay`, formData)
     
-        await axios.post(`${API_URL}/payments/makepay`, formData)
+                console.log("STK Push Response:", response.data);
+                setInvoiceId(data.response.invoice_id);
+                checkPaymentStatus(data.response.invoice_id);
+            } catch (error) {
+                console.error("Payment error:", error);
+                setPaymentStatus("Error initiating payment.");
+            }
+    
+            setLoading(false);
+        }
 
-        navigate('/success-pay')
+    };
 
-        setLoading(false);
-    }
+    const checkPaymentStatus = async (invoiceId) => {
+        let attempts = 0;
+        const interval = setInterval(async () => {
+            try {
+                const response = await axios.get(`${API_URL}/payments/payment-status/${invoiceId}`)
 
-    if(loading) {
-        return (
-            <>
-                <Navbar />
-                <div className='flex h-screen justify-center items-center'>
-                <p className='text-xl font-semibold'>Just a moment...</p>
-            </div>
-            </>
+                console.log("Payment Status Response:", response.data);
 
-        )
-    }
+                if (response.data.invoice.state === "COMPLETE") {
+                    setPaymentStatus("Payment Successful 🎉");
+                    clearInterval(interval);
+                } else if (response.data.invoice.state === "FAILED") {
+                    setPaymentStatus("Payment Failed ❌");
+                    clearInterval(interval);
+                } else if (attempts >= 10) {
+                    setPaymentStatus("Payment Pending... Check again later.");
+                    clearInterval(interval);
+                }
+
+                attempts++;
+            } catch (error) {
+                console.error("Error checking payment status:", error);
+                clearInterval(interval);
+            }
+        }, 5000); // Check status every 5 seconds
+    };
+
+    // if(loading) {
+    //     return (
+    //         <>
+    //             <Navbar />
+    //             <div className='flex h-screen justify-center items-center'>
+    //             <p className='text-xl font-semibold'>Just a moment...</p>
+    //         </div>
+    //         </>
+    //     )
+    // }
 
 
   return (
@@ -103,22 +158,14 @@ function Pay() {
                 required
             />
           </div>
-        {initiated === 'false' &&
-          <button onClick={handleInitiate} type='submit' className="bg-gradient-to-r from-fuchsia-700 via-slate-800 to-gray-950 hover:bg-gradient-to-l w-full text-white text-bold rounded-xl py-3">
-            Pay
-          </button>
-        }
-        {initiated === 'true' &&
-            <div className='mt-8 border border-slate-200 pt-4'>
-                <div className='px-4'>
-                    <p><span className='font-bold'>Till Number: </span> <span>45689</span></p>
-                    <p><span className='font-bold'>Amount: </span><span>KES {amount}</span></p>
-                </div>
-                <button type='submit' onClick={onSubmit} className="mt-4 bg-gradient-to-r from-green-700 via-slate-800 to-gray-950 hover:bg-gradient-to-l w-full text-white text-bold py-3">
-                    Mark as Paid
-                </button>
-            </div>
-        }
+
+
+            <button type='submit' onClick={initiatePayment} disabled={loading} className="mt-4 bg-gradient-to-r from-green-700 via-slate-800 to-gray-950 hover:bg-gradient-to-l w-full text-white text-bold py-3">
+                {loading ? "Processing..." : "Pay Now"}
+            </button>
+            {paymentStatus && <p>{paymentStatus}</p>}
+
+
 
         </form>
       </div>
