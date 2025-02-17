@@ -5,7 +5,7 @@ const { v4: uuidv4 } = require('uuid');
 
 const intasend = new IntaSend(
   'ISPubKey_test_12d6d02b-fa7e-4f1e-b79f-b285af7c5331',
-  'ISSecretKey_test_bad69278-9a8f-4741-b3f7-a8e3fcf8d15d',
+  'ISSecretKey_test_e605175f-5ae6-47b8-b19f-0a04f5df8d11',
   true, // Test ? Set true for test environment
 );
 
@@ -35,7 +35,7 @@ module.exports.createPayment = async (req, res) => {
             last_name: 'Doe',
             email: 'joe@doe.com',
             host: 'https://peskaya-98bb2fd3d6e7.herokuapp.com/',
-            amount: 5,
+            amount: 1,
             phone_number: '254700487751',
             api_ref: uniqueId,
         });

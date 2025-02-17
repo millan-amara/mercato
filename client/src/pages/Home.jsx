@@ -43,7 +43,7 @@ function Home() {
   return (
     <div className='h-[100dvh] flex flex-col justify-between'>
       <Navbar />
-      <div className='flex justify-center items-center mb-12'>
+      <div className='flex justify-center items-center mb-12 md:mb-0'>
       <form onSubmit={handleSubmit} className='w-full md:w-3/5 flex md:flex-col items-center py-8 px-4 text-center'>
         <TextField
             id="description"
