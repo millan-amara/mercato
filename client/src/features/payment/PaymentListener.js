@@ -7,6 +7,15 @@ const socket = io(import.meta.env.VITE_API_URL, {
     withCredentials: true,
 });
 
+socket.on("connect_error", (err) => {
+    console.error("WebSocket Connection Error:", err.message);
+});
+
+socket.on("disconnect", (reason) => {
+    console.warn("WebSocket Disconnected:", reason);
+});
+
+
 const PaymentListener = ({ invoiceId }) => {
     const dispatch = useDispatch();
     const [isListening, setIsListening] = useState(false);

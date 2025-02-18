@@ -6,9 +6,10 @@ const ExpressError = require('../utils/ExpressError');
 
 const intasend = new IntaSend(
   'ISPubKey_test_12d6d02b-fa7e-4f1e-b79f-b285af7c5331',
-  'ISSecretKey_test_e605175f-5ae6-47b8-b19f-0a04f5df8d11',
+  'ISSecretKey_test_cd24e510-2f1a-49a3-ba95-dfc874f32565',
   true, // Test ? Set true for test environment
 );
+
 
 
 module.exports.createPayment = async (req, res) => {
@@ -101,6 +102,7 @@ module.exports.createWebhook = async (req, res) => {
 
         // Send update to the specific user if they are connected
         if (userId && users[userId]) {
+            console.log(`Sending WebSocket update to user: ${userId}`);
             io.to(users[userId]).emit("paymentUpdate", {
                 invoiceId: invoice_id,
                 status: state,

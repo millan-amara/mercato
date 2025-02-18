@@ -146,6 +146,7 @@ const io = new Server(server, {
         methods: ["GET", "POST"],
         credentials: true,
     },
+    transports: ["websocket", "polling"]
 });
 
 // Store user socket connections
@@ -156,7 +157,10 @@ io.on("connection", (socket) => {
 
     // Register user socket ID
     socket.on("register", (userId) => {
-        users[userId] = socket.id;
+        if (userId) {
+            users[userId] = socket.id;
+            console.log(`User ${userId} registered with socket ID ${socket.id}`);
+        }
     });
 
     // Remove user on disconnect
@@ -165,6 +169,7 @@ io.on("connection", (socket) => {
         Object.keys(users).forEach((userId) => {
             if (users[userId] === socket.id) {
                 delete users[userId];
+                console.log(`Removed user ${userId} from active sockets.`);
             }
         });
     });
