@@ -43,7 +43,7 @@ function TopProfile({ handleTabChange,isOwner,activeTab,profileData,loggedInUser
             <Link 
                 to={`/user/profile/${loggedInUser._id}/earnings`}
                 className={`mr-4 px-2 py-1 hidden md:flex`}
-                >EARNINGS
+                >MY MONEY
             </Link>}
             </div>
         {/* {isOwner &&

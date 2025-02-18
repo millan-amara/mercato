@@ -72,7 +72,7 @@ function Pay() {
             try {
                 const response = await axios.get(`${API_URL}/payments/status/${invoiceId}`)
 
-                console.log("Payment Status Response:", response.data.invoice.state);
+                console.log("Payment Status Response:", response.data);
 
                 if (response.data.invoice.state === "COMPLETE") {
                     setPaymentStatus("Payment Successful 🎉");

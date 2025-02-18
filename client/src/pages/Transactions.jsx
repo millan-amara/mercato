@@ -3,9 +3,9 @@ import MyMoney from '../components/MyMoney';
 import axios from 'axios';
 import Navbar from '../components/Navbar';
 
-function Earnings() {
+function Transactions() {
 
-    const [payments, setPayments] = useState([]);
+    const [transactions, setTransactions] = useState([]);
     const [activePage, setActivePage] = useState(1);
     const [items, setItems] = useState([]);
     const [loading, setLoading] = useState(true)
@@ -13,13 +13,13 @@ function Earnings() {
     const API_URL = import.meta.env.VITE_API_URL;
 
     useEffect(() => {
-        const fetchPayments = async () => {
+        const fetchTransactions = async () => {
             try {
-                const paymentsResponse = await axios.post(`${API_URL}/payments/search/page`, { page: 1 });
-                setPayments(paymentsResponse.data.payments);
-                const rows = Array.from({ length: paymentsResponse.data.pages}, (_, i) => i + 1);
+                const transactionsResponse = await axios.post(`${API_URL}/payments/transactions/search/page`, { page: 1 });
+                setTransactions(transactionsResponse.data.transactions);
+                const rows = Array.from({ length: transactionsResponse.data.pages}, (_, i) => i + 1);
                 console.log(`rows ${rows}`)
-                console.log(`pages ${paymentsResponse.data.pages}`)
+                console.log(`pages ${transactionsResponse.data.pages}`)
                 setItems(rows)
                 setLoading(false)
             } catch (err) {
@@ -30,16 +30,16 @@ function Earnings() {
 
         }
 
-        fetchPayments();
+        fetchTransactions();
     }, [])
 
     const onPagination = async(e) => {
         e.preventDefault()
         setLoading(true)
         const pageNumber = e.target.value;
-        await axios.post(`${API_URL}/payments/search/page`, { page: pageNumber })
+        await axios.post(`${API_URL}/payments/transactions/search/page`, { page: pageNumber })
         .then((response) => {
-          setPayments(response.data.payments)
+          setTransactionsPayments(response.data.payments)
           setActivePage(pageNumber)
           setLoading(false)
         })
@@ -50,7 +50,7 @@ function Earnings() {
         <Navbar />
         <div className='mx-8'>
             <MyMoney
-                payments={payments}
+                transactions={transactions}
                 onPagination={onPagination}
                 activePage={activePage}
                 items={items}
@@ -61,4 +61,4 @@ function Earnings() {
   )
 }
 
-export default Earnings
+export default Transactions

@@ -10,24 +10,7 @@ const intasend = new IntaSend(
   true, // Test ? Set true for test environment
 );
 
-
-
 module.exports.createPayment = async (req, res) => {
-    
-    // const payment = new Payment({
-    //     ...req.body,
-    // });
-    // payment.author = req.user._id;
-
-    // const user = await User.findById(req.user._id);
-    // if(!user.canReview.includes(req.body.seller)) {
-    //     user.canReview.push(req.body.seller);
-    // }
-
-    // await payment.save();
-    // await user.save();
-
-    // res.status(201).json(payment);
     try {
         const uniqueId = `ORDER-${uuidv4()}`;
         let collection = intasend.collection();
@@ -41,6 +24,7 @@ module.exports.createPayment = async (req, res) => {
             phone_number: '254700487751',
             api_ref: uniqueId,
         });
+        const invoiceId = response.invoice.invoice_id;
 
         if (!response) {
             throw new ExpressError("Failed to initiate payment", 401)
@@ -48,17 +32,19 @@ module.exports.createPayment = async (req, res) => {
 
         const payment = new Payment({
             ...req.body,
-            invoiceId: uniqueId,
+            invoiceId: invoiceId,
             author: req.user._id,
-            status: "PENDING",
+            status: "PROCESSING",
         });
+        const user = await User.findById(req.user._id);
+        if(!user.canReview.includes(req.body.seller)) {
+            user.canReview.push(req.body.seller);
+        }
 
         await payment.save();
-
-        console.log(`STK Push Resp:`, response);
-        console.log("Payment created:", payment);
+        await user.save();
     
-        res.status(201).json(response);  
+        res.status(201).json(response);
     } catch (error) {
         console.error(`STK Push Resp error:`, error);
         res.status(500).json(error)
@@ -70,58 +56,62 @@ module.exports.getPaymentStatus = async (req, res) => {
     try {
         let collection = intasend.collection();
         const response = await collection.status(req.params.invoiceId);
-        res.json(response);
+
+        const payment = await Payment.findOne({ invoiceId: req.params.invoiceId });
+
+        if (!payment) {
+            return res.status(404).json({ message: "Payment not found" });
+        }
+
+        if (response.invoice.state !== payment.status) {
+            payment.status = response.invoice.state;
+            await payment.save();
+        }
+
+        res.status(200).json(response);
     } catch (error) {
         res.status(500).json({ success: false, message: 'Error fetching payment status', error });
     }
 };
 
+module.exports.fetchBusinessPayments = async (req, res) => { 
+    const limit = 3;
+    const user = await User.findById(req.user._id);
 
+    if(req.body.page) {
+        const pageNumber = req.body.page - 1;
+        const payments = await Payment.find({ seller: user.email })
+            .populate('author')
+            .limit(limit)
+            .skip(limit * pageNumber)
 
-// module.exports.createWebhook = async (req, res) => {
-//     try {
-//         const eventData = req.body;
-//         console.log("Webhook Received:", eventData);
+        const allPayments = await Payment.find({ seller: user.email }).populate('author');
 
-//         // Extract the payment status and invoice ID
-//         const { invoice_id, state, userId } = eventData;
+        const count = allPayments.length;
+        const pages = Math.ceil(count / limit);
 
-//         // Update your database (e.g., mark payment as completed)
-//         await Payment.updateOne({ invoiceId: invoice_id }, { status: state });
+        res.status(200).json({ payments, pages })
 
-//         // Get `io` instance from `app.js`
-//         const io = req.app.get("io");
-//         const users = req.app.get("users");
+    }
+}
 
-//         // Send update to the specific user if they are connected
-//         if (userId && users[userId]) {
-//             io.to(users[userId]).emit("paymentUpdate", { invoiceId: invoice_id, status: state });
-//         }
+module.exports.fetchUserTransactions = async (req, res) => {
+    const limit = 3;
+    const user = await User.findById(req.user._id);
 
-//         res.status(200).send("Webhook received successfully");
-//     } catch (error) {
-//         console.error("Webhook Error:", error);
-//         res.status(500).send("Error processing webhook");
-//     }
-// }
+    if(req.body.page) {
+        const pageNumber = req.body.page - 1;
+        const transactions = await Payment.find({ author: user._id })
+            .limit(limit)
+            .skip(limit * pageNumber)
 
-// module.exports.fetchBusinessPayments = async (req, res) => { 
-//     const limit = 3;
-//     const user = await User.findById(req.user._id);
+        const allTransactions = await Payment.find({ author: user._id });
 
-//     if(req.body.page) {
-//         const pageNumber = req.body.page - 1;
-//         const payments = await Payment.find({ seller: user.email })
-//             .populate('author')
-//             .limit(limit)
-//             .skip(limit * pageNumber)
+        const count = allTransactions.length;
+        const pages = Math.ceil(count / limit);
 
-//         const allPayments = await Payment.find({ seller: user.email }).populate('author');
+        console.log(transactions)
+        res.status(200).json({ transactions, pages })
 
-//         const count = allPayments.length;
-//         const pages = Math.ceil(count / limit);
-
-//         res.status(200).json({ payments, pages })
-
-//     }
-// }
+    }
+}

@@ -15,6 +15,7 @@ import SuccessPay from './pages/SuccessPay';
 import Earnings from './pages/Earnings';
 import Landing from './pages/Landing';
 import BottomNavbar from './components/BottomNavbar.jsx';
+import Transactions from './pages/Transactions.jsx';
 
 
 function App() {
@@ -35,6 +36,9 @@ function App() {
       </Route>
       <Route path='/user/profile/:userId/earnings' element={<PrivateRoute />} >
         <Route path='/user/profile/:userId/earnings' element={<Earnings />} />
+      </Route>
+      <Route path='/user/profile/:userId/transactions' element={<PrivateRoute />} >
+        <Route path='/user/profile/:userId/transactions' element={<Transactions />} />
       </Route>
       <Route path='/posts/post/:postId' element={<PrivateRoute />} >
         <Route path='/posts/post/:postId' element={<ShowPost />} />
