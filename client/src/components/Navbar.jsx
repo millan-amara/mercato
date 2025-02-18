@@ -71,18 +71,18 @@ function Navbar() {
         </button>
 
 
-        <div className="flex flex-col mx-auto p-6 mt-10">
-          <Link to={`/user/profile/${user._id}`} className='flex items-center justify-center text-base hover:bg-fuchsia-300 py-2 rounded-md border'>
+        <div className="flex flex-col mx-auto p-6 mt-10 text-sm">
+          <Link to={`/user/profile/${user._id}`} className='flex items-center justify-center hover:bg-fuchsia-300 py-2 rounded-md border'>
             <FaUserLarge className='text-fuchsia-700 inline-block mr-2' />
             <span>Profile</span>
           </Link>
           <Link 
-              to={`/user/profile/${user._id}/earnings`} className='flex items-center justify-center text-base hover:bg-fuchsia-300 py-2 rounded-md mt-2'
+              to={`/user/profile/${user._id}/earnings`} className='flex items-center justify-center hover:bg-fuchsia-300 py-2 rounded-md mt-2'
           >
             <FaDollarSign className='text-fuchsia-700 inline-block mr-2' />
             Earnings
           </Link>
-          <button onClick={onLogout} className='text-base hover:bg-fuchsia-300 py-2 rounded-md mt-2 border'>
+          <button onClick={onLogout} className='hover:bg-fuchsia-300 py-2 rounded-md mt-2 border'>
             <FaPowerOff className='text-fuchsia-700 inline-block mr-2' />
             Logout
           </button>

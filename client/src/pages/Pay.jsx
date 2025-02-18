@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import Navbar from '../components/Navbar';
 import axios from 'axios';
 import { toast } from 'react-toastify';
@@ -20,6 +20,17 @@ function Pay() {
     const API_URL = import.meta.env.VITE_API_URL;
 
     const {seller,item,amount} = formData;
+
+    // useEffect(() => {
+    //     const fetchStatus = async () => {
+    //         const response = await axios.get(`${API_URL}/payments/status/RL3JP8Y`)
+
+    //         console.log("Payment Status Response:", response.data.invoice.state);
+    //     }
+
+    //     fetchStatus()
+
+    // }, [])
 
     const onChange = (e) => {
         setFormData((prevState) => ({
@@ -69,7 +80,7 @@ function Pay() {
                 } else if (response.data.invoice.state === "FAILED") {
                     setPaymentStatus("Payment Failed ❌");
                     clearInterval(interval);
-                } else if (attempts >= 10) {
+                } else if (attempts >= 20) {
                     setPaymentStatus("Payment Pending... Check again later.");
                     clearInterval(interval);
                 }
@@ -79,7 +90,7 @@ function Pay() {
                 console.error("Error checking payment status:", error);
                 clearInterval(interval);
             }
-        }, 5000); // Check status every 5 seconds
+        }, 10000); // Check status every 5 seconds
     };
 
     // if(loading) {

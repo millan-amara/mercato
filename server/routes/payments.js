@@ -9,5 +9,4 @@ router.get('/status/:invoiceId', isLoggedIn, payments.getPaymentStatus);
 
 // router.post('/search/page', isLoggedIn, payments.fetchBusinessPayments);
 
- 
 module.exports = router;
