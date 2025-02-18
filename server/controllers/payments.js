@@ -36,13 +36,13 @@ module.exports.createPayment = async (req, res) => {
             first_name: 'Joe',
             last_name: 'Doe',
             email: 'joe@doe.com',
-            host: 'https://peskaya-98bb2fd3d6e7.herokuapp.com/',
+            host: 'https://peskaya-98bb2fd3d6e7.herokuapp.com',
             amount: 1,
             phone_number: '254700487751',
             api_ref: uniqueId,
         });
 
-        if (!response || response.status !== "success") {
+        if (!response) {
             throw new ExpressError("Failed to initiate payment", 401)
         }
 
@@ -58,7 +58,7 @@ module.exports.createPayment = async (req, res) => {
         console.log(`STK Push Resp:`, response);
         console.log("Payment created:", payment);
     
-        res.status(201).json(payment);  
+        res.status(201).json(response);  
     } catch (error) {
         console.error(`STK Push Resp error:`, error);
         res.status(500).json(error)
@@ -70,51 +70,12 @@ module.exports.getPaymentStatus = async (req, res) => {
     try {
         let collection = intasend.collection();
         const response = await collection.status(req.params.invoiceId);
-        console.log(`STATUS:`, response);
-        res.status(200).json(response)
+        res.json(response);
     } catch (error) {
-        res.status(500).json(error)
-    }
-}
-
-module.exports.createWebhook = async (req, res) => {
-    try {
-        const { invoice_id, state, userId } = req.body;
-        console.log("Webhook Received:", req.body);
-
-        // Update payment status in database and return updated document
-        const updatedPayment = await Payment.findOneAndUpdate(
-            { invoiceId: invoice_id },
-            { status: state },
-            { new: true }
-        );
-
-        if (!updatedPayment) {
-            console.warn("Payment record not found for invoice:", invoice_id);
-            return res.status(404).json({ error: "Payment record not found" });
-        }
-
-        console.log("Payment updated:", updatedPayment);
-
-        // Get `io` and `users` instance from `app.js`
-        const io = req.app.get("io");
-        const users = req.app.get("users");
-
-        // Send update to the specific user if they are connected
-        if (userId && users[userId]) {
-            console.log(`Sending WebSocket update to user: ${userId}`);
-            io.to(users[userId]).emit("paymentUpdate", {
-                invoiceId: invoice_id,
-                status: state,
-            });
-        }
-
-        res.status(200).send("Webhook processed successfully");
-    } catch (error) {
-        console.error("Webhook Error:", error);
-        res.status(500).send("Error processing webhook");
+        res.status(500).json({ success: false, message: 'Error fetching payment status', error });
     }
 };
+
 
 
 // module.exports.createWebhook = async (req, res) => {

@@ -15,7 +15,6 @@ import SuccessPay from './pages/SuccessPay';
 import Earnings from './pages/Earnings';
 import Landing from './pages/Landing';
 import BottomNavbar from './components/BottomNavbar.jsx';
-import PaymentListener from './features/payment/PaymentListener.js';
 
 
 function App() {
@@ -23,7 +22,6 @@ function App() {
 
   return (
     <>
-    <PaymentListener />
     <Router>
     <Routes>
       <Route path='/landing' element={<Landing />} />
