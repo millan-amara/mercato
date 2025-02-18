@@ -14,6 +14,15 @@ const PaymentSchema = new Schema({
         type: String,
         required: true
     },
+    status: {
+        type: String,
+        required: true
+    },
+    invoiceId: {
+        type: String,
+        required: true,
+        unique: true
+    },
     received: {
         type: Boolean,
         default: false,
