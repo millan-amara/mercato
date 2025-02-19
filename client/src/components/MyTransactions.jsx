@@ -9,20 +9,6 @@ function MyTransactions({ transactions,onPagination,activePage,items,loadingTran
 
   return (
     <>
-        {/* <div className='flex justify-center mb-6 mt-5'>
-            <button className='shadow-sm shadow-gray-600 hover:bg-gray-100 py-3 px-4 w-1/3 rounded-md mr-4'>
-                <p className='text-md mb-4'>Total paid out</p>
-                <p className='text-xl'>KES. 3,000,000,000</p> 
-            </button>
-            <button className='shadow-sm shadow-green-600 hover:bg-gray-100 py-3 px-4 w-1/3 rounded-md mr-4'>
-                <p className='text-md mb-4'>Approved for this period</p>
-                <p className='text-xl'>KES. 500,000</p>
-            </button>
-            <button className='shadow-sm shadow-gray-600 hover:bg-gray-100 py-3 px-4 w-1/3 rounded-md'>
-                <p className='text-md mb-4'>Pending Approval</p>
-                <p className='text-xl'>KES. 200,000</p>
-            </button>
-        </div> */}
         <div>
             <h1 className='text-center'>My Transactions</h1>
         </div>

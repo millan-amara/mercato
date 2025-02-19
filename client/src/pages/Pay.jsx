@@ -8,8 +8,6 @@ function Pay() {
 
     const navigate = useNavigate();
     const [loading, setLoading] = useState(false);
-    const [paymentStatus, setPaymentStatus] = useState(null);
-    // const [invoiceId, setInvoiceId] = useState(null);
     const [formData, setFormData] = useState({
         seller: '',
         item: '',
@@ -40,21 +38,16 @@ function Pay() {
             setLoading(true);
 
             try {
-                const response = await axios.post(`${API_URL}/payments/makepay`, formData)
-                console.log("STK Push Response:", response.data);
-                // setInvoiceId(response.data.invoice.invoice_id);
-                // checkPaymentStatus(response.data.invoice.invoice_id);
+                await axios.post(`${API_URL}/payments/makepay`, formData)
                 navigate('/success-pay')
 
                 setLoading(false);
             } catch (error) {
                 console.error("Payment error:", error);
-                // setPaymentStatus("Error initiating payment.");
             }
     
             setLoading(false);
         }
-
     };
 
     if(loading) {
@@ -116,8 +109,6 @@ function Pay() {
             <button type='submit' onClick={initiatePayment} disabled={loading} className="mt-4 bg-gradient-to-r from-green-700 via-slate-800 to-gray-950 hover:bg-gradient-to-l w-full text-white text-bold py-3">
                 Pay Now
             </button>
-
-
 
         </form>
       </div>
