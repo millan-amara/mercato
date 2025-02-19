@@ -1,12 +1,14 @@
-import React from 'react'
-import { FaWhatsapp } from 'react-icons/fa6'
-import { Link } from 'react-router-dom'
-import Navbar from '../components/Navbar'
+import React from 'react';
+import { FaWhatsapp } from 'react-icons/fa6';
+import { Link } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+import Navbar from '../components/Navbar';
 import { FaArrowAltCircleLeft, FaCheckCircle } from "react-icons/fa";
-// import Logo from '../assets/images/LOGO.png'
+
 
 
 function Success() {
+  const {user} = useSelector((state) => state.auth);
 
   return (
     <div className='flex flex-col h-screen justify-between'>
@@ -17,21 +19,21 @@ function Success() {
             <p className='mb-8 font-semibold'>
                 <FaCheckCircle className='text-green-600 h-16 w-16' />
             </p>
-            <p className='mb-8'>Success, and thanks.</p>
-            <p className='text-xs'>We'll let the buyer know that you paid.</p>
+            <p className='mb-8'>Check the Mpesa prompt sent to your phone.</p>
+            <p className='text-xs'>After paying, you can check the payment status under transactions.</p>
             
         </div>
         <div className='mt-4'>
-            <Link to="/" className='flex justify-center items-center text-fuchsia-600 font-bold underline px-3 py-1'>
+            <Link to={`/user/profile/${user._id}/transactions`} className='flex justify-center items-center text-fuchsia-600 font-bold underline px-3 py-1'>
                 <FaArrowAltCircleLeft />
-                <span className='ml-1'>Go back home</span>
+                <span className='ml-1'>Go to Transactions</span>
 
             </Link>
         </div>
 
       </div>
       
-      <div class="flex justify-center items-end">
+      <div className="flex justify-center items-end">
         <p>&copy; Peskaya 2025. All rights reserved</p>
       </div>
       

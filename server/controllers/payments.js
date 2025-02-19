@@ -16,11 +16,11 @@ module.exports.createPayment = async (req, res) => {
         let collection = intasend.collection();
     
         const response = await collection.mpesaStkPush({
-            first_name: 'Joe',
+            first_name: req.user.fname,
             last_name: 'Doe',
-            email: 'joe@doe.com',
+            email: req.user.email,
             host: 'https://peskaya-98bb2fd3d6e7.herokuapp.com',
-            amount: 1,
+            amount: req.body.amount,
             phone_number: '254700487751',
             api_ref: uniqueId,
         });
@@ -45,6 +45,7 @@ module.exports.createPayment = async (req, res) => {
         await user.save();
     
         res.status(201).json(response);
+
     } catch (error) {
         console.error(`STK Push Resp error:`, error);
         res.status(500).json(error)
@@ -104,14 +105,31 @@ module.exports.fetchUserTransactions = async (req, res) => {
         const transactions = await Payment.find({ author: user._id })
             .limit(limit)
             .skip(limit * pageNumber)
+            .sort({ createdAt: -1 })
 
         const allTransactions = await Payment.find({ author: user._id });
 
         const count = allTransactions.length;
         const pages = Math.ceil(count / limit);
 
-        console.log(transactions)
         res.status(200).json({ transactions, pages })
 
+    }
+}
+
+module.exports.disputeTransaction = async (req, res) => {
+    console.log(req.params)
+    console.log(req.body)
+
+    try {
+        const transaction = await Payment.findByIdAndUpdate(req.params.txId, {
+            disputed: true,
+            disputeReason: req.body.issue,
+        }, { new: true })
+    
+        await transaction.save()
+        res.status(201).json(transaction)
+    } catch (error) {
+        console.log(error)
     }
 }

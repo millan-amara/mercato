@@ -1,12 +1,15 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { format } from "date-fns";
+import { motion, AnimatePresence } from 'framer-motion';
 
 
-function MyTransactions({ payments,onPagination,activePage,items,loading }) {
+function MyTransactions({ transactions,onPagination,activePage,items,loadingTransactions,loadingStatuses,transactionStatuses,checkTransactionStatus,disputeTransaction,onChange,issue,issueSubmitted,setIssueSubmitted,disputed }) {
+
+    const [disputedTransactionId, setDisputedTransactionId] = useState(null);
 
   return (
     <>
-        <div className='flex justify-center mb-6 mt-5'>
+        {/* <div className='flex justify-center mb-6 mt-5'>
             <button className='shadow-sm shadow-gray-600 hover:bg-gray-100 py-3 px-4 w-1/3 rounded-md mr-4'>
                 <p className='text-md mb-4'>Total paid out</p>
                 <p className='text-xl'>KES. 3,000,000,000</p> 
@@ -19,8 +22,11 @@ function MyTransactions({ payments,onPagination,activePage,items,loading }) {
                 <p className='text-md mb-4'>Pending Approval</p>
                 <p className='text-xl'>KES. 200,000</p>
             </button>
+        </div> */}
+        <div>
+            <h1 className='text-center'>My Transactions</h1>
         </div>
-        {loading ? (
+        {loadingTransactions ? (
             <>
             <div className='mt-6 bg-slate-200 animate-pulse'>
                 <div className='flex justify-between border-b-2 border-slate-300 py-4 px-2'>
@@ -70,21 +76,67 @@ function MyTransactions({ payments,onPagination,activePage,items,loading }) {
             
         ) : (
             <div className='mt-6 bg-slate-100'>
-                {payments.length !== 0 && payments.map((pay) => (
-                    <div key={pay._id} className='hover:bg-slate-200 flex justify-between border-b-2 py-4 px-2 text-sm'>
-                        <div className='flex justify-between'>
-                            <div>
-                                <p className='font-semibold'>KES. {pay.amount}</p>
-                                <p>{format(new Date(pay.createdAt), "dd/MM/yyyy")}</p>
-                                <p>{pay.author.phone}</p>
-                                <p>{pay.item}</p>
+                {transactions.length !== 0 && transactions.map((pay) => (
+                    <div key={pay._id} className='border-b-2 py-4 px-2 hover:bg-slate-200'>
+                        <div className='flex justify-between text-sm'>
+                            <div className='flex justify-between'>
+                                <div>
+                                    <p className='font-semibold'>KES. {pay.amount}</p>
+                                    <p>{format(new Date(pay.createdAt), "dd/MM/yyyy")}</p>
+                                    <p>{pay.author.phone}</p>
+                                    <p>{pay.item}</p>
+                                </div>
+                            </div>
+                            <div className='flex flex-col justify-around px-2'>
+                                <p className='text-xs'>tx ID: {pay.invoiceId}</p>
+                                {pay.status === "COMPLETE" || transactionStatuses[pay.invoiceId] === "COMPLETE" ? (
+                                    <>
+                                    <button disabled className={`bg-lime-600 text-center text-white text-xs px-1 py-1 mb-1 rounded-sm`}>
+                                        payment succesful
+                                    </button>
+                                    {pay.disputed || disputed === pay._id ? (
+                                        <button disabled className='bg-slate-300 text-center text-white text-xs px-1 py-1 rounded-sm'>Disputed</button>
+                                    ) : (
+                                        <button onClick={() => {setDisputedTransactionId(pay._id); setIssueSubmitted(false);}} className='bg-orange-500 text-center text-white text-xs px-1 py-1 rounded-sm'>Dispute</button>
+                                    )}
+                                    
+                                    </>
+                                ) : (
+                                    <button onClick={() => checkTransactionStatus(pay.invoiceId)} className="text-center text-white text-xs px-1 py-1 rounded-sm bg-slate-400">
+                                        {loadingStatuses[pay.invoiceId] ? (
+                                            <div className='mx-auto w-4 h-4 md:w-6 md:h-6 border-4 border-slate-300 border-t-transparent rounded-full animate-spin'></div>
+                                        ) : "pending, click to refresh"}
+                                    </button>
+                                )}
+
                             </div>
                         </div>
-                        <div className='flex flex-col justify-around px-2'>
-                            <p className='text-xs'>{pay._id}</p>
-                            <button disabled className='bg-lime-600 text-center text-white text-sm px-2 py-1 rounded-sm'>{pay.status}</button>
-                            <button disabled className='bg-orange-600 text-center text-white text-sm px-2 py-1 rounded-sm'>Approval: Pending</button>
-                        </div>
+                        <AnimatePresence>
+                            {disputedTransactionId === pay._id && !issueSubmitted && (
+                                <motion.div
+                                    className='mb-2'
+                                    initial={{ opacity: 0, height: 0 }}
+                                    animate={{ opacity: 1, height: "auto" }}
+                                    exit={{ opacity: 0, height: 0 }}
+                                    transition={{ duration: 0.3, ease: "easeInOut" }}
+                                >
+                                    <textarea 
+                                        type="text" 
+                                        placeholder='Describe the issue'
+                                        id='issue'
+                                        value={issue}
+                                        className="bg-slate-50 focus:ring-2 focus:outline-none appearance-none w-full text-sm leading-6 text-slate-900 rounded-md py-2 pl-2 ring-1 ring-slate-200" 
+                                        onChange={onChange}
+                                        maxLength={500}
+                                        required
+                                    />
+                                    <button type='submit' onClick={() => disputeTransaction(pay._id)} className="w-full md:w-1/4 border-2 bg-gradient-to-r from-slate-50 via-slate-200 to-gray-100 hover:bg-gradient-to-l text-bold py-3">
+                                        Submit Issue
+                                    </button>
+                                </motion.div>
+                            )}
+                        </AnimatePresence>
+
                     </div>
                 ))}
             </div>

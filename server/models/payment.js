@@ -23,9 +23,14 @@ const PaymentSchema = new Schema({
         required: true,
         unique: true
     },
-    received: {
+    disputed: {
         type: Boolean,
-        default: false,
+        default: 'false',
+    },
+    disputeReason: {
+        type: String,
+        required: true,
+        default: "none"
     },
     approved: String,
     author: {

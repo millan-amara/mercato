@@ -2,7 +2,7 @@ import React from 'react';
 import { format } from "date-fns";
 
 
-function MyMoney({ transactions,onPagination,activePage,items,loading }) {
+function MyMoney({ payments,onPagination,activePage,items,loading }) {
 
   return (
     <>
@@ -70,7 +70,7 @@ function MyMoney({ transactions,onPagination,activePage,items,loading }) {
             
         ) : (
             <div className='mt-6 bg-slate-100'>
-                {transactions.length !== 0 && transactions.map((pay) => (
+                {payments.length !== 0 && payments.map((pay) => (
                     <div key={pay._id} className='hover:bg-slate-200 flex justify-between border-b-2 py-4 px-2 text-sm'>
                         <div className='flex justify-between'>
                             <div>
@@ -81,9 +81,9 @@ function MyMoney({ transactions,onPagination,activePage,items,loading }) {
                             </div>
                         </div>
                         <div className='flex flex-col justify-around px-2'>
-                            <p className='text-xs'>tx ID: {pay.invoiceId}</p>
+                            <p className='text-xs'>{pay._id}</p>
                             <button disabled className='bg-lime-600 text-center text-white text-sm px-2 py-1 rounded-sm'>{pay.status}</button>
-                            <button disabled className='bg-orange-600 text-center text-white text-sm px-2 py-1 rounded-sm'>Dispute</button>
+                            <button disabled className='bg-orange-600 text-center text-white text-sm px-2 py-1 rounded-sm'>Approval: Pending</button>
                         </div>
                     </div>
                 ))}
