@@ -65,7 +65,7 @@ function MyTransactions({ transactions,onPagination,activePage,items,loadingTran
                 {transactions.length !== 0 && transactions.map((pay) => (
                     <div key={pay._id} className='border-b-2 py-4 px-2 hover:bg-slate-200'>
                         <div className='flex justify-between text-sm'>
-                            <div className='flex justify-between'>
+                            <div className='flex justify-between w-3/5'>
                                 <div>
                                     <p className='font-semibold'>KES. {pay.amount}</p>
                                     <p>{format(new Date(pay.createdAt), "dd/MM/yyyy")}</p>
@@ -73,7 +73,7 @@ function MyTransactions({ transactions,onPagination,activePage,items,loadingTran
                                     <p>{pay.item}</p>
                                 </div>
                             </div>
-                            <div className='flex flex-col justify-around px-2'>
+                            <div className='flex flex-col justify-around px-2 w-2/5 md:w-1/6'>
                                 <p className='text-xs'>tx ID: {pay.invoiceId}</p>
                                 {pay.status === "COMPLETE" || transactionStatuses[pay.invoiceId] === "COMPLETE" ? (
                                     <>
