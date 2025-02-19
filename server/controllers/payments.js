@@ -76,7 +76,7 @@ module.exports.getPaymentStatus = async (req, res) => {
 };
 
 module.exports.fetchBusinessPayments = async (req, res) => { 
-    const limit = 3;
+    const limit = 10;
     const user = await User.findById(req.user._id);
 
     if(req.body.page) {
@@ -85,6 +85,7 @@ module.exports.fetchBusinessPayments = async (req, res) => {
             .populate('author')
             .limit(limit)
             .skip(limit * pageNumber)
+            .sort({ createdAt: -1 })
 
         const allPayments = await Payment.find({ seller: user.email }).populate('author');
 
@@ -97,7 +98,7 @@ module.exports.fetchBusinessPayments = async (req, res) => {
 }
 
 module.exports.fetchUserTransactions = async (req, res) => {
-    const limit = 3;
+    const limit = 10;
     const user = await User.findById(req.user._id);
 
     if(req.body.page) {

@@ -88,11 +88,16 @@ function MyTransactions({ transactions,onPagination,activePage,items,loadingTran
                                     
                                     </>
                                 ) : (
-                                    <button onClick={() => checkTransactionStatus(pay.invoiceId)} className="text-center text-white text-xs px-1 py-1 rounded-sm bg-slate-400">
-                                        {loadingStatuses[pay.invoiceId] ? (
-                                            <div className='mx-auto w-4 h-4 md:w-6 md:h-6 border-4 border-slate-300 border-t-transparent rounded-full animate-spin'></div>
-                                        ) : "pending, click to refresh"}
-                                    </button>
+                                    pay.status === "RETRY" || transactionStatuses[pay.invoiceId] === "RETRY" ? (
+                                        <button disabled className='bg-slate-400 text-center text-white text-xs px-1 py-1 rounded-sm'>payment failed</button>
+                                    ) : (
+                                        <button onClick={() => checkTransactionStatus(pay.invoiceId)} className="text-center text-white text-xs px-1 py-1 rounded-sm bg-slate-400">
+                                            {loadingStatuses[pay.invoiceId] ? (
+                                                <div className='mx-auto w-4 h-4 md:w-6 md:h-6 border-4 border-slate-300 border-t-transparent rounded-full animate-spin'></div>
+                                            ) : "pending, click to refresh"}
+                                        </button>
+                                    )
+
                                 )}
 
                             </div>

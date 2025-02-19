@@ -1,8 +1,12 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { format } from "date-fns";
+import { motion, AnimatePresence } from 'framer-motion';
+import { MdKeyboardArrowDown } from "react-icons/md";
 
 
-function MyMoney({ payments,onPagination,activePage,items,loading }) {
+function MyMoney({ payments,onPagination,activePage,items,loadingPayments,paymentStatuses,checkPaymentStatus,loadingPaymentStatuses }) {
+
+    const [disputedPaymentId, setDisputedPaymentId] = useState(null);
 
   return (
     <>
@@ -20,7 +24,7 @@ function MyMoney({ payments,onPagination,activePage,items,loading }) {
                 <p className='text-xl'>KES. 200,000</p>
             </button>
         </div>
-        {loading ? (
+        {loadingPayments ? (
             <>
             <div className='mt-6 bg-slate-200 animate-pulse'>
                 <div className='flex justify-between border-b-2 border-slate-300 py-4 px-2'>
@@ -71,7 +75,8 @@ function MyMoney({ payments,onPagination,activePage,items,loading }) {
         ) : (
             <div className='mt-6 bg-slate-100'>
                 {payments.length !== 0 && payments.map((pay) => (
-                    <div key={pay._id} className='hover:bg-slate-200 flex justify-between border-b-2 py-4 px-2 text-sm'>
+                    <div key={pay._id} className='border-b-2 py-4 px-2 hover:bg-slate-200'>
+                    <div className={`flex justify-between text-sm ${disputedPaymentId === pay._id && 'mb-3'}`}>
                         <div className='flex justify-between'>
                             <div>
                                 <p className='font-semibold'>KES. {pay.amount}</p>
@@ -81,10 +86,48 @@ function MyMoney({ payments,onPagination,activePage,items,loading }) {
                             </div>
                         </div>
                         <div className='flex flex-col justify-around px-2'>
-                            <p className='text-xs'>{pay._id}</p>
-                            <button disabled className='bg-lime-600 text-center text-white text-sm px-2 py-1 rounded-sm'>{pay.status}</button>
-                            <button disabled className='bg-orange-600 text-center text-white text-sm px-2 py-1 rounded-sm'>Approval: Pending</button>
+                            <p className='text-xs'>tx ID: {pay.invoiceId}</p>
+                            {pay.status === "COMPLETE" || paymentStatuses[pay.invoiceId] === "COMPLETE" ? (
+                                <>
+                                    <button disabled className={`bg-lime-600 text-center text-white text-xs px-1 py-1 mb-1 rounded-sm`}>
+                                        payment succesful
+                                    </button>
+                                    {pay.disputed && (
+                                        <button onClick={() => setDisputedPaymentId(pay._id)} className='bg-slate-300 text-white text-xs px-1 py-1 rounded-sm flex justify-center items-center '>
+                                            <span className='mr-1'>Disputed</span>
+                                            <MdKeyboardArrowDown className='text-base' />
+                                        </button>
+                                    )}
+                                </>
+                            ) : (
+                                pay.status === "RETRY" || paymentStatuses[pay.invoiceId] === "RETRY" ? (
+                                    <button disabled className='bg-slate-400 text-center text-white text-xs px-1 py-1 rounded-sm'>payment failed</button>
+                                ) : (
+                                    <button onClick={() => checkPaymentStatus(pay.invoiceId)} className="text-center text-white text-xs px-1 py-1 rounded-sm bg-slate-400">
+                                        {loadingPaymentStatuses[pay.invoiceId] ? (
+                                            <div className='mx-auto w-4 h-4 md:w-6 md:h-6 border-4 border-slate-300 border-t-transparent rounded-full animate-spin'></div>
+                                        ) : "pending, click to refresh"}
+                                    </button>
+                                )
+                            )}
+
                         </div>
+                    </div>
+                    <AnimatePresence>
+                        {disputedPaymentId === pay._id && (
+                            <motion.div
+                                className='mb-2'
+                                initial={{ opacity: 0, height: 0 }}
+                                animate={{ opacity: 1, height: "auto" }}
+                                exit={{ opacity: 0, height: 0 }}
+                                transition={{ duration: 0.3, ease: "easeInOut" }}
+                            >
+                                <div 
+                                    className="bg-slate-50 focus:ring-2 focus:outline-none appearance-none w-full text-sm leading-6 text-slate-900 rounded-md py-2 pl-2 ring-1 ring-slate-200" 
+                                >{pay.disputeReason}</div>
+                            </motion.div>
+                        )}
+                    </AnimatePresence>
                     </div>
                 ))}
             </div>

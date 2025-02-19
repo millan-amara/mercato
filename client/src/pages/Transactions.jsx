@@ -101,7 +101,7 @@ function Transactions() {
   return (
     <div>
         <Navbar />
-        <div className='mx-8'>
+        <div className='mx-4 md:mx-8'>
             <MyTransactions
                 transactions={transactions}
                 onPagination={onPagination}

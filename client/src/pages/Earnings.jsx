@@ -8,7 +8,11 @@ function Earnings() {
     const [payments, setPayments] = useState([]);
     const [activePage, setActivePage] = useState(1);
     const [items, setItems] = useState([]);
-    const [loading, setLoading] = useState(true)
+    const [loadingPayments, setLoadingPayments] = useState(true);
+    const [paymentStatuses, setPaymentStatuses] = useState({});
+    const [loadingPaymentStatuses, setLoadingPaymentStatuses] = useState({});
+    // const [issueSubmitted, setIssueSubmitted] = useState(false);
+    // const [disputed, setDisputed] = useState(null);
 
     const API_URL = import.meta.env.VITE_API_URL;
 
@@ -18,43 +22,70 @@ function Earnings() {
                 const paymentsResponse = await axios.post(`${API_URL}/payments/search/page`, { page: 1 });
                 setPayments(paymentsResponse.data.payments);
                 const rows = Array.from({ length: paymentsResponse.data.pages}, (_, i) => i + 1);
-                console.log(`rows ${rows}`)
-                console.log(`pages ${paymentsResponse.data.pages}`)
+
                 setItems(rows)
-                setLoading(false)
+                setLoadingPayments(false)
             } catch (err) {
-                if(err.response) {
-                    console.log('Sorry about that!')
-                }    
+                console.log(err)
             }
 
         }
 
         fetchPayments();
-    }, [])
+    }, []) 
 
     const onPagination = async(e) => {
         e.preventDefault()
-        setLoading(true)
+        setLoadingPayments(true)
         const pageNumber = e.target.value;
         await axios.post(`${API_URL}/payments/search/page`, { page: pageNumber })
         .then((response) => {
           setPayments(response.data.payments)
           setActivePage(pageNumber)
-          setLoading(false)
+          setLoadingPayments(false)
         })
     }
+
+    const checkPaymentStatus = async (invoiceId) => {
+        try {
+            setLoadingPaymentStatuses(prevState => ({
+                ...prevState,
+                [invoiceId]: true
+            }));
+            const response = await axios.get(`${API_URL}/payments/status/${invoiceId}`)
+
+            console.log("Payment Status Response:", response.data);
+            setPaymentStatuses(prevState => ({
+                ...prevState,
+                [invoiceId]: response.data.invoice.state
+            }));
+
+        } catch (error) {
+            console.error("Error checking payment status:", error);
+
+        } finally {
+            // Set loading to false only for this check
+            setLoadingPaymentStatuses(prevState => ({
+                ...prevState,
+                [invoiceId]: false
+            }));
+        }
+    };
+
 
   return (
     <div>
         <Navbar />
-        <div className='mx-8'>
+        <div className='mx-4 md:mx-8'>
             <MyMoney
                 payments={payments}
                 onPagination={onPagination}
                 activePage={activePage}
                 items={items}
-                loading={loading}
+                loadingPayments={loadingPayments}
+                paymentStatuses={paymentStatuses}
+                checkPaymentStatus={checkPaymentStatus}
+                loadingPaymentStatuses={loadingPaymentStatuses}
             />
         </div>
     </div>
