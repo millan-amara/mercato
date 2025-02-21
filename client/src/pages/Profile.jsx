@@ -10,6 +10,7 @@ import ProfileReviews from '../components/ProfileReviews';
 import TopProfile from '../components/TopProfile';
 import axios from 'axios';
 import ProfileLoader from '../components/ProfileLoader';
+import ProfileCoins from '../components/ProfileCoins';
 
 
 function Profile() {
@@ -83,6 +84,8 @@ function Profile() {
               {activeTab === 'reviews' && <ProfileReviews userId={userId} loggedInUser={loggedInUser} cacheRef={cacheRef} />}
   
               {activeTab === 'editProfile' && <ProfileEdit loggedInUser={loggedInUser} />}
+
+              {activeTab === 'addCoins' && <ProfileCoins loggedInUser={loggedInUser} />}
             </div>
 
           </div>

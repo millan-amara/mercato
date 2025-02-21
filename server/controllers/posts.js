@@ -3,19 +3,43 @@ const User = require('../models/user');
 const ExpressError = require('../utils/ExpressError');
 
 
+// module.exports.fetchPosts = async (req, res) => {
+//     console.log(req.query)
+//         // let { search, page = 1, limit = 3 } = req.query;
+//         // page = parseInt(page);
+//         // limit = parseInt(limit);
+    
+//         // // const posts = await Post.find({}).limit(limit);
+    
+//         // // res.json(posts)
+//         // let query = {}; 
+    
+//         // if (search) {
+//         //     query = {
+//         //         $text: { $search: search } // Use MongoDB text index
+//         //     };
+//         // }
+    
+//         // const totalPosts = await Post.countDocuments(query);
+//         // const posts = await Post.find(query)
+//         //     .skip((page - 1) * limit)
+//         //     .limit(limit);
+//         // console.log(posts)
+//         // console.log(totalPosts)
+//         // res.json({ 
+//         //     posts, 
+//         //     totalPages: Math.ceil(totalPosts / limit),
+//         // });
+// }
+
 module.exports.fetchPosts = async (req, res) => {
-    const limit = 9;
-    const posts = await Post.find({}).limit(limit);
-
-    res.json(posts)
-}
-
-module.exports.fetchSearchPosts = async (req, res) => {
-    const searchQuery = req.body.search;
-    const limit = 1;
-    let page = req.body.page ? parseInt(req.body.page) : 0;
+    
+    let { searchQuery, page = 1, limit = 3 } = req.query;
+    page = parseInt(page);
+    limit = parseInt(limit);
 
     if (searchQuery) {
+        console.log(searchQuery)
             const foundPosts = await Post.aggregate([
                 {
                     $search: {
@@ -32,7 +56,7 @@ module.exports.fetchSearchPosts = async (req, res) => {
                         }
                     }
                 },
-                { $skip: limit * page },
+                { $skip: (limit * (page - 1)) },
                 { $limit: limit }
             ]);
 
@@ -57,6 +81,13 @@ module.exports.fetchSearchPosts = async (req, res) => {
             const pages = Math.ceil(count / limit);
 
             res.json({ posts: foundPosts, pages })
+    } else {
+        const posts = await Post.find({}).limit(limit).skip((page - 1) * limit);
+        const allPosts = await Post.find({});
+        const count = allPosts.length;
+        const pages = Math.ceil(count / limit);
+
+        res.json({ posts, pages })
     }
 }
 

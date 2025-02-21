@@ -127,6 +127,7 @@ app.all('*', (req, res, next) => {
 
 app.use((err, req, res, next) => {
     const statusCode = err.status || 500;
+    console.log(`ERROR MESSAGE: ${err.message}`)
     res.status(statusCode).json({
         error: {
             message: err.message || 'Internal Server Error',

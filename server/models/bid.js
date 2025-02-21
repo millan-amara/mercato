@@ -21,6 +21,11 @@ const BidSchema = new Schema({
         default: "false",
     },
     imgs: [ImageSchema],
+    coins: {
+        type: Number,
+        required: true,
+        default: 2
+    }
 }, {
     timestamps: true,
 });

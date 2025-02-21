@@ -9,6 +9,7 @@ function SearchForm({ onSubmit, search, onChange }) {
           type="search" 
           name="search" 
           id='search'
+          value={search}
           onChange={onChange}
           placeholder='Search anything...'
           pattern=".*\S.*" 

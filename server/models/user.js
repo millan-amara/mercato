@@ -24,6 +24,7 @@ const UserSchema = new Schema({
     ratingCount: { type: Number, default: 0 },
     canReview: [],
     fname: String,
+    coins: Number,
     phone: String,
     website: String,
     resetPasswordToken: String,

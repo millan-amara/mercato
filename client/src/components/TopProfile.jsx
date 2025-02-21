@@ -40,11 +40,17 @@ function TopProfile({ handleTabChange,isOwner,activeTab,profileData,loggedInUser
             className={`mr-4 px-2 py-1 ${activeTab === 'editProfile' ? 'border-b-4 border-b-lime-600 text-lime-600 font-semibold' : ''}`}
             >EDIT PROFILE</button>}
             {isOwner &&
-            <Link 
-                to={`/user/profile/${loggedInUser._id}/earnings`}
-                className={`mr-4 px-2 py-1 hidden md:flex`}
-                >MY MONEY
-            </Link>}
+            <div className='hidden md:flex flex-col'>
+                <Link 
+                    to={`/user/profile/${loggedInUser._id}/earnings`}
+                    className={`mr-4 px-2 py-1`}
+                    >MY MONEY
+                </Link>
+                <button onClick={() => handleTabChange('addCoins')} className='bg-yellow-300 px-2 py-1 rounded-md flex justify-center'>
+                    <span className='text-center'>Coins: {loggedInUser.coins}</span>
+                </button>
+            </div>
+            }
             </div>
         {/* {isOwner &&
         <div className='flex justify-center mt-8'>

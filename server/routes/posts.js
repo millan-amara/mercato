@@ -11,7 +11,7 @@ router.use('/:postId/bids', bidRouter)
 router.get('/fetchposts', catchAsync(posts.fetchPosts));
 router.post('/createpost', isLoggedIn, catchAsync(posts.createPost));
 
-router.post('/search', posts.fetchSearchPosts)
+// router.post('/search', posts.fetchSearchPosts)
 router.post('/search/page', isLoggedIn, posts.fetchPagePosts)
 
 router.delete('/:id', isLoggedIn, isPostAuthor, catchAsync(posts.deletePost));

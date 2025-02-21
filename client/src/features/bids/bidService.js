@@ -16,9 +16,14 @@ const getBids = async (postId) => {
 }
 
 const createBid = async (bidData) => {
-    const postId = bidData.get('postId');
-    const response = await axios.post(API_URL + "/posts/" + postId + '/bids', bidData, { withCredentials: true })
-    return response.data
+  const postId = bidData.get('postId');
+  const response = await axios.post(API_URL + "/posts/" + postId + '/bids', bidData, { withCredentials: true })
+
+  if(response.data) {
+    localStorage.setItem('user', JSON.stringify(response.data))
+  }
+  
+  return response.data
 }
 
 const bidService = {

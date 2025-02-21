@@ -4,18 +4,20 @@ import { FaArrowRight } from "react-icons/fa";
 import ImageUpload from './ImageUpload';
 import Compressor from 'compressorjs';
 import { useQuill } from 'react-quilljs';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import {toast} from 'react-toastify';
 import { createBid } from '../features/bids/bidSlice';
 import 'quill/dist/quill.snow.css'; // Add for 'snow' theme
 
 function BidInput({ postId }) {
 
+  const { user } = useSelector((state) => state.auth)
   const [selectedImages, setSelectedImages] = useState([]);
   const [loading, setLoading] = useState(false);
   const [formData, setFormData] = useState({
     images: [],
   });
+  const [coins, setCoins] = useState(2);
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
@@ -61,6 +63,7 @@ function BidInput({ postId }) {
       requestBody.append('text', bidText)
     }
     requestBody.append('postId', postId);
+    requestBody.append('coins', coins)
 
     const compressedImages = await Promise.all(selectedImages.map(file => compressImage(file)));
 
@@ -82,7 +85,6 @@ function BidInput({ postId }) {
       setLoading(false);
       toast.error("couldn't add")
     }
-
 
 
   }
@@ -129,37 +131,38 @@ function BidInput({ postId }) {
 
   return (
     <div>
-        <form>
+        <form className=''>
             <div className='flex flex-col items-center mb-12'>
-            <div className='' style={{ width: 600, height: 300, }}>
+            <div className='w-full h-80 md:h-72 max-w-screen-md'>
                 <div ref={quillRef} name="bidText" id='bidText' />
             </div>
             </div>
 
             <ImageUpload onSelectFile={onSelectFile} deleteHandler={deleteHandler} selectedImages={selectedImages} />
 
-            <div id='search-button' className='flex justify-center'>
-                <button onClick={handleSubmit} type='submit' className='flex bg-fuchsia-800 text-white w-1/2 md:w-2/5 py-2 rounded-md items-center justify-center hover:opacity-80'>Submit Request <span className='ml-2'><FaArrowRight /></span></button>
+            <div className='flex flex-col items-center justify-center'>
+              <label htmlFor="seller" className='text-sm mb-2'>Do you wish to boost this bid? (Optional)</label>
+              <div className='mb-5 flex w-full md:w-1/3 bg-yellow-300 py-1 px-1 rounded-md'>
+                  <input 
+                      type="coins" 
+                      name='coins'
+                      id='coins'
+                      min={2}
+                      value={coins}
+                      required
+                      onChange={(e) => setCoins(e.target.value)}
+                      className="mt-1 focus:ring-2 focus:outline-none appearance-none w-3/4 md:w-4/5 text-sm leading-6 text-slate-900 rounded-md py-2 pl-2 ring-1 ring-slate-200 shadow-sm" 
+                  />
+                  <p className='px-2 py-1 rounded-md flex items-center text-sm w-1/4 md:w-1/5'>Coins: <span className='font-semibold'>{user.coins - coins}</span></p>
+              </div>
+            </div>
+
+
+
+            <div id='search-button' className='flex justify-center mb-24 md:mb-8'>
+                <button onClick={handleSubmit} type='submit' className='flex bg-black text-white w-1/2 sm:w-2/5 md:w-1/3 py-2 rounded-md items-center justify-center hover:opacity-80'>Submit Request <span className='ml-2'><FaArrowRight /></span></button>
             </div>
         </form>
-
-        {/* <form>
-          <div className="flex flex-col items-center mb-12">
-            <div className="w-full h-72 sm:h-80 md:h-96 lg:h-[400px] xl:h-[500px] max-w-screen-md">
-              <div ref={quillRef} name="bidText" id="bidText" className="w-full h-full border border-gray-300 rounded-md"></div>
-            </div>
-          </div>
-
-          <div id="search-button" className="flex justify-center">
-            <button
-              onClick={handleSubmit}
-              type="submit"
-              className="flex bg-fuchsia-800 text-white w-1/2 md:w-2/5 py-2 rounded-md items-center justify-center hover:opacity-80"
-            >
-              Submit Request <span className="ml-2"><FaArrowRight /></span>
-            </button>
-          </div>
-        </form> */}
 
     </div>
   )

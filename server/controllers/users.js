@@ -28,6 +28,7 @@ module.exports.register = async (req, res) => {
                     business: registeredUser.business,
                     reviews: registeredUser.reviews,
                     rating: registeredUser.rating,
+                    coins: registeredUser.coins,
                 });
 
             });
@@ -63,7 +64,8 @@ module.exports.login = async (req, res, next) => {
                 business: user.business,
                 website: user.website,
                 reviews: user.reviews.length,
-                rating: user.rating
+                rating: user.rating,
+                coins: user.coins,
             }); 
         });
     })(req, res, next);
@@ -170,6 +172,8 @@ module.exports.getProfileOwner = async (req, res) => {
         reviews: user.reviews.length,
         website: user.website,
         rating: user.rating,
+        business: user.business,
+
     })
 }
 
@@ -193,7 +197,9 @@ module.exports.updateUser = async (req, res) => {
                 business: user.business,
                 fname: user.fname,
                 phone: user.phone,
-                website: user.website
+                website: user.website,
+                rating: user.rating,
+                reviews: user.reviews.length,
             })
         } 
     } catch (error) {

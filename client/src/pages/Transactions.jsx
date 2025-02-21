@@ -29,7 +29,6 @@ function Transactions() {
 
     const API_URL = import.meta.env.VITE_API_URL;
 
-
     useEffect(() => {
         const fetchTransactions = async () => {
             try {
@@ -39,7 +38,7 @@ function Transactions() {
                 setItems(rows)
                 setLoadingTransactions(false)
             } catch (err) {
-                console.log(err)  
+                console.log(err)
             }
 
         }
