@@ -148,8 +148,6 @@ function BidInput({ postId }) {
                       name='coins'
                       id='coins'
                       min={2}
-                      value={coins}
-                      required
                       onChange={(e) => setCoins(e.target.value)}
                       className="mt-1 focus:ring-2 focus:outline-none appearance-none w-3/4 md:w-4/5 text-sm leading-6 text-slate-900 rounded-md py-2 pl-2 ring-1 ring-slate-200 shadow-sm" 
                   />
