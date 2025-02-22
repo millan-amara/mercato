@@ -67,8 +67,13 @@ export const bidSlice = createSlice({
             })
             .addCase(createBid.fulfilled, (state, action) => {
                 state.isLoading = false;
-                state.bids.push(action.payload);
+                state.bids.push(action.payload.bid);
                 state.isSuccess = true;
+
+                    // Store updated user data in local storage
+                if (action.payload.user) {
+                    localStorage.setItem('user', JSON.stringify(action.payload.user));
+                }
             })
             .addCase(createBid.rejected, (state, action) => {
                 state.isLoading = false;

@@ -18,7 +18,7 @@ router.get('/logout', isLoggedIn, catchAsync(users.logout));
 router.get('/users/getownposts', isLoggedIn, catchAsync(users.getOwnUserPosts));
 router.get('/users/getownbids', isLoggedIn, catchAsync(users.getOwnUserBids));
 
-router.get('/users/currentuser', isLoggedIn, catchAsync(users.getCurrentUser))
+router.get('/users/currentuser', isLoggedIn, catchAsync(users.getCurrentUser));
 
 router.route('/users/:userId/reviews')
     .post(isLoggedIn, catchAsync(users.createUserReview))

@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { FaArrowRight } from "react-icons/fa";
 import ImageUpload from './ImageUpload';
 import Compressor from 'compressorjs';
@@ -11,6 +11,7 @@ import 'quill/dist/quill.snow.css'; // Add for 'snow' theme
 
 function BidInput({ postId }) {
 
+  const { userId } = useParams();
   const { user } = useSelector((state) => state.auth)
   const [selectedImages, setSelectedImages] = useState([]);
   const [loading, setLoading] = useState(false);

@@ -49,12 +49,13 @@ const fetchOwnBids = async() => {
     return response.data
 }
 
+
 const authService = {
     register,
     login,
     updateUser,
     logout,
-    fetchOwnPosts
+    fetchOwnPosts,
 }
 
 export default authService;

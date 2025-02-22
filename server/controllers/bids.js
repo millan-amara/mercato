@@ -34,7 +34,6 @@ module.exports.getBids = async (req, res) => {
     } catch (error) {
         console.log(error)
     }
-
 }
 
 module.exports.addBid = async (req, res) => {
@@ -46,27 +45,35 @@ module.exports.addBid = async (req, res) => {
             throw new ExpressError('Not allwoed to do that', 401)
         }
 
-        if(user.coins >= req.body.coins) {
-            const post = await Post.findById(req.params.postId)
+        if(user.coins < req.body.coins) {
+            throw new ExpressError('Please recharge your coins', 401);
+        }
+
+        const post = await Post.findById(req.params.postId);
+
+        if(!post) {
+            throw new ExpressError('Post not found', 404)
+        }
+
+
+        const bid = new Bid({
+            ...req.body,
+            author: req.user._id
+        });
+        if(req.files) {
+            bid.imgs = req.files.map(f => ({ url: f.path, filename: f.filename }));
+        }
+
+        post.bids.unshift(bid)
     
-            const bid = new Bid({
-                ...req.body,
-            });
-            if(req.files) {
-                bid.imgs = req.files.map(f => ({ url: f.path, filename: f.filename }));
-            }
-            bid.author = req.user._id;
-            post.bids.unshift(bid)
-        
-            await bid.save();
-            await post.save();
-            const updatedUser = await User.findByIdAndUpdate(req.user._id, {
-                coins: user.coins - req.body.coins,  
-            }, { new: true })
+        await bid.save();
+        await post.save();
+        const updatedUser = await User.findByIdAndUpdate(req.user._id, {
+            coins: user.coins - req.body.coins,  
+        }, { new: true })
 
-            await updatedUser.save()
-
-            res.status(200).json({
+        res.status(200).json({
+            user: {
                 _id: updatedUser._id,
                 email: updatedUser.email,
                 business: updatedUser.business,
@@ -76,14 +83,14 @@ module.exports.addBid = async (req, res) => {
                 rating: updatedUser.rating,
                 reviews: updatedUser.reviews.length,
                 coins: updatedUser.coins,
-            });
-        } else {
-            throw new ExpressError('Please recharge your coins', 401);
-        }
+            },
+            bid
+        });
     
 
     } catch (error) {
-        console.log(error)
+        console.error(error);
+        res.status(500).json({ message: "Something went wrong, please try again" });
     }
 }
 
