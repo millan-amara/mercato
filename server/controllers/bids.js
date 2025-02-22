@@ -21,7 +21,14 @@ module.exports.getBids = async (req, res) => {
         if(!post || post.author.toString() !== req.user.id) {
             throw new ExpressError('Not authorized', 401)
         }
-        const bids = post.bids
+        
+        // Sorting: First by coins (descending), then by createdAt (newest first)
+        const bids = post.bids.sort((a, b) => {
+            if (a.coins === b.coins) {
+                return new Date(a.createdAt) - new Date(b.createdAt); // Sort by createdAt (latest first)
+            }
+            return b.coins - a.coins; // Sort by coins (descending)
+        });
     
         res.status(200).json(bids)
     } catch (error) {
