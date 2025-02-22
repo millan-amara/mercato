@@ -78,7 +78,7 @@ function ShowPost() {
 
 
     // Automatically set active bid when bids are loaded
-    useState(() => {
+    useEffect(() => {
       if (bids.length > 0 && activeBidId === null) {
           setActiveBidId(bids[0]._id);
       }
