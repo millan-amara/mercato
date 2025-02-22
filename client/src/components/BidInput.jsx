@@ -149,9 +149,9 @@ function BidInput({ postId }) {
                       id='coins'
                       min={2}
                       onChange={(e) => setCoins(e.target.value)}
-                      className="mt-1 focus:ring-2 focus:outline-none appearance-none w-3/4 md:w-4/5 text-sm leading-6 text-slate-900 rounded-md py-2 pl-2 ring-1 ring-slate-200 shadow-sm" 
+                      className="mt-1 focus:ring-2 focus:outline-none appearance-none w-3/4 md:w-3/5 xl:w-4/5 text-sm leading-6 text-slate-900 rounded-md py-2 pl-2 ring-1 ring-slate-200 shadow-sm" 
                   />
-                  <p className='px-2 py-1 rounded-md flex items-center text-sm w-1/4 md:w-1/5'>Coins: <span className='font-semibold'>{user.coins - coins}</span></p>
+                  <p className='px-2 py-1 rounded-md flex items-center text-sm w-1/4 md:w-2/5 '>Coins: <span className='font-semibold'>{user.coins - coins}</span></p>
               </div>
             </div>
 
