@@ -27,7 +27,7 @@ function ShowPost() {
     const API_URL = import.meta.env.VITE_API_URL;
     const {user} = useSelector((state) => state.auth);
 
-    const [activeBidId, setActiveBidId] = useState(null);
+    const [activeBidId, setActiveBidId] = useState(null); 
 
     //Fetch post data
     const { data: post, isLoading: postLoading, error: postError } = useQuery({

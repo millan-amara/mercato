@@ -16,6 +16,7 @@ import Earnings from './pages/Earnings';
 import Landing from './pages/Landing';
 import BottomNavbar from './components/BottomNavbar.jsx';
 import Transactions from './pages/Transactions.jsx';
+import ErrorPage from './pages/ErrorPage.jsx';
 
 
 function App() {
@@ -55,6 +56,7 @@ function App() {
       <Route path='/success-pay' element={<PrivateRoute />} >
         <Route path='/success-pay' element={<SuccessPay />} />
       </Route>
+      <Route path='*' element={<ErrorPage />} />
     </Routes>
     
     {/* Show BottomNavbar only if user is logged in */}

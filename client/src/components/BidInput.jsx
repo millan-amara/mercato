@@ -158,7 +158,7 @@ function BidInput({ postId }) {
 
 
             <div id='search-button' className='flex justify-center mb-24 md:mb-8'>
-                <button onClick={handleSubmit} type='submit' className='flex bg-black text-white w-1/2 sm:w-2/5 md:w-1/3 py-2 rounded-md items-center justify-center hover:opacity-80'>Submit Request <span className='ml-2'><FaArrowRight /></span></button>
+                <button onClick={handleSubmit} type='submit' className='flex bg-black text-white w-1/2 sm:w-2/5 md:w-1/3 py-2 rounded-md items-center justify-center hover:opacity-80'>Submit Bid <span className='ml-2'><FaArrowRight /></span></button>
             </div>
         </form>
 
