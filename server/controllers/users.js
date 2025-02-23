@@ -4,15 +4,24 @@ const Bid = require('../models/bid');
 const Review = require('../models/review');
 const passport = require('passport');
 const ExpressError = require('../utils/ExpressError');
+const crypto = require('crypto');
+const { v4: uuidv4 } = require('uuid');
+
+const formData = require('form-data');
+const Mailgun = require('mailgun.js');
+const mailgun = new Mailgun(formData);
+const apiKey = process.env.MAILGUN_API_KEY;
+const DOMAIN = 'freelients.com';
+const mg = mailgun.client({username: 'api', key: apiKey, url: 'https://api.eu.mailgun.net' });
 
 
 module.exports.register = async (req, res) => {
     try {
         const {email,phone,business,password} = req.body;
         const user = new User({
-            email: email,
-            phone: phone,
-            business: business,
+            email,
+            phone,
+            business,
         });
         
             const registeredUser = await User.register(user, password);
@@ -173,6 +182,7 @@ module.exports.getProfileOwner = async (req, res) => {
         website: user.website,
         rating: user.rating,
         business: user.business,
+        coins: user.coins
 
     })
 }
@@ -200,10 +210,113 @@ module.exports.updateUser = async (req, res) => {
                 website: user.website,
                 rating: user.rating,
                 reviews: user.reviews.length,
+                coins: user.coins,
             })
         } 
     } catch (error) {
         console.log(error)
     }
 
+}
+
+// Helper function to generate a token
+async function generateToken() {
+    const token = uuidv4();
+    return token;
+}
+
+// Helper function to find a user by email
+async function findUserByEmail(email) {
+    try {
+        const user = await User.findOne({ email }).exec();
+        return user;
+    } catch (error) {
+        throw new ExpressError('Error finding user', 500)
+    }
+}
+
+// Helper function to send email
+async function sendResetEmail(user, token) {
+    const apiUrl = process.env.BASE_URL;
+    const resetUrl = `${apiUrl}/reset-password/${token}`;
+    const message = {
+        from: 'noreply@freelients.com',
+        to: user.email,
+        template: "forgot",
+        'h:X-Mailgun-Variables': JSON.stringify({user: user.email, resetUrl: resetUrl}),
+    };
+    try {
+        const msg = await mg.messages.create(DOMAIN, message)
+        console.log(msg)
+    } catch (error) {
+        console.error('Error sending email:', error);
+    }
+}
+
+
+module.exports.forgot = async (req, res, next) => { 
+    const email = req.body.email;
+    
+    try {
+        const token = await generateToken();
+        const user = await findUserByEmail(email);
+
+        if(!user) {
+            return res.status(200).json({ message: 'If your email exists, a reset link has been sent.' });
+        }
+
+        user.resetPasswordToken = token;
+        user.resetPasswordExpires = new Date(Date.now() + 30 * 60 * 1000).toISOString();
+
+        await user.save();
+        await sendResetEmail(user, token);
+        res.status(200).json({ message: 'If your email exists, a reset link has been sent.' });
+
+    } catch (error) {
+        console.error(error);
+        next(error);
+    }
+}
+
+
+module.exports.reset = async (req, res) => {
+    try {
+        const { token } = req.params;
+        const { password, confirm } = req.body;
+
+        if (password !== confirm) {
+            throw new ExpressError('Passwords do not match', 400)
+        }
+
+        const user = await User.findOne({ 
+            resetPasswordToken: token, 
+            resetPasswordExpires: { $gt: new Date() } 
+        }).exec();
+
+        if (!user) {
+            throw new ExpressError('Invalid or expired token', 400)
+        }
+
+        await user.setPassword(password);
+        user.resetPasswordToken = undefined;
+        user.resetPasswordExpires = undefined;
+        await user.save();
+        await new Promise((resolve, reject) => req.logIn(user, err => (err ? reject(err) : resolve())));
+
+        const message = {
+            to: user.email,
+            from: 'noreply@freelients.com',
+            template: "reset",
+	        'h:X-Mailgun-Variables': JSON.stringify({ user: user.email }),
+        };
+
+        await mg.messages.create(DOMAIN, message)
+            .then(msg => console.log(msg))
+            .catch(err => console.log(err));
+
+        res.status(200).json({ message: 'Password reset successful' });
+
+    } catch (error) {
+        next(error);
+    }
 }

@@ -8,10 +8,12 @@ const UserSchema = new Schema({
         required: true,
         unique: true
     },
-    verified: {
+    isVerified: {
         type: Boolean,
         default: 'false',
     },
+    emailVerificationToken: String,
+    emailVerificationExpires: Date,
     business: Boolean,
     reviews: [
         {

@@ -2,8 +2,9 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { login, reset } from '../features/auth/authSlice';
-import { FaUser, FaLock, FaUserCircle, FaEye, FaEyeSlash } from "react-icons/fa";
+import { FaUser, FaLock, FaEye, FaEyeSlash } from "react-icons/fa";
 import { useDispatch, useSelector } from 'react-redux';
+import BackImage from '../assets/back.png'
 
 function Login() {
   const [formData, setFormData] = useState({
@@ -61,17 +62,16 @@ function Login() {
   }
 
   return (
-    <div className='h-screen md:h-auto flex flex-col justify-center items-center'>
-      <div className='z-10 w-11/12 sm:w-1/2 lg:w-1/3'>
-      <div className="">
-           <Link to='/' className="text-3xl font-semibold">
-            </Link>
-        </div>
-      <form onSubmit={onSubmit} className='py-16 md:py-12 px-7'>
-        <div className='flex justify-center mb-4 '>
-          <FaUserCircle className='h-16 w-16' />
-        </div>
-          <div className='text-center mb-16 font-semibold text-3xl'>Sign In</div>
+    <div className='h-[100dvh] md:h-auto flex flex-col justify-center items-center'>
+      <div 
+        className="absolute inset-0 bg-cover bg-center bg-no-repeat opacity-5"
+        style={{ backgroundImage: `url(${BackImage})` }}
+      ></div>
+      <div className="flex justify-center pb-16 h-1/6 items-center pt-12">
+        <span className='text-xl md:text-3xl'>PES<span className='text-fuchsia-700 font-bold text-3xl md:text-6xl'>K</span>AYA</span>
+      </div>
+      <form onSubmit={onSubmit} className='w-3/4 sm:w-2/5 lg:w-1/3 xl:w-1/4 z-50'>
+          <div className='text-center mb-8 text-2xl'>Sign In</div>
           <div className='mb-5 flex flex-col text-sm'>
             <label htmlFor="email" className='font-semibold mb-2'>Email</label>
             <div className='flex items-center border-b-2 px-2 relative'>
@@ -80,8 +80,8 @@ function Login() {
                 className='pl-8 border-0 px-2 py-1 focus:outline-none appearance-none w-full rounded-md h-8' 
                 type="" name="email" id="email" value={email} onChange={onChange} placeholder='Type your email' />
             </div>
-            
           </div>
+
           <div className='pb-4 flex flex-col text-sm'>
             <label htmlFor="password" className='font-semibold mb-2'>Password</label>
             <div className='flex items-center border-b-2 px-2 relative'>
@@ -95,21 +95,17 @@ function Login() {
                 <FaEyeSlash className='cursor-pointer absolute right-4' onClick={onShowPassword} /> :
                 <FaEye className='cursor-pointer absolute right-4' onClick={onShowPassword} />
               }
-           
-           
             </div>
-            
           </div>
           <div className='text-xs mb-5 flex justify-end font-semibold'>
-            <a href="/forgot">Forgot password?</a>
+            <a href="/forgot" className='text-fuchsia-600'>Forgot password?</a>
           </div>
-          <button type="submit" className='bg-gradient-to-r from-fuchsia-700 via-slate-800 to-gray-950 hover:bg-gradient-to-l w-full text-white text-bold rounded-md py-2'>Log In</button>
-
+          <button type="submit" className='w-full rounded-md border-2 border-slate-500 text-lg px-3 py-3 mb-2 font-semibold bg-slate-200 hover:bg-slate-300'>Log In</button>
           <div className='text-xs mb-5 flex justify-center mt-5 font-semibold'>
             <Link to="/register" className='underline-offset-3 underline'>Create Account</Link>
           </div>
       </form>
-      </div>
+  
       
     </div>
   )

@@ -4,8 +4,8 @@ const users = require('../controllers/users');
 const catchAsync = require('../utils/catchAsync');
 const { isLoggedIn } = require('../middleware');
 
-// router.post('/users/forgot', users.forgot);
-// router.post('/users/reset/:token', users.reset);
+router.post('/users/forgot', users.forgot);
+router.post('/users/reset/:token', users.reset);
 
 router.route('/register')
     .post(catchAsync(users.register));

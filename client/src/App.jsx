@@ -17,6 +17,10 @@ import Landing from './pages/Landing';
 import BottomNavbar from './components/BottomNavbar.jsx';
 import Transactions from './pages/Transactions.jsx';
 import ErrorPage from './pages/ErrorPage.jsx';
+import Forgot from './pages/Forgot';
+import ResetPassword from './pages/ResetPassword';
+import ResetFail from './pages/ResetFail';
+import ResetSuccess from './pages/ResetSuccess.jsx';
 
 
 function App() {
@@ -29,6 +33,11 @@ function App() {
       <Route path='/landing' element={<Landing />} />
       <Route path='/register' element={<Register />} />
       <Route path='/login' element={<Login />} />
+      <Route path='/forgot' element={<Forgot />} />
+      <Route path='/reset-password/:token' element={<ResetPassword />} />
+      <Route path='/forgot-password/success' element={<ResetSuccess />} />
+      <Route path='/reset-password/failed' element={<ResetFail />} />
+
       <Route path='/' element={<PrivateRoute />} >
         <Route path='/' element={<Home />} />
       </Route>
