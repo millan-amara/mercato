@@ -2,16 +2,15 @@ import React, { useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom';
 import { FaArrowRight } from "react-icons/fa";
 import ImageUpload from './ImageUpload';
-import Compressor from 'compressorjs';
+
 import { useQuill } from 'react-quilljs';
 import { useDispatch, useSelector } from 'react-redux';
-import {toast} from 'react-toastify';
+import { toast } from 'react-toastify';
 import { createBid } from '../features/bids/bidSlice';
 import 'quill/dist/quill.snow.css'; // Add for 'snow' theme
 
 function BidInput({ postId }) {
 
-  const { userId } = useParams();
   const { user } = useSelector((state) => state.auth)
   const [selectedImages, setSelectedImages] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -32,19 +31,19 @@ function BidInput({ postId }) {
     placeholder: 'Type your offer here...',
   });
 
-  const compressImage = (file) => {
-    return new Promise((resolve, reject) => {
-      new Compressor(file, {
-        quality: 0.6,
-        success(result) {
-          resolve(result);
-        },
-        error(err) {
-          reject(err);
-        }
-      });
-    });
-  };
+  // const compressImage = (file) => {
+  //   return new Promise((resolve, reject) => {
+  //     new Compressor(file, {
+  //       quality: 0.6,
+  //       success(result) {
+  //         resolve(result);
+  //       },
+  //       error(err) {
+  //         reject(err);
+  //       }
+  //     });
+  //   });
+  // };
 
   
   const handleSubmit = async (e) => {
@@ -66,9 +65,9 @@ function BidInput({ postId }) {
     requestBody.append('postId', postId);
     requestBody.append('coins', coins)
 
-    const compressedImages = await Promise.all(selectedImages.map(file => compressImage(file)));
+    // const compressedImages = await Promise.all(selectedImages.map(file => compressImage(file)));
 
-    compressedImages.forEach((image) => {
+    selectedImages.forEach((image) => {
       requestBody.append('files', image); // Assuming 'files' is the key for the backend
     });
 
