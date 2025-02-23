@@ -46,7 +46,7 @@ function CoinInput({ handleSubmit, handleChange, selectedOption, onFetchTransact
 
         </form>
         <div className='mb-5 md:w-2/5 xl:w-1/3'>
-            <button onClick={onFetchTransactions} className='bg-green-700 hover:bg-green-800 py-3 rounded-md text-white w-full'>View Recharge History</button>
+            <button onClick={onFetchTransactions} className='border border-slate-400 bg-slate-50 shadow-md hover:bg-slate-100 py-3 rounded-md w-full'>View Recharge History</button>
         </div>
     </div>
   )

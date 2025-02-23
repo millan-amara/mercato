@@ -8,9 +8,6 @@ function RechargeTransactions({ transactions,onPagination,activePage,items,loadi
 
   return (
     <>
-        <div>
-            <h1 className='text-center'>My Transactions</h1>
-        </div>
         {loadingTransactions ? (
             <>
             <div className='mt-6 bg-slate-200 animate-pulse'>
