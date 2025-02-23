@@ -63,10 +63,10 @@ function Login() {
 
   return (
     <div className='h-[100dvh] md:h-auto flex flex-col justify-center items-center'>
-      {/* <div 
+      <div 
         className="absolute inset-0 bg-cover bg-center bg-no-repeat opacity-5"
         style={{ backgroundImage: `url(${BackImage})` }}
-      ></div> */}
+      ></div>
       <div className="flex justify-center z-10 pb-16 h-1/6 items-center pt-12">
         <span className='text-4xl'>PES<span className='text-fuchsia-700 font-bold text-7xl'>K</span>AYA</span>
       </div> 
