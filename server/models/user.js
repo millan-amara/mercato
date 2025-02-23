@@ -12,8 +12,6 @@ const UserSchema = new Schema({
         type: Boolean,
         default: 'false',
     },
-    emailVerificationToken: String,
-    emailVerificationExpires: Date,
     business: Boolean,
     reviews: [
         {

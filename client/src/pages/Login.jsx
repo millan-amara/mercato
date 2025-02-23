@@ -63,13 +63,13 @@ function Login() {
 
   return (
     <div className='h-[100dvh] md:h-auto flex flex-col justify-center items-center'>
-      <div 
+      {/* <div 
         className="absolute inset-0 bg-cover bg-center bg-no-repeat opacity-5"
         style={{ backgroundImage: `url(${BackImage})` }}
-      ></div>
-      <div className="flex justify-center pb-16 h-1/6 items-center pt-12">
-        <span className='text-xl md:text-3xl'>PES<span className='text-fuchsia-700 font-bold text-3xl md:text-6xl'>K</span>AYA</span>
-      </div>
+      ></div> */}
+      <div className="flex justify-center z-10 pb-16 h-1/6 items-center pt-12">
+        <span className='text-4xl'>PES<span className='text-fuchsia-700 font-bold text-7xl'>K</span>AYA</span>
+      </div> 
       <form onSubmit={onSubmit} className='w-3/4 sm:w-2/5 lg:w-1/3 xl:w-1/4 z-50'>
           <div className='text-center mb-8 text-2xl'>Sign In</div>
           <div className='mb-5 flex flex-col text-sm'>
@@ -100,7 +100,7 @@ function Login() {
           <div className='text-xs mb-5 flex justify-end font-semibold'>
             <a href="/forgot" className='text-fuchsia-600'>Forgot password?</a>
           </div>
-          <button type="submit" className='w-full rounded-md border-2 border-slate-500 text-lg px-3 py-3 mb-2 font-semibold bg-slate-200 hover:bg-slate-300'>Log In</button>
+          <button type="submit" className='w-full rounded-md text-lg px-3 py-3 mb-2 font-semibold bg-gradient-to-l from-fuchsia-800 via-slate-800 to-gray-950 hover:bg-gradient-to-r text-white'>Log In</button>
           <div className='text-xs mb-5 flex justify-center mt-5 font-semibold'>
             <Link to="/register" className='underline-offset-3 underline'>Create Account</Link>
           </div>
