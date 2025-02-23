@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { format } from "date-fns";
-import { motion, AnimatePresence } from 'framer-motion';
 
 
 function RechargeTransactions({ transactions,onPagination,activePage,items,loadingTransactions,loadingStatuses,transactionStatuses,checkTransactionStatus }) {

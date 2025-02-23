@@ -1,10 +1,12 @@
 import React, { useState } from 'react';
 import { toast } from 'react-toastify';
 import axios from 'axios'
-import RechargeTransactions from './RechargeTransactions';
+import RechargeTransactions from '../components/RechargeTransactions';
+import Navbar from '../components/Navbar';
+import CoinInput from '../components/CoinInput';
 
 
-function ProfileCoins({ loggedInUser }) {
+function Coins({ loggedInUser }) {
 
     const [selectedOption, setSelectedOption] = useState("");
     const [activePage, setActivePage] = useState(1);
@@ -92,54 +94,18 @@ function ProfileCoins({ loggedInUser }) {
 
 
   return (
-    <div className='flex justify-center flex-col'>
-    <form className='w-full mx-2 md:w-2/5 xl:w-1/3 my-8 flex flex-col items-center'>
-        <div className='flex flex-col mb-5 text-sm'>
-            <h3>Choose an option:</h3>
+    <div className=''>
+        <Navbar />
 
-            <label className='mb-2'>
-                <input
-                type="radio"
-                value="1"
-                checked={selectedOption === "1"}
-                onChange={handleChange}
-                />
-                <span className='ml-1'>200 coins for KES1</span>
-            </label>
-
-            <label className='mb-2'>
-                <input
-                type="radio"
-                value="2"
-                checked={selectedOption === "2"}
-                onChange={handleChange}
-                />
-                <span className='ml-1'>2,500 coins for KES2</span>
-            </label>
-
-            <label className='mb-2'>
-                <input
-                type="radio"
-                value="3"
-                checked={selectedOption === "3"}
-                onChange={handleChange}
-                />
-                <span className='ml-1'>6,000 coins for KES 3</span>
-            </label>
-
-            
+        <CoinInput
+            handleChange={handleChange}
+            handleSubmit={handleSubmit}
+            selectedOption={selectedOption}
+        />
+        <div>
+            <button onClick={onFetchTransactions} className='bg-green-700 py-2 px-2 rounded-md text-white'>View Recharge History</button>
         </div>
 
-        <button onClick={handleSubmit} className='bg-slate-500 hover:bg-slate-800 text-white text-sm font-semibold rounded-md w-full py-3'>
-            Add Coins
-        </button>
-
-    </form>
-
-    <div>
-        <button onClick={onFetchTransactions} className='bg-green-700 py-2 px-2 rounded-md text-white'>View Recharge History</button>
-    </div>
-    <div>
         <RechargeTransactions
             transactions={transactions}
             onPagination={onPagination}
@@ -150,9 +116,9 @@ function ProfileCoins({ loggedInUser }) {
             checkTransactionStatus={checkTransactionStatus}
             loadingStatuses={loadingStatuses}
         />
-    </div>
+
     </div>
   )
 }
 
-export default ProfileCoins
+export default Coins

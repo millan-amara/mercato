@@ -21,6 +21,7 @@ import Forgot from './pages/Forgot';
 import ResetPassword from './pages/ResetPassword';
 import ResetFail from './pages/ResetFail';
 import ResetSuccess from './pages/ResetSuccess.jsx';
+import Coins from './pages/Coins.jsx';
 
 
 function App() {
@@ -49,6 +50,9 @@ function App() {
       </Route>
       <Route path='/user/profile/:userId/transactions' element={<PrivateRoute />} >
         <Route path='/user/profile/:userId/transactions' element={<Transactions />} />
+      </Route>
+      <Route path='/user/profile/:userId/coins' element={<PrivateRoute />} >
+        <Route path='/user/profile/:userId/coins' element={<Coins />} />
       </Route>
       <Route path='/posts/post/:postId' element={<PrivateRoute />} >
         <Route path='/posts/post/:postId' element={<ShowPost />} />

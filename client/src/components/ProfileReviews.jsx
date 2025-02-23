@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from 'react'
 import { Rating, Typography } from '@mui/material';
 import axios from 'axios';
+import { motion, AnimatePresence } from 'framer-motion';
 
-function ProfileReviews({ userId, cacheRef, loggedInUser }) {
+function ProfileReviews({ userId, cacheRef, loggedInUser }) { 
 
   const [reviews, setReviews] = useState(cacheRef.current.reviews || []);
   const [canReview, setCanReview] = useState(false);
@@ -87,36 +88,46 @@ function ProfileReviews({ userId, cacheRef, loggedInUser }) {
 
     </div>
     {canReview &&
-    <form className='flex flex-col py-2 items-center'>
-      
-      <Typography component="legend">What was your interaction like?</Typography>
-      <div className='flex flex-col items-center w-full md:w-3/4 lg:w-1/2'>
-        <div className='flex items-center justify-center mb-2'>
-          <Rating 
-            name="simple-controlled"
-            value={value}
-            onChange={(event, newValue) => {
-              setValue(newValue);
-            }}
-          />
-        </div>
+    <AnimatePresence>
+      <motion.div
+          className='mb-2'
+          initial={{ opacity: 0, height: 0 }}
+          animate={{ opacity: 1, height: "auto" }}
+          exit={{ opacity: 0, height: 0 }}
+          transition={{ duration: 0.3, ease: "easeInOut" }}
+      >
+        <form className='flex flex-col py-2 items-center'>
+          
+          <Typography component="legend">What was your interaction like?</Typography>
+          <div className='flex flex-col items-center w-full md:w-3/4 lg:w-1/2'>
+            <div className='flex items-center justify-center mb-2'>
+              <Rating 
+                name="simple-controlled"
+                value={value}
+                onChange={(event, newValue) => {
+                  setValue(newValue);
+                }}
+              />
+            </div>
 
-        <textarea
-          type="text" 
-          id='description'
-          value={description}
-          className="mt-1 mb-2 focus:ring-2 focus:outline-none w-5/6 md:w-3/4 appearance-none text-sm leading-6 text-slate-900 rounded-md py-2 pl-2 ring-1 ring-slate-200 shadow-sm" 
-          onChange={onReviewChange}
-          name="description"
-        ></textarea>
-        <button className='flex bg-fuchsia-800 text-white px-4 py-1 rounded-sm' onClick={onSubmitReview}>
-            <span>Post Review</span>
-            {submitReviewLoading &&
-                <div className='ml-2 w-6 h-6 md:w-8 md:h-6 border-4 border-slate-300 border-t-transparent rounded-full animate-spin'></div>
-            }
-        </button>
-      </div>
-    </form>}
+            <textarea
+              type="text" 
+              id='description'
+              value={description}
+              className="mt-1 mb-2 focus:ring-2 focus:outline-none w-5/6 md:w-3/4 appearance-none text-sm leading-6 text-slate-900 rounded-md py-2 pl-2 ring-1 ring-slate-200 shadow-sm" 
+              onChange={onReviewChange}
+              name="description"
+            ></textarea>
+            <button className='flex bg-fuchsia-800 text-white px-4 py-1 rounded-sm' onClick={onSubmitReview}>
+                <span>Post Review</span>
+                {submitReviewLoading &&
+                    <div className='ml-2 w-6 h-6 md:w-8 md:h-6 border-4 border-slate-300 border-t-transparent rounded-full animate-spin'></div>
+                }
+            </button>
+          </div>
+        </form>
+      </motion.div>
+    </AnimatePresence>}
 
     <ul className='mt-4 mx-2 flex flex-col items-center'>
       {reviews.length !== 0 && reviews.map((review) => (

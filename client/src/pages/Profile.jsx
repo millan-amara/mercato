@@ -10,7 +10,6 @@ import ProfileReviews from '../components/ProfileReviews';
 import TopProfile from '../components/TopProfile';
 import axios from 'axios';
 import ProfileLoader from '../components/ProfileLoader';
-import ProfileCoins from '../components/ProfileCoins';
 
 
 function Profile() {
@@ -63,7 +62,7 @@ function Profile() {
         {!profileData ? (
           <ProfileLoader />
         ) : (
-          <div className='flex justify-center flex-col md:flex-row mt-4 md:h-screen md:overflow-hidden'>
+          <div className='flex justify-center flex-col md:flex-row mt-4 mb-12 md:h-screen md:overflow-hidden'>
             <div className='md:w-1/5 md:mr-5 md:mt-8'>
               <TopProfile
                 handleTabChange={handleTabChange}
@@ -76,7 +75,7 @@ function Profile() {
               />
             </div> 
   
-            <div className='md:w-4/5 md:overflow-y-auto'>
+            <div className='md:w-4/5 md:overflow-y-auto mb-12'>
               {activeTab === 'posts' && <ProfilePosts userId={userId} cacheRef={cacheRef} isOwner={isOwner} />}
   
               {activeTab === 'bids' && <ProfileBids userId={userId} cacheRef={cacheRef} />}
@@ -85,7 +84,6 @@ function Profile() {
   
               {activeTab === 'editProfile' && <ProfileEdit loggedInUser={loggedInUser} />}
 
-              {activeTab === 'addCoins' && <ProfileCoins loggedInUser={loggedInUser} />}
             </div>
 
           </div>

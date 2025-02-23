@@ -85,7 +85,9 @@ function Navbar() {
             <FaDollarSign className='text-fuchsia-700 inline-block mr-2' />
             My Money
           </Link>
-          <p className='bg-yellow-300 px-2 py-1 rounded-md'>Coins: {user.coins}</p>
+          <Link to={`/user/profile/${user._id}/coins`} className='bg-yellow-300 px-2 py-2 rounded-md text-center'>
+            Coins: {user.coins}
+          </Link>
           <button onClick={onLogout} className='hover:bg-fuchsia-300 py-2 rounded-md mt-2 border'>
             <FaPowerOff className='text-fuchsia-700 inline-block mr-2' />
             Logout

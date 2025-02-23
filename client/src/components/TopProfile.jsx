@@ -46,9 +46,9 @@ function TopProfile({ handleTabChange,isOwner,activeTab,profileData,loggedInUser
                     className={`mr-4 px-2 py-1`}
                     >MY MONEY
                 </Link>
-                <button onClick={() => handleTabChange('addCoins')} className='bg-yellow-300 px-2 py-1 rounded-md flex justify-center'>
+                <Link to={`/user/profile/${loggedInUser._id}/coins`} className='bg-yellow-300 px-2 py-1 rounded-md flex justify-center'>
                     <span className='text-center'>Coins: {loggedInUser.coins}</span>
-                </button>
+                </Link>
             </div>
             }
             </div>
