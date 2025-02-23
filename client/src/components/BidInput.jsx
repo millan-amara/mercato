@@ -2,12 +2,12 @@ import React, { useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom';
 import { FaArrowRight } from "react-icons/fa";
 import ImageUpload from './ImageUpload';
-
-import { useQuill } from 'react-quilljs';
+import Compressor from 'compressorjs';
+// import { useQuill } from 'react-quilljs';
 import { useDispatch, useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
 import { createBid } from '../features/bids/bidSlice';
-import 'quill/dist/quill.snow.css'; // Add for 'snow' theme
+// import 'quill/dist/quill.snow.css'; // Add for 'snow' theme
 
 function BidInput({ postId }) {
 
@@ -21,29 +21,29 @@ function BidInput({ postId }) {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  const { quill, quillRef } = useQuill({
-    theme: 'snow',
-    modules: {
-      toolbar: [
-        ['bold', 'italic', 'underline', 'strike'],  // Custom toolbar options
-      ],
-    },
-    placeholder: 'Type your offer here...',
-  });
+  // const { quill, quillRef } = useQuill({
+  //   theme: 'snow',
+  //   modules: {
+  //     toolbar: [
+  //       ['bold', 'italic', 'underline', 'strike'],  // Custom toolbar options
+  //     ],
+  //   },
+  //   placeholder: 'Type your offer here...',
+  // });
 
-  // const compressImage = (file) => {
-  //   return new Promise((resolve, reject) => {
-  //     new Compressor(file, {
-  //       quality: 0.6,
-  //       success(result) {
-  //         resolve(result);
-  //       },
-  //       error(err) {
-  //         reject(err);
-  //       }
-  //     });
-  //   });
-  // };
+  const compressImage = (file) => {
+    return new Promise((resolve, reject) => {
+      new Compressor(file, {
+        quality: 0.6,
+        success(result) {
+          resolve(result);
+        },
+        error(err) {
+          reject(err);
+        }
+      });
+    });
+  };
 
   
   const handleSubmit = async (e) => {
@@ -58,16 +58,16 @@ function BidInput({ postId }) {
 
     const requestBody = new FormData();
 
-    if(quill) {
-      const bidText = quill.root.innerHTML;
-      requestBody.append('text', bidText)
-    }
+    // if(quill) {
+    //   const bidText = quill.root.innerHTML;
+    //   requestBody.append('text', bidText)
+    // }
     requestBody.append('postId', postId);
     requestBody.append('coins', coins)
 
-    // const compressedImages = await Promise.all(selectedImages.map(file => compressImage(file)));
+    const compressedImages = await Promise.all(selectedImages.map(file => compressImage(file)));
 
-    selectedImages.forEach((image) => {
+    compressedImages.forEach((image) => {
       requestBody.append('files', image); // Assuming 'files' is the key for the backend
     });
 
@@ -133,9 +133,9 @@ function BidInput({ postId }) {
     <div>
         <form className=''>
             <div className='flex flex-col items-center mb-12'>
-            <div className='w-full h-80 md:h-72 max-w-screen-md'>
+            {/* <div className='w-full h-80 md:h-72 max-w-screen-md'>
                 <div ref={quillRef} name="bidText" id='bidText' />
-            </div>
+            </div> */}
             </div>
 
             <ImageUpload onSelectFile={onSelectFile} deleteHandler={deleteHandler} selectedImages={selectedImages} />
