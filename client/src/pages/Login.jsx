@@ -4,7 +4,6 @@ import { toast } from 'react-toastify';
 import { login, reset } from '../features/auth/authSlice';
 import { FaUser, FaLock, FaEye, FaEyeSlash } from "react-icons/fa";
 import { useDispatch, useSelector } from 'react-redux';
-import BackImage from '../assets/back.png'
 
 function Login() {
   const [formData, setFormData] = useState({
@@ -63,10 +62,6 @@ function Login() {
 
   return (
     <div className='h-[100dvh] md:h-auto flex flex-col justify-center items-center'>
-      <div 
-        className="absolute inset-0 bg-cover bg-center bg-no-repeat opacity-5"
-        style={{ backgroundImage: `url(${BackImage})` }}
-      ></div>
       <div className="flex justify-center z-10 pb-16 h-1/6 items-center pt-12">
         <span className='text-4xl'>PES<span className='text-fuchsia-700 font-bold text-7xl'>K</span>AYA</span>
       </div> 
@@ -97,10 +92,10 @@ function Login() {
               }
             </div>
           </div>
-          <div className='text-xs mb-5 flex justify-end font-semibold'>
+          <div className='text-xs mb-8 flex justify-end font-semibold'>
             <a href="/forgot" className='text-fuchsia-600'>Forgot password?</a>
           </div>
-          <button type="submit" className='w-full rounded-md text-lg px-3 py-3 mb-2 font-semibold bg-gradient-to-l from-fuchsia-800 via-slate-800 to-gray-950 hover:bg-gradient-to-r text-white'>Log In</button>
+          <button type="submit" className='w-full rounded-md text-lg px-3 py-3 mb-2 font-semibold border border-slate-500 bg-slate-200 hover:bg-slate-300'>Log In</button>
           <div className='text-xs mb-5 flex justify-center mt-5 font-semibold'>
             <Link to="/register" className='underline-offset-3 underline'>Create Account</Link>
           </div>
