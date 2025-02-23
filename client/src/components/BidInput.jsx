@@ -7,7 +7,8 @@ import Compressor from 'compressorjs';
 import { useDispatch, useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
 import { createBid } from '../features/bids/bidSlice';
-// import 'quill/dist/quill.snow.css'; // Add for 'snow' theme
+import ReactQuill from 'react-quill';
+import 'react-quill/dist/quill.snow.css';
 
 function BidInput({ postId }) {
 
@@ -18,18 +19,9 @@ function BidInput({ postId }) {
     images: [],
   });
   const [coins, setCoins] = useState(2);
+  const [bidText, setBidText] = useState("");
   const navigate = useNavigate();
   const dispatch = useDispatch();
-
-  // const { quill, quillRef } = useQuill({
-  //   theme: 'snow',
-  //   modules: {
-  //     toolbar: [
-  //       ['bold', 'italic', 'underline', 'strike'],  // Custom toolbar options
-  //     ],
-  //   },
-  //   placeholder: 'Type your offer here...',
-  // });
 
   const compressImage = (file) => {
     return new Promise((resolve, reject) => {
@@ -57,11 +49,8 @@ function BidInput({ postId }) {
     }
 
     const requestBody = new FormData();
-
-    // if(quill) {
-    //   const bidText = quill.root.innerHTML;
-    //   requestBody.append('text', bidText)
-    // }
+    
+    requestBody.append('text', bidText)
     requestBody.append('postId', postId);
     requestBody.append('coins', coins)
 
@@ -133,9 +122,18 @@ function BidInput({ postId }) {
     <div>
         <form className=''>
             <div className='flex flex-col items-center mb-12'>
-            {/* <div className='w-full h-80 md:h-72 max-w-screen-md'>
-                <div ref={quillRef} name="bidText" id='bidText' />
-            </div> */}
+            <div className='w-full h-80 md:h-72 max-w-screen-md'>
+              <ReactQuill 
+                theme="snow" 
+                required
+                value={bidText}
+                placeholder='Type your offer here...'
+                className='h-72 mb-12'
+                onChange={setBidText}
+              />
+
+            </div>
+
             </div>
 
             <ImageUpload onSelectFile={onSelectFile} deleteHandler={deleteHandler} selectedImages={selectedImages} />
@@ -144,12 +142,12 @@ function BidInput({ postId }) {
               <label htmlFor="seller" className='text-sm mb-2'>Do you wish to boost this bid? (Optional)</label>
               <div className='mb-5 flex w-full md:w-1/3 bg-yellow-300 py-1 px-1 rounded-md'>
                   <input 
-                      type="coins" 
+                      type="number" 
                       name='coins'
                       id='coins'
                       min={2}
                       value={coins}
-                      onChange={(e) => setCoins(e.target.value)}
+                      onChange={(e) => setCoins(Number(e.target.value))}
                       required
                       className="mt-1 focus:ring-2 focus:outline-none appearance-none w-3/4 md:w-3/5 xl:w-4/5 text-sm leading-6 text-slate-900 rounded-md py-2 pl-2 ring-1 ring-slate-200 shadow-sm" 
                   />
