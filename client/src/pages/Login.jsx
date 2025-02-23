@@ -57,7 +57,11 @@ function Login() {
   }
 
   if(isLoading) {
-    return <h1>Loading...</h1>
+    return (
+      <div className='h-[100dvh] flex justify-center items-center'>
+        <p className='animate-pulse md:text-xl'>Loading...</p>
+      </div>
+    )
   }
 
   return (
