@@ -80,7 +80,7 @@ function Navbar() {
             <span>Transactions</span>
           </Link>
           <Link 
-              to={`/user/profile/${user._id}/earnings`} className='flex items-center justify-center hover:bg-fuchsia-300 py-2 rounded-md mt-2'
+              to={`/user/profile/${user._id}/earnings`} className='flex items-center justify-center hover:bg-fuchsia-300 py-2 rounded-md mt-2 mb-2 border'
           >
             <FaDollarSign className='text-fuchsia-700 inline-block mr-2' />
             My Money

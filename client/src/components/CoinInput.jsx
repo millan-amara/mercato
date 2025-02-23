@@ -1,13 +1,13 @@
 import React from 'react'
 
-function CoinInput({ handleSubmit, handleChange, selectedOption}) {
+function CoinInput({ handleSubmit, handleChange, selectedOption, onFetchTransactions}) {
   return (
-    <div>
-        <form className='w-full mx-2 md:w-2/5 xl:w-1/3 my-8 flex flex-col items-center'>
+    <div className='px-2'>
+        <form className='md:w-2/5 xl:w-1/3 my-8 flex flex-col items-center'>
             <div className='flex flex-col mb-5 text-sm'>
-                <h3>Choose an option:</h3>
+                <h3>How much do you wish to recharge?</h3>
 
-                <label className='mb-2'>
+                <label className='mb-2 mt-3'>
                     <input
                     type="radio"
                     value="1"
@@ -45,6 +45,9 @@ function CoinInput({ handleSubmit, handleChange, selectedOption}) {
             </button>
 
         </form>
+        <div className='mb-5 md:w-2/5 xl:w-1/3'>
+            <button onClick={onFetchTransactions} className='bg-green-700 hover:bg-green-800 py-3 rounded-md text-white w-full'>View Recharge History</button>
+        </div>
     </div>
   )
 }

@@ -101,10 +101,8 @@ function Coins({ loggedInUser }) {
             handleChange={handleChange}
             handleSubmit={handleSubmit}
             selectedOption={selectedOption}
+            onFetchTransactions={onFetchTransactions}
         />
-        <div>
-            <button onClick={onFetchTransactions} className='bg-green-700 py-2 px-2 rounded-md text-white'>View Recharge History</button>
-        </div>
 
         <RechargeTransactions
             transactions={transactions}
