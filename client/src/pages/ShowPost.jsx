@@ -136,7 +136,7 @@ function ShowPost() {
               </div>
 
               {/* Main Content */}
-              <div className="w-full min-h-screen md:w-3/4 p-4 overflow-y-auto bg-white">
+              <div className="w-full min-h-[100dvh] md:w-3/4 p-4 overflow-y-auto bg-white">
                 <BidContent
                   post={post}
                   bid={bids.find(bid => bid._id === activeBidId)}
@@ -145,7 +145,7 @@ function ShowPost() {
               </div>
 
               {/* Floating Action Button for Small Screens */}
-              <div className="fixed bottom-20 right-4 md:hidden">
+              <div className="fixed bottom-20 right-4 md:hidden z-10">
                 <Fab color="primary" onClick={() => setModalOpen(true)}>
                   <FaList />
                 </Fab>

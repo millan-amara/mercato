@@ -17,7 +17,7 @@ import 'swiper/css/scrollbar';
 function BidContent({ bid, onBookmarkBid }) {
   
   return (
-    <div className=''>
+    <div className='pb-16'>
       {!bid ? (
         <p>No bids yet</p>
       ) : (

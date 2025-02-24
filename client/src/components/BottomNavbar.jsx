@@ -7,7 +7,7 @@ const BottomNavbar = ({ user }) => {
   if (!user) return null; // Hide if user isn't logged in
 
   return (
-    <div className="fixed bottom-0 left-0 w-full bg-white shadow-md border-t flex justify-around items-center py-3 md:hidden">
+    <div className="fixed z-10 bottom-0 left-0 w-full bg-white shadow-md border-t flex justify-around items-center py-3 md:hidden">
       <Link to="/" className="flex flex-col items-center text-gray-700 hover:text-fuchsia-700">
         <PlusSquare className="text-xl" />
         <span className="text-xs">Create</span>
