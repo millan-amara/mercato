@@ -77,6 +77,7 @@ function Pay() {
                 value={seller}
                 className="mt-1 focus:ring-2 focus:outline-none appearance-none w-full text-sm leading-6 text-slate-900 rounded-md py-2 pl-2 ring-1 ring-slate-200 shadow-sm" 
                 onChange={onChange}
+                placeholder='one@one.com'
                 required
             />
           </div>

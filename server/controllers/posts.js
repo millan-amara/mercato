@@ -34,7 +34,7 @@ const ExpressError = require('../utils/ExpressError');
 
 module.exports.fetchPosts = async (req, res) => {
     
-    let { searchQuery, page = 1, limit = 3 } = req.query;
+    let { searchQuery, page = 1, limit = 9 } = req.query;
     page = parseInt(page);
     limit = parseInt(limit);
 
@@ -93,7 +93,7 @@ module.exports.fetchPosts = async (req, res) => {
 
 module.exports.fetchPagePosts = async (req, res) => {
     const searchQuery = req.body.search;
-    const limit = 1;
+    const limit = 9;
     const pageNumber = req.body.page - 1;
 
     if(req.body.search) {

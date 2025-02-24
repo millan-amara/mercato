@@ -180,7 +180,7 @@ function Register() {
         <div className='text-xs mb-5 flex justify-end font-semibold'>
           <Link to="/login" className='text-fuchsia-600'>Have an account?</Link>
         </div>
-        <button type="submit" className='w-full rounded-md text-lg px-3 py-3 mb-2 font-semibold border border-slate-500 bg-slate-200 hover:bg-slate-300'>Sign Up</button>
+        <button type="submit" className='w-full rounded-md text-lg px-3 py-3 mb-2 font-semibold bg-gradient-to-r from-black to-slate-500 hover:bg-gradient-to-l text-white'>Sign Up</button>
       </form>
       </div> 
 

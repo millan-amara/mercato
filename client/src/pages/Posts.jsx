@@ -12,7 +12,7 @@ const API_URL = import.meta.env.VITE_API_URL;
 const fetchPosts = async ({ queryKey }) => {
   const [, page, searchQuery] = queryKey;
   const { data } = await axios.get(`${API_URL}/posts/fetchposts`, {
-    params: { page, limit: 3, searchQuery: searchQuery || '' },
+    params: { page, limit: 9, searchQuery: searchQuery || '' },
     withCredentials: true
   });
   console.log(data)
@@ -77,17 +77,18 @@ function Posts() {
               <Link 
                 to={`/posts/post/${post._id}`}
                 key={post._id}
-                className='bg-slate-100 hover:bg-slate-200 mb-1 px-2 py-4 rounded-xl h-48'
+                className='bg-slate-100 hover:bg-slate-200 mb-1 px-2 py-4 rounded-xl h-40 md:h-48'
               >
-                {post.description.substr(0, 174)}...
+                <p className='bg-fuchsia-600 w-1/12 text-sm rounded-md text-white flex justify-self-end mb-1'>25/30</p>
+                <span>{post.description.substr(0, 174)}...</span>
               </Link> 
               ))}
     
             </div>
 
             {/* // Pagination */}
-            <div className='flex justify-center mt-16 md:pb-8' >
-              <ul id='pagination' className='flex justify-between px-2 rounded-3xl bottom-24 bg-white'>
+            <div className='flex justify-center mt-8 mb-20 md:mb-0 md:pb-8' >
+              <ul id='pagination' className='flex justify-between px-2 rounded-3xl bg-white'>
                 {Array.from({ length: data.pages }, (_, i) => i + 1).map((page) => (
                   <li
                     key={page}

@@ -134,7 +134,7 @@ function MyMoney({ payments,onPagination,activePage,items,loadingPayments,paymen
         )}
 
 
-        <div className='flex justify-center mt-16 md:pb-8' >
+        <div className='flex justify-center mt-8 md:pb-8 mb-20 md:mb-0' >
           <ul id='pagination' className='flex justify-between px-2 rounded-3xl bottom-24 bg-white'>
             {items.map((page) => (
               page === activePage ? (
