@@ -3,7 +3,6 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { FaArrowRight } from "react-icons/fa";
 import ImageUpload from './ImageUpload';
 import Compressor from 'compressorjs';
-// import { useQuill } from 'react-quilljs';
 import { useDispatch, useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
 import { createBid } from '../features/bids/bidSlice';

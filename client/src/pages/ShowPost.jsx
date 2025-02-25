@@ -171,11 +171,12 @@ function ShowPost() {
             
             <div className="flex flex-col items-center mt-2 pt-4">
               <p className="w-11/12 md:w-3/4 mb-12">{post.description}</p>
+              {!post.cantBid.includes(user._id) &&
               <div className="w-11/12">
                 {user.business &&
                   <BidInput postId={postId} />
                 }
-              </div>
+              </div>}
             </div>
           )}
     </div>

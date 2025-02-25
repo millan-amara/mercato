@@ -8,8 +8,9 @@ const ImageUpload = ({ selectedImages, onSelectFile, deleteHandler }) => {
   return (
     <section className="section">
       <label className="label">
-        + Add Images
+        + Add Images 
         <br />
+        <span className="text-sm">(optional)</span>
         <span className="span">up to 6 images</span>
         <input
           className="input" 

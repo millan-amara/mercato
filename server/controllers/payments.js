@@ -37,13 +37,9 @@ module.exports.createPayment = async (req, res) => {
             author: req.user._id,
             status: "PROCESSING",
         });
-        const user = await User.findById(req.user._id);
-        if(!user.canReview.includes(req.body.seller)) {
-            user.canReview.push(req.body.seller);
-        }
 
         await payment.save();
-        await user.save();
+        
     
         res.status(201).json(response);
 
@@ -51,7 +47,6 @@ module.exports.createPayment = async (req, res) => {
         console.error(`STK Push Resp error:`, error);
         res.status(500).json(error)
     }
-
 }
 
 module.exports.getPaymentStatus = async (req, res) => {
@@ -68,6 +63,14 @@ module.exports.getPaymentStatus = async (req, res) => {
         if (response.invoice.state !== payment.status) {
             payment.status = response.invoice.state;
             await payment.save();
+        }
+
+        if (response.invoice.state === COMPLETE) {
+            const user = await User.findById(req.user._id);
+            if(!user.canReview.includes(req.body.seller)) {
+                user.canReview.push(req.body.seller);
+            }
+            await user.save();
         }
 
         res.status(200).json(response);

@@ -40,7 +40,7 @@ function CoinInput({ handleSubmit, handleChange, selectedOption, onFetchTransact
                 
             </div>
 
-            <button onClick={handleSubmit} className='bg-slate-500 hover:bg-slate-800 text-white text-sm font-semibold rounded-md w-full py-3'>
+            <button onClick={handleSubmit} className='bg-slate-800 hover:bg-slate-600 text-white text-sm font-semibold rounded-md w-full py-3'>
                 Add Coins
             </button>
 

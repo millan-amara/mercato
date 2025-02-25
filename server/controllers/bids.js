@@ -55,6 +55,9 @@ module.exports.addBid = async (req, res) => {
             throw new ExpressError('Post not found', 404)
         }
 
+        if(post.cantBid.includes(req.user._id)) {
+            throw new ExpressError("Sorry, you can't do that", 401);
+        }
 
         const bid = new Bid({
             ...req.body,
@@ -64,7 +67,8 @@ module.exports.addBid = async (req, res) => {
             bid.imgs = req.files.map(f => ({ url: f.path, filename: f.filename }));
         }
 
-        post.bids.unshift(bid)
+        post.bids.unshift(bid);
+        post.cantBid.push(req.user._id);
     
         await bid.save();
         await post.save();

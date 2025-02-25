@@ -22,6 +22,7 @@ module.exports.register = async (req, res) => {
             email,
             phone,
             business,
+            coins: 50,
         });
         
             const registeredUser = await User.register(user, password);
