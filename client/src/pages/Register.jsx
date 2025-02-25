@@ -100,7 +100,7 @@ function Register() {
   }
 
   return (
-    <div className='h-[100dvh] md:h-auto flex flex-col md:flex-row justify-center items-center'>
+    <div className='h-[100dvh] md:min-h-screen flex flex-col md:flex-row justify-center items-center'>
       <div className="flex justify-center z-10 pb-16 h-1/6 items-center pt-12 md:w-1/2 ">
         <span className='text-4xl'>PES<span className='text-fuchsia-700 font-bold text-7xl'>K</span>AYA</span>
       </div>
