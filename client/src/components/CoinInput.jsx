@@ -10,31 +10,31 @@ function CoinInput({ handleSubmit, handleChange, selectedOption, onFetchTransact
                 <label className='mb-2 mt-3'>
                     <input
                     type="radio"
-                    value="1"
-                    checked={selectedOption === "1"}
+                    value="1000"
+                    checked={selectedOption === "1000"}
                     onChange={handleChange}
                     />
-                    <span className='ml-1'>200 coins for KES1</span>
+                    <span className='ml-1'>100 coins for KES 2,000</span>
                 </label>
 
                 <label className='mb-2'>
                     <input
                     type="radio"
-                    value="2"
-                    checked={selectedOption === "2"}
+                    value="10000"
+                    checked={selectedOption === "10000"}
                     onChange={handleChange}
                     />
-                    <span className='ml-1'>2,500 coins for KES2</span>
+                    <span className='ml-1'>1,000 coins for KES 10,000</span>
                 </label>
 
                 <label className='mb-2'>
                     <input
                     type="radio"
-                    value="3"
-                    checked={selectedOption === "3"}
+                    value="20000"
+                    checked={selectedOption === "20000"}
                     onChange={handleChange}
                     />
-                    <span className='ml-1'>6,000 coins for KES 3</span>
+                    <span className='ml-1'>3,000 coins for KES 20,000</span>
                 </label>
 
                 

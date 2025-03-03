@@ -79,7 +79,7 @@ function Posts() {
                 key={post._id}
                 className='bg-slate-100 hover:bg-slate-200 mb-1 px-2 py-4 rounded-xl h-48'
               >
-                <p className='bg-fuchsia-700 w-1/12 py-1 text-xs rounded-md text-white flex justify-self-end justify-center mb-2'>15/30</p>
+                <p className='bg-fuchsia-700 w-1/12 py-1 text-xs rounded-md text-white flex justify-self-end justify-center mb-2'>{post.bids.length}/30</p>
                 <span>{post.description.substr(0, 174)}...</span>
               </Link> 
               ))}

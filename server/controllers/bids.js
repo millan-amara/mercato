@@ -42,7 +42,7 @@ module.exports.addBid = async (req, res) => {
         const user = await User.findById(req.user.id)
 
         if(!user) {
-            throw new ExpressError('Not allwoed to do that', 401)
+            throw new ExpressError('Not allowed to do that', 401)
         }
 
         if(user.coins < req.body.coins) {
@@ -53,6 +53,10 @@ module.exports.addBid = async (req, res) => {
 
         if(!post) {
             throw new ExpressError('Post not found', 404)
+        }
+
+        if(post.bids.length >= 30) {
+            throw new ExpressError('Bid limit reached', 404)
         }
 
         if(post.cantBid.includes(req.user._id)) {
@@ -94,7 +98,6 @@ module.exports.addBid = async (req, res) => {
 
     } catch (error) {
         console.error(error);
-        res.status(500).json({ message: "Something went wrong, please try again" });
     }
 }
 

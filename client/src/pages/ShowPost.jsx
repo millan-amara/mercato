@@ -1,4 +1,4 @@
-import { useNavigate, useParams } from 'react-router-dom';
+import { useNavigate, useParams, Link } from 'react-router-dom';
 import axios from 'axios';
 import {toast} from 'react-toastify';
 import { useEffect, useState } from 'react';
@@ -171,12 +171,26 @@ function ShowPost() {
             
             <div className="flex flex-col items-center mt-2 pt-4">
               <p className="w-11/12 md:w-3/4 mb-12">{post.description}</p>
-              {!post.cantBid.includes(user._id) &&
-              <div className="w-11/12">
-                {user.business &&
-                  <BidInput postId={postId} />
-                }
-              </div>}
+              {!post.cantBid.includes(user._id) ? (
+                <div className="w-11/12">
+                  {user.business && post.bids.length < 30 &&
+                    <BidInput postId={postId} />
+                  }
+                  {post.bids.length >= 30 && (
+                    <div className='flex flex-col justify-center items-center '>
+                      <p className='mb-3'>Sorry! Maximum bids submitted for this post!</p>
+                      <Link to='/posts' className='text-fuchsia-600 underline underline-offset-2 text-xs font-semibold'>Back to posts</Link>
+                    </div>
+  
+                  )}
+                </div>
+              ) : (
+                <div className='flex flex-col justify-center items-center '>
+                  <p className='mb-3'>Sorry! You already submitted a bid for this post!</p>
+                  <Link to='/posts' className='text-fuchsia-600 underline underline-offset-2 text-xs font-semibold'>Back to posts</Link>
+                </div>
+              )
+              }
             </div>
           )}
     </div>

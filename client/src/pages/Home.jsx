@@ -47,7 +47,7 @@ function Home() {
       <form onSubmit={handleSubmit} className='w-full md:w-3/5 flex md:flex-col items-center py-8 px-4 text-center'>
         <TextField
             id="description"
-            label="What are you looking for?"
+            label="What do you want to buy today?"
             fullWidth
             multiline
             variant='standard'
