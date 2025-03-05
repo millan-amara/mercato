@@ -321,3 +321,44 @@ module.exports.reset = async (req, res) => {
         next(error);
     }
 }
+
+module.exports.updateMpesa = async (req, res) => {
+    const id = req.user._id;
+
+    if (foundUser.mpesa && Object.keys(foundUser.mpesa).length > 0) {
+        throw new ExpressError("You can't do that", 401)
+    }
+    const user = await User.findByIdAndUpdate(id, 
+        { mpesa: req.body },
+        { new: true, runValidators: true }
+    )
+
+    if (!user) {
+        throw new ExpressError("User not found", 404);
+    }
+    
+    await user.save();
+    res.json(user);
+}
+
+module.exports.updateBank = async (req, res) => {
+    const id = req.user._id;  
+    
+    const foundUser = await User.findById(id);
+
+    if (foundUser.bank && Object.keys(foundUser.bank).length > 0) {
+        throw new ExpressError("You can't do that", 401)
+    }
+
+    const user = await User.findByIdAndUpdate(id, 
+        { bank: req.body },
+        { new: true, runValidators: true }
+    );
+
+    if (!user) {
+        throw new ExpressError("User not found", 404);
+    }
+    
+    await user.save();
+    res.json(user)
+}

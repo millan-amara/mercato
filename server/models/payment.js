@@ -32,7 +32,14 @@ const PaymentSchema = new Schema({
         required: true,
         default: "none"
     },
-    approved: String,
+    approved: {
+        type: Boolean,
+        default: 'false',
+    },
+    paidOut: {
+        type: Boolean,
+        default: 'false',
+    },
     author: {
         type: Schema.Types.ObjectId,
         ref: 'User'

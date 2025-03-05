@@ -24,6 +24,9 @@ router.route('/users/:userId/reviews')
     .post(isLoggedIn, catchAsync(users.createUserReview))
     .get(isLoggedIn, catchAsync(users.getUserReviews))
 
+router.put('/users/:id/update-mpesa', isLoggedIn, users.updateMpesa);
+router.put('/users/:id/update-bank', isLoggedIn, users.updateBank);
+
 router.put('/users/:userId/updateuser', isLoggedIn, users.updateUser);
 router.get('/users/:userId', isLoggedIn, catchAsync(users.getProfileOwner));
 

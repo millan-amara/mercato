@@ -13,10 +13,12 @@ const BottomNavbar = ({ user }) => {
         <span className="text-xs">Create</span>
       </Link>
 
-      <Link to="/posts" className="flex flex-col items-center text-gray-700 hover:text-fuchsia-700">
-        <FaThList className="text-xl" />
-        <span className="text-xs">Posts</span>
-      </Link>
+      {user.business && (
+        <Link to="/posts" className="flex flex-col items-center text-gray-700 hover:text-fuchsia-700">
+          <FaThList className="text-xl" />
+          <span className="text-xs">Posts</span>
+        </Link>
+      )}
 
       <Link to="/makepay" className="flex flex-col items-center text-gray-700 hover:text-fuchsia-700">
         <FaDollarSign className="text-xl" />

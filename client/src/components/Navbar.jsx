@@ -7,7 +7,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { FaTimes } from 'react-icons/fa';
 
 
-function Navbar() {
+function Navbar({ fixedNav }) {
   const [isOpen, setIsOpen] = useState(false);
   const { user } = useSelector((state) => state.auth);
   const navigate = useNavigate();
@@ -23,7 +23,9 @@ function Navbar() {
 
 
   return (
-    <nav className="flex justify-between items-center px-2 md:px-6 py-4">
+    <nav className={`${
+            fixedNav ? "fixed top-0 left-0 w-full" : ""
+          } flex justify-between items-center px-2 md:px-6 py-4`}>
         <Link to='/' className='text-xl md:text-3xl'>
             <span>PES<span className='text-fuchsia-700 font-bold text-3xl md:text-6xl'>K</span>AYA</span>
         </Link>
@@ -39,9 +41,11 @@ function Navbar() {
         
         <div className='hidden md:flex items-center'>
           <div className='flex items-center py-1'>
-            <div className='mr-4'>
-              <Link to="/posts" className='hover:underline font-semibold'>Posts</Link>
-            </div>
+            {user.business && (
+              <div className='mr-4'>
+                <Link to="/posts" className='hover:underline font-semibold'>Posts</Link>
+              </div>
+            )}
             <div>
               <Link to={`/user/profile/${user._id}/transactions`} className='hover:underline font-semibold'>Transactions</Link>
             </div>
@@ -79,15 +83,22 @@ function Navbar() {
             <FaMoneyCheck className='text-fuchsia-700 inline-block mr-2' />
             <span>Transactions</span>
           </Link>
-          <Link 
-              to={`/user/profile/${user._id}/earnings`} className='flex items-center justify-center hover:bg-fuchsia-300 py-2 rounded-md mt-2 mb-2 border'
-          >
-            <FaDollarSign className='text-fuchsia-700 inline-block mr-2' />
-            My Money
-          </Link>
-          <Link to={`/user/profile/${user._id}/coins`} className='bg-yellow-300 px-2 py-2 rounded-md text-center'>
-            Coins: {user.coins}
-          </Link>
+          {user.business && (
+            <>
+              <Link to={`/user/profile/${user._id}/earnings`} className='flex items-center justify-center hover:bg-fuchsia-300 py-2 rounded-md mt-2 mb-2 border'>
+                <FaDollarSign className='text-fuchsia-700 inline-block mr-2' />
+                My Money
+              </Link>
+              <Link to={`/user/profile/${user._id}/coins`} className='bg-yellow-300 px-2 py-2 rounded-md text-center'>
+                Coins: {user.coins}
+              </Link>
+              <Link to={`/user/profile/${user._id}/payment-info`} className='flex items-center justify-center hover:bg-fuchsia-300 py-2 rounded-md mt-2 mb-2 border'>
+                <FaDollarSign className='text-fuchsia-700 inline-block mr-2' />
+                  Payment Info
+              </Link>
+            </>
+          )}
+
           <button onClick={onLogout} className='hover:bg-fuchsia-300 py-2 rounded-md mt-2 border'>
             <FaPowerOff className='text-fuchsia-700 inline-block mr-2' />
             Logout

@@ -10,6 +10,8 @@ import ProfileReviews from '../components/ProfileReviews';
 import TopProfile from '../components/TopProfile';
 import axios from 'axios';
 import ProfileLoader from '../components/ProfileLoader';
+import ProfileSidebar from '../components/ProfileSidebar';
+import PaymentInfoComponent from '../components/PaymentInfoComponent';
 
 
 function Profile() {
@@ -62,9 +64,9 @@ function Profile() {
         {!profileData ? (
           <ProfileLoader />
         ) : (
-          <div className='flex justify-center flex-col md:flex-row mt-4 mb-12 md:h-screen md:overflow-hidden'>
-            <div className='md:w-1/5 md:mr-5 md:mt-8'>
-              <TopProfile
+          <>
+            <div className='hidden md:flex'>
+              <ProfileSidebar
                 handleTabChange={handleTabChange}
                 activeTab={activeTab}
                 userId={userId}
@@ -74,8 +76,20 @@ function Profile() {
                 isOwner={isOwner}
               />
             </div> 
+          <div className='flex justify-center flex-col md:flex-row mt-4 mb-12 md:h-screen md:overflow-hidden'>
+            <div className='md:hidden md:w-1/5 md:mr-5 md:mt-8'>
+              <TopProfile
+                handleTabChange={handleTabChange}
+                activeTab={activeTab}
+                userId={userId}
+                loggedInUser={loggedInUser}
+                profileData={profileData}
+                onLogout={onLogout}
+                isOwner={isOwner}
+              />
+            </div>
   
-            <div className='md:w-4/5 md:overflow-y-auto mb-12'>
+            <div className='md:w-4/5 md:overflow-y-auto mb-12 md:ml-60'>
               {activeTab === 'posts' && <ProfilePosts userId={userId} cacheRef={cacheRef} isOwner={isOwner} />}
   
               {activeTab === 'bids' && <ProfileBids userId={userId} cacheRef={cacheRef} />}
@@ -84,9 +98,12 @@ function Profile() {
   
               {activeTab === 'editProfile' && <ProfileEdit loggedInUser={loggedInUser} />}
 
+              {activeTab === 'paymentInfo' && <PaymentInfoComponent loggedInUser={loggedInUser} />}
+
             </div>
 
           </div>
+          </>
         )}
 
     </div>

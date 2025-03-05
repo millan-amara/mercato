@@ -88,7 +88,6 @@ function Transactions() {
         try {
             const response = await axios.put(`${API_URL}/payments/transactions/${txId}/disputeTransaction`, formData)
 
-            console.log("Transaction Status:", response.data);
             setIssueSubmitted(true)
             setDisputed(txId)
             toast.success("We'll follow up and update you promptly. Thanks.")

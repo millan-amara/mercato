@@ -4,26 +4,45 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { MdKeyboardArrowDown } from "react-icons/md";
 
 
-function MyMoney({ payments,onPagination,activePage,items,loadingPayments,paymentStatuses,checkPaymentStatus,loadingPaymentStatuses }) {
+function MyMoney({ loadingTotal,totalPaidOut,totalApprovedAmount,totalPendingAmount,payments,onPagination,activePage,items,loadingPayments,paymentStatuses,checkPaymentStatus,loadingPaymentStatuses }) {
 
     const [disputedPaymentId, setDisputedPaymentId] = useState(null);
 
+
   return (
     <>
-        <div className='flex justify-center mb-6 mt-5'>
+        {loadingTotal ? (
+            <div className='flex justify-center mb-6 mt-5'>
+                <button className='shadow-sm shadow-gray-600 py-3 px-4 w-1/3 rounded-md mr-4'>
+                    <p className='text-md mb-4'>Total paid out</p>
+                    <p className='text-xl bg-slate-300 text-center text-slate-300'>KES. 3,000,000,000</p> 
+                </button>
+                <button className='shadow-sm shadow-green-600 py-3 px-4 w-1/3 rounded-md mr-4'>
+                    <p className='text-md mb-4'>Approved for this period</p>
+                    <p className='text-xl bg-slate-300 text-center text-slate-300'>KES. 500,000</p>
+                </button>
+                <button className='shadow-sm shadow-gray-600 py-3 px-4 w-1/3 rounded-md'>
+                    <p className='text-md mb-4'>Pending Approval</p>
+                    <p className='text-xl bg-slate-300 text-center text-slate-300'>KES. 200,000</p>
+                </button>
+            </div>
+        ) : (
+            <div className='flex justify-center mb-6 mt-5'>
             <button className='shadow-sm shadow-gray-600 hover:bg-gray-100 py-3 px-4 w-1/3 rounded-md mr-4'>
                 <p className='text-md mb-4'>Total paid out</p>
-                <p className='text-xl'>KES. 3,000,000,000</p> 
+                <p className='text-xl'>KES. {totalPaidOut.toLocaleString()}</p> 
             </button>
             <button className='shadow-sm shadow-green-600 hover:bg-gray-100 py-3 px-4 w-1/3 rounded-md mr-4'>
                 <p className='text-md mb-4'>Approved for this period</p>
-                <p className='text-xl'>KES. 500,000</p>
+                <p className='text-xl'>KES. {totalApprovedAmount.toLocaleString()}</p>
             </button>
             <button className='shadow-sm shadow-gray-600 hover:bg-gray-100 py-3 px-4 w-1/3 rounded-md'>
                 <p className='text-md mb-4'>Pending Approval</p>
-                <p className='text-xl'>KES. 200,000</p>
+                <p className='text-xl'>KES. {totalPendingAmount.toLocaleString()}</p>
             </button>
         </div>
+        )}
+
         {loadingPayments ? (
             <>
             <div className='mt-6 bg-slate-200 animate-pulse'>

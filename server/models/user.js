@@ -23,6 +23,8 @@ const UserSchema = new Schema({
     ratingSum: { type: Number, default: 0 },
     ratingCount: { type: Number, default: 0 },
     canReview: [],
+    bank: {},
+    mpesa: {},
     fname: String,
     coins: Number,
     phone: String,

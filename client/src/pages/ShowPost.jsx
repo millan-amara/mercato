@@ -118,7 +118,7 @@ function ShowPost() {
                     {post.description}
                   </AccordionDetails>
                   <AccordionActions>
-                    <Button>Edit</Button>
+                    {/* <Button>Edit</Button> */}
                     <Button onClick={() => deletePostMutation.mutate()}>Delete</Button>
                   </AccordionActions>
                 </Accordion>

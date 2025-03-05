@@ -1,36 +1,8 @@
 const Post = require('../models/post');
 const User = require('../models/user');
 const ExpressError = require('../utils/ExpressError');
+const moment = require("moment");
 
-
-// module.exports.fetchPosts = async (req, res) => {
-//     console.log(req.query)
-//         // let { search, page = 1, limit = 3 } = req.query;
-//         // page = parseInt(page);
-//         // limit = parseInt(limit);
-    
-//         // // const posts = await Post.find({}).limit(limit);
-    
-//         // // res.json(posts)
-//         // let query = {}; 
-    
-//         // if (search) {
-//         //     query = {
-//         //         $text: { $search: search } // Use MongoDB text index
-//         //     };
-//         // }
-    
-//         // const totalPosts = await Post.countDocuments(query);
-//         // const posts = await Post.find(query)
-//         //     .skip((page - 1) * limit)
-//         //     .limit(limit);
-//         // console.log(posts)
-//         // console.log(totalPosts)
-//         // res.json({ 
-//         //     posts, 
-//         //     totalPages: Math.ceil(totalPosts / limit),
-//         // });
-// }
 
 module.exports.fetchPosts = async (req, res) => {
     
@@ -122,15 +94,34 @@ module.exports.fetchPagePosts = async (req, res) => {
 }
 
 module.exports.createPost = async (req, res) => {
+    try {
+        const userId = req.user._id;
+        const todayStart = moment().startOf('day').toDate();
+        const todayEnd = moment().endOf('day').toDate();
 
-    const post = new Post({
-        ...req.body,
-    });
-    post.author = req.user._id;
+        // Count the user's posts created today
+        const postCount = await Post.countDocuments({
+            author: userId,
+            createdAt: { $gte: todayStart, $lte: todayEnd }
+        });
 
-    await post.save();
+        if (postCount >= 3) {
+            return res.status(403).json({ error: "Daily post limit reached. Try again tomorrow." });
+        }
 
-    res.status(201).json(post);
+        // Create new post
+        const post = new Post({
+            ...req.body,
+            author: userId,
+        });
+
+        await post.save();
+        res.status(201).json({ post, postCount });
+
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ error: "Something went wrong. Please try again later." });
+    }
 }
 
 module.exports.showPost = async (req, res) => {

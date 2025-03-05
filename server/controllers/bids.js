@@ -49,6 +49,10 @@ module.exports.addBid = async (req, res) => {
             throw new ExpressError('Please recharge your coins', 401);
         }
 
+        if(req.body.coins < 2) {
+            throw new ExpressError('Minimum of 2 coins', 401);
+        }
+
         const post = await Post.findById(req.params.postId);
 
         if(!post) {

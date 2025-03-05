@@ -101,6 +101,33 @@ module.exports.fetchBusinessPayments = async (req, res) => {
     }
 }
 
+module.exports.fetchBusinessTotals = async (req, res) => { 
+    const user = await User.findById(req.user._id);
+
+    const allPayments = await Payment.find({ seller: user.email });
+
+    // Calculate total amount
+    // const totalAmount = allPayments.reduce((sum, payment) => sum + payment.amount, 0);
+
+    // Calculate total for paid-out payments
+    const totalPaidOut = allPayments
+        .filter(payment => payment.paidOut)
+        .reduce((sum, payment) => sum + payment.amount, 0);
+
+    // Calculate total for approved payments
+    const totalApprovedAmount = allPayments
+        .filter(payment => payment.approved)
+        .reduce((sum, payment) => sum + payment.amount, 0);
+    
+    // Calculate total for non-approved payments
+    const totalPendingAmount = allPayments
+        .filter(payment => !payment.approved)
+        .reduce((sum, payment) => sum + payment.amount, 0);
+
+    res.status(200).json({ totalPaidOut, totalApprovedAmount, totalPendingAmount });
+};
+
+
 module.exports.fetchUserTransactions = async (req, res) => {
     const limit = 10;
     const user = await User.findById(req.user._id);
@@ -224,5 +251,41 @@ module.exports.fetchRechargeHistory = async (req, res) => {
 
         res.status(200).json({ transactions, pages })
 
+    }
+}
+
+module.exports.fetchAllTransactions = async (req, res) => {
+    let { page = 1, limit = 9 } = req.query;
+    page = parseInt(page);
+    limit = parseInt(limit);
+
+    console.log(req.query)
+    if(page) {
+        const transactions = await Payment.find({})
+            .limit(limit)
+            .skip(limit * (page - 1))
+            .sort({ createdAt: -1 })
+
+        const allTransactions = await Payment.find({});
+
+        const count = allTransactions.length;
+        const pages = Math.ceil(count / limit);
+
+        res.status(200).json({ transactions, pages })
+
+    }
+}
+
+module.exports.approveTransaction = async (req, res) => {
+
+    try {
+        const transaction = await Payment.findByIdAndUpdate(req.params.txId, {
+            approved: true,
+        }, { new: true })
+    
+        await transaction.save()
+        res.status(201).json(transaction)
+    } catch (error) {
+        console.log(error)
     }
 }

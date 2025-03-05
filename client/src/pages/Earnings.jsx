@@ -11,6 +11,10 @@ function Earnings() {
     const [loadingPayments, setLoadingPayments] = useState(true);
     const [paymentStatuses, setPaymentStatuses] = useState({});
     const [loadingPaymentStatuses, setLoadingPaymentStatuses] = useState({});
+    const [totalPaidOut, setTotalPaidOut] = useState(0);
+    const [totalApprovedAmount, setTotalApprovedAmount] = useState(0);
+    const [totalPendingAmount, setTotalPendingAmount] = useState(0);
+    const [loadingTotal, setLoadingTotal] = useState(true);
     // const [issueSubmitted, setIssueSubmitted] = useState(false);
     // const [disputed, setDisputed] = useState(null);
 
@@ -25,6 +29,13 @@ function Earnings() {
 
                 setItems(rows)
                 setLoadingPayments(false)
+
+                // Fetch total amounts (only once)
+                const totalsResponse = await axios.get(`${API_URL}/payments/search/page/totals`);
+                setTotalPaidOut(totalsResponse.data.totalPaidOut);
+                setTotalApprovedAmount(totalsResponse.data.totalApprovedAmount);
+                setTotalPendingAmount(totalsResponse.data.totalPendingAmount);
+                setLoadingTotal(false)
             } catch (err) {
                 console.log(err)
             }
@@ -34,16 +45,21 @@ function Earnings() {
         fetchPayments();
     }, []) 
 
+
     const onPagination = async(e) => {
         e.preventDefault()
         setLoadingPayments(true)
         const pageNumber = e.target.value;
-        await axios.post(`${API_URL}/payments/search/page`, { page: pageNumber })
-        .then((response) => {
-          setPayments(response.data.payments)
-          setActivePage(pageNumber)
-          setLoadingPayments(false)
-        })
+
+        try {
+            const response = await axios.post(`${API_URL}/payments/search/page`, { page: pageNumber });
+            setPayments(response.data.payments);
+            setActivePage(pageNumber);
+        } catch (err) {
+            console.log(err);
+        } finally {
+            setLoadingPayments(false);
+        }
     }
 
     const checkPaymentStatus = async (invoiceId) => {
@@ -86,6 +102,10 @@ function Earnings() {
                 paymentStatuses={paymentStatuses}
                 checkPaymentStatus={checkPaymentStatus}
                 loadingPaymentStatuses={loadingPaymentStatuses}
+                totalPaidOut={totalPaidOut}
+                loadingTotal={loadingTotal}
+                totalApprovedAmount={totalApprovedAmount}
+                totalPendingAmount={totalPendingAmount}
             />
         </div>
     </div>

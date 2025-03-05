@@ -8,6 +8,7 @@ import Login from './pages/Login';
 import Register from './pages/Register';
 import ShowPost from './pages/ShowPost';
 import PrivateRoute from './components/PrivateRoute';
+import BusinessPrivateRoute from './components/BusinessPrivateRoute.jsx';
 import Profile from './pages/Profile';
 import Success from './pages/Success';
 import Pay from './pages/Pay';
@@ -22,6 +23,8 @@ import ResetPassword from './pages/ResetPassword';
 import ResetFail from './pages/ResetFail';
 import ResetSuccess from './pages/ResetSuccess.jsx';
 import Coins from './pages/Coins.jsx';
+import Dashboard from './pages/Dashboard.jsx';
+import PaymentInfo from './pages/PaymentInfo.jsx';
 
 
 function App() {
@@ -42,14 +45,18 @@ function App() {
       <Route path='/' element={<PrivateRoute />} >
         <Route path='/' element={<Home />} />
       </Route>
-      <Route path='/posts' element={<PrivateRoute />} >
-        <Route path='/posts' element={<Posts />} />
+      <Route path="/posts" element={<BusinessPrivateRoute />}>
+        <Route path="/posts" element={<Posts />} />
       </Route>
-      <Route path='/user/profile/:userId/earnings' element={<PrivateRoute />} >
+
+      <Route path='/user/profile/:userId/earnings' element={<BusinessPrivateRoute />} >
         <Route path='/user/profile/:userId/earnings' element={<Earnings />} />
       </Route>
       <Route path='/user/profile/:userId/transactions' element={<PrivateRoute />} >
         <Route path='/user/profile/:userId/transactions' element={<Transactions />} />
+      </Route>
+      <Route path='/user/profile/:userId/payment-info' element={<PrivateRoute />} >
+        <Route path='/user/profile/:userId/payment-info' element={<PaymentInfo />} />
       </Route>
       <Route path='/user/profile/:userId/coins' element={<PrivateRoute />} >
         <Route path='/user/profile/:userId/coins' element={<Coins />} />
@@ -60,11 +67,15 @@ function App() {
       <Route path='/user/profile/:userId' element={<PrivateRoute />} >
         <Route path='/user/profile/:userId' element={<Profile />} />
       </Route>
+
       <Route path='/success' element={<PrivateRoute />} >
         <Route path='/success' element={<Success />} />
       </Route>
       <Route path='/makepay' element={<PrivateRoute />} >
         <Route path='/makepay' element={<Pay />} />
+      </Route>
+      <Route path='/dashboard' element={<PrivateRoute />} >
+        <Route path='/dashboard' element={<Dashboard />} />
       </Route>
       <Route path='/success-pay' element={<PrivateRoute />} >
         <Route path='/success-pay' element={<SuccessPay />} />

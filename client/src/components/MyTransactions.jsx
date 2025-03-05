@@ -68,7 +68,7 @@ function MyTransactions({ transactions,onPagination,activePage,items,loadingTran
                             <div className='flex justify-between w-3/5'>
                                 <div>
                                     <p className='font-semibold'>KES. {pay.amount}</p>
-                                    <p>{format(new Date(pay.createdAt), "dd/MM/yyyy")}</p>
+                                    <p>{format(new Date(pay.createdAt), "dd/MM/yyyy 'at' hh:mm a")}</p>
                                     <p>{pay.author.phone}</p>
                                     <p>{pay.item}</p>
                                 </div>

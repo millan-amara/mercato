@@ -47,6 +47,12 @@ function BidInput({ postId }) {
         return;
     }
 
+    if(coins < 2) {
+      setLoading(false)
+      toast.error('Minimu coins is 2')
+      return
+    }
+
     const requestBody = new FormData();
     
     requestBody.append('text', bidText)
