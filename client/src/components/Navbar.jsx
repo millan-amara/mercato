@@ -7,7 +7,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { FaTimes } from 'react-icons/fa';
 
 
-function Navbar({ fixedNav }) {
+function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
   const { user } = useSelector((state) => state.auth);
   const navigate = useNavigate();
@@ -23,9 +23,7 @@ function Navbar({ fixedNav }) {
 
 
   return (
-    <nav className={`${
-            fixedNav ? "fixed top-0 left-0 w-full" : ""
-          } flex justify-between items-center px-2 md:px-6 py-4`}>
+    <nav className="flex justify-between items-center px-2 md:px-6 py-4">
         <Link to='/' className='text-xl md:text-3xl'>
             <span>PES<span className='text-fuchsia-700 font-bold text-3xl md:text-6xl'>K</span>AYA</span>
         </Link>

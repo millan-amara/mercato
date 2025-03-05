@@ -118,7 +118,7 @@ function PaymentInfo() {
         <div className=''>
             <Navbar />
 
-        <div id='main' className="w-full mt-10 sm:hidden">
+        <div id='main' className="w-full mt-10 sm:hidden mb-12">
           <div className='flex justify-center'>
             <p>Please addd either an Mpesa or Bank Account</p>
           </div>
