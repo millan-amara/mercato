@@ -16,7 +16,7 @@ function ProfilePosts({ userId, cacheRef, isOwner }) {
         cacheRef.current.posts = postsResponse.data
         setPosts(postsResponse.data)
       }
-      setPostsLoading(false)
+      setPostsLoading(false) 
     }
 
     fetchOwnPosts()

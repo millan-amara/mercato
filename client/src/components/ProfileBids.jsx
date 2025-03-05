@@ -5,6 +5,7 @@ function ProfileBids({ userId, cacheRef, isOwner }) {
 
   const API_URL = import.meta.env.VITE_API_URL;
   const [bids, setBids] = useState(cacheRef.current.bids || []);
+    const [bidsLoading, setBidsLoading] = useState(!cacheRef.current.bids);
 
   useEffect(() => {
     const fetchOwnBids = async() => {
@@ -13,6 +14,7 @@ function ProfileBids({ userId, cacheRef, isOwner }) {
         cacheRef.current.bids = bidsResponse.data;
         setBids(bidsResponse.data)
       }
+      setBidsLoading(false) 
 
     }
 
