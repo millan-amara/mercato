@@ -6,12 +6,11 @@ import { useNavigate } from 'react-router-dom';
 import Navbar from '../components/Navbar';
 import TextField from '@mui/material/TextField';
 import { IoMdSend } from "react-icons/io";
-import EiffelImage from '../assets/images/eiffel.webp';
-import DubsImage from '../assets/images/dubs.jpg';
 import HeelsImage from '../assets/images/heels.png';
 import JordanBlackImage from '../assets/images/jordanblack.png';
 import JordanYellowImage from '../assets/images/jordanyellow.png';
-import ToyotaImage from '../assets/images/toyota.png';
+import { motion, AnimatePresence } from 'framer-motion';
+
 
 
 function Home() {
@@ -90,12 +89,34 @@ function Home() {
       <Navbar />
       <div className='flex flex-col mb-12 mt-12 h-[100dvh] items-center md:mb-0'>
         <div className='w-full h-1/2 flex flex-col md:flex-row justify-center items-center md:items-start text-3xl md:text-5xl'>
-          <span ref={el} className='auto-type text-green-400 min-h-[2em]'></span>
+        <div className='min-h-[3em]'>
+        <span ref={el} className='auto-type text-green-400 inline-flex items-center'></span>
+        </div>
+
+                            <AnimatePresence mode='wait'>
+                             
+                                    <motion.div
+                                    key={currentIndex}
+                                        className='mb-2'
+                                        initial={{ opacity: 0, height: 0 }}
+                                        animate={{ opacity: 1, height: "auto" }}
+                                        exit={{ opacity: 0, height: 0 }}
+                                        transition={{ duration: 0.8, ease: "easeInOut" }}
+                                    >
           <img 
             src={imageOptions[currentIndex]} 
             alt={textOptions[currentIndex]} 
-            className="w-64 h-64 object-cover mt-4"
+            className="w-64 h-56 object-cover mt-4"
           />
+                                    </motion.div>
+                              
+                            </AnimatePresence>
+
+          {/* <img 
+            src={imageOptions[currentIndex]} 
+            alt={textOptions[currentIndex]} 
+            className="w-64 h-64 object-cover mt-4"
+          /> */}
 
         </div>
         <form onSubmit={handleSubmit} className='w-full h-1/2 md:w-3/5 flex md:flex-col items-end md:items-center justify-end py-8 px-4 text-center'>

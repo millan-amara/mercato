@@ -13,3 +13,9 @@ body {
     font-style: normal;
     letter-spacing: 2px;
 }
+
+@media (max-width: 768px) {
+    .auto-type::after {
+      display: none !important;
+    }
+}
