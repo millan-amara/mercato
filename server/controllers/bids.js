@@ -24,10 +24,7 @@ module.exports.getBids = async (req, res) => {
         
         // Sorting: First by coins (descending), then by createdAt (newest first)
         const bids = post.bids.sort((a, b) => {
-            if (a.coins === b.coins) {
-                return new Date(a.createdAt) - new Date(b.createdAt); // Sort by createdAt (latest first)
-            }
-            return b.coins - a.coins; // Sort by coins (descending)
+            return new Date(a.createdAt) - new Date(b.createdAt); // Sort by createdAt (latest first)
         });
     
         res.status(200).json(bids)
@@ -43,14 +40,6 @@ module.exports.addBid = async (req, res) => {
 
         if(!user) {
             throw new ExpressError('Not allowed to do that', 401)
-        }
-
-        if(user.coins < req.body.coins) {
-            throw new ExpressError('Please recharge your coins', 401);
-        }
-
-        if(req.body.coins < 2) {
-            throw new ExpressError('Minimum of 2 coins', 401);
         }
 
         const post = await Post.findById(req.params.postId);
@@ -80,21 +69,17 @@ module.exports.addBid = async (req, res) => {
     
         await bid.save();
         await post.save();
-        const updatedUser = await User.findByIdAndUpdate(req.user._id, {
-            coins: user.coins - req.body.coins,  
-        }, { new: true })
 
         res.status(200).json({
             user: {
-                _id: updatedUser._id,
-                email: updatedUser.email,
-                business: updatedUser.business,
-                fname: updatedUser.fname,
-                phone: updatedUser.phone,
-                website: updatedUser.website,
-                rating: updatedUser.rating,
-                reviews: updatedUser.reviews.length,
-                coins: updatedUser.coins,
+                _id: user._id,
+                email: user.email,
+                business: user.business,
+                fname: user.fname,
+                phone: user.phone,
+                website: user.website,
+                rating: user.rating,
+                reviews: user.reviews.length,
             },
             bid
         });

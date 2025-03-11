@@ -19,7 +19,7 @@ function ProfileSidebar({ handleTabChange,isOwner,activeTab,profileData,loggedIn
   const navigate = useNavigate();
 
   const menus = [
-    { key: "1", title: "Posts", path:"posts", icon: <BiSolidDashboard /> },
+    { key: "1", title: "Requests", path:"posts", icon: <BiSolidDashboard /> },
     { key: "2", title: "Bids", path:"bids", icon: <FaLanguage /> },
     { key: "3", title: "Reviews", path:"reviews", icon: <BsPersonCircle /> },
     { key: "4", title: "Edit Profile", path:"editProfile", icon: <MdContactEmergency /> },
@@ -29,7 +29,7 @@ function ProfileSidebar({ handleTabChange,isOwner,activeTab,profileData,loggedIn
 
   const links = [
     { key: "6", title: "My Money", path: "earnings", icon: <MdSecurity /> },  
-    { key: "7", title: `Coins: ${loggedInUser.coins}`, path: "coins", icon: <MdSecurity /> },
+    // { key: "7", title: `Coins: ${loggedInUser.coins}`, path: "coins", icon: <MdSecurity /> },
   ]
   
   return (

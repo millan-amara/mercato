@@ -25,7 +25,7 @@ function TopProfile({ handleTabChange,isOwner,activeTab,profileData,loggedInUser
             <button 
             onClick={() => handleTabChange('posts')} 
             className={`mr-4 px-2 py-1 flex align-self-start ${activeTab === 'posts' ? 'border-b-4 border-b-lime-600 text-lime-600 font-semibold' : ''}`}
-            >POSTS</button>}
+            >REQUESTS</button>}
             {isOwner && loggedInUser.business && (
                 <button 
                 onClick={() => handleTabChange('bids')} 

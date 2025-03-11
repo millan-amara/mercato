@@ -26,9 +26,9 @@ const UserSchema = new Schema({
     bank: {},
     mpesa: {},
     fname: String,
-    coins: Number,
     phone: String,
     website: String,
+    tiktok: String,
     resetPasswordToken: String,
     resetPasswordExpires: Date,
 }, {

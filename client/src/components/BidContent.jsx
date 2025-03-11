@@ -22,14 +22,14 @@ function BidContent({ bid, onBookmarkBid }) {
         <p>No bids yet</p>
       ) : (
         <div>
-          <div className='border-b-2 mb-8 pb-4 flex justify-between items-center'>
+          {/* <div className='border-b-2 mb-8 pb-4 flex justify-between items-center'>
             <div className=''>
               <div className='flex items-center mb-2'>
                 <Link to={`/user/profile/${bid.author._id}`} className='mr-2 font-semibold text-lg underline'>{bid.author.fname}</Link>
                 <MdVerified />
               </div>
 
-              <p className='text-sm'>{bid.author.reviews.length} order{bid.author.reviews.length === 1 ? '' : 's'}</p>
+              <p className='text-sm'>{bid.author.reviews.length} client{bid.author.reviews.length === 1 ? '' : 's'}</p>
               <Rating name="read-only" value={bid.author.rating} size='small' readOnly />
               
             </div>
@@ -44,17 +44,17 @@ function BidContent({ bid, onBookmarkBid }) {
                 </span>
               </Link>
             </div>
+          </div> */}
+
+          <div className='flex justify-between mb-5'>
+            <span className='bg-fuchsia-700 text-white px-2 py-1 text-sm rounded-md'>{bid.bedrooms}</span>
+            <span className='text-fuchsia-500 font-bold text-xl'>{bid.price}</span>
           </div>
 
-          <div
-            dangerouslySetInnerHTML={{ __html: bid && bid.text }}
-            className=''
-        ></div>
         {bid.imgs.length !== 0 &&
    <>
           <Swiper 
             modules={[EffectCoverflow,Navigation, Pagination, Scrollbar, A11y]}
-            navigation
             pagination={true}
             effect={'coverflow'}
             grabCursor={true}
@@ -67,14 +67,14 @@ function BidContent({ bid, onBookmarkBid }) {
               modifier: 1,
               slideShadows: true,
             }}
-            className='md:w-full lg:w-3/4'
+            className='w-full lg:w-3/4'
           >
             {bid.imgs.map((img, index) => (
               <SwiperSlide key={index}>
                   <div
-                    className="py-10 flex justify-center" 
+                    className="py-8 flex justify-center" 
                   >
-                    <img src={img.url} className="h-56" alt="product" />
+                    <img src={img.url} className="max-h-80" alt="product" />
                   </div>
               </SwiperSlide>
             ))}
@@ -89,6 +89,11 @@ function BidContent({ bid, onBookmarkBid }) {
 
 
         }
+
+        <div
+            dangerouslySetInnerHTML={{ __html: bid && bid.text }}
+            className='mt-10'
+        ></div>
 
         </div>
       )}

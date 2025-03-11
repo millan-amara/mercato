@@ -1,12 +1,12 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
-import BackImage from '../assets/back.png'
+import BackImage from '../assets/images/image5.jpg'
 
 function Landing() {
   return (
     <div className="relative h-[100dvh] flex flex-col justify-between mx-1">
         <div 
-            className="absolute inset-0 bg-cover bg-center bg-no-repeat opacity-5"
+            className="absolute inset-0 bg-cover bg-center bg-no-repeat opacity-10"
             style={{ backgroundImage: `url(${BackImage})` }}
         ></div>
         <div className=''></div>
@@ -16,10 +16,10 @@ function Landing() {
         <div className='relative z-50 w-full h-3/4 flex flex-col justify-between py-4'>
             <div className='text-center h-1/2 justify-between flex flex-col py-4'>
                 <div>
-                    <h1 className='text-3xl'>Buy or Sell anything reliably and fast.</h1>
+                    <h1 className='text-3xl'>Looking for a House to Rent or Buy?</h1>
                 </div>
                 <div>
-                    <p className=''>Make a request for anything and get hundreds of deals to choose from.</p>
+                    <p className=''>Describe your ideal house and get several options to choose from.</p>
                 </div>
             </div>
 

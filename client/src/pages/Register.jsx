@@ -155,7 +155,7 @@ function Register() {
           </div>   
         </div>
         <div className='mb-5 flex items-center justify-between text-sm'>
-          <label htmlFor="business" className='font-semibold mb-2'>Are you a Business?</label>
+          <label htmlFor="business" className='font-semibold mb-2'>Are you an Agent?</label>
           <div className='w-1/3'>
             <button
               type='button'

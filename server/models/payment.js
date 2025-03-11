@@ -10,10 +10,6 @@ const PaymentSchema = new Schema({
         type: Number,
         required: true
     },
-    item: {
-        type: String,
-        required: true
-    },
     status: {
         type: String,
         required: true

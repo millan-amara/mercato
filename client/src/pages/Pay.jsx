@@ -10,13 +10,12 @@ function Pay() {
     const [loading, setLoading] = useState(false);
     const [formData, setFormData] = useState({
         seller: '',
-        item: '',
         amount: '',
     });
 
     const API_URL = import.meta.env.VITE_API_URL;
 
-    const {seller,item,amount} = formData;
+    const {seller,amount} = formData;
 
     const onChange = (e) => {
         setFormData((prevState) => ({
@@ -30,8 +29,6 @@ function Pay() {
 
         if(!seller) {
             toast.error("Please include seller's email")
-        } else if (!item) {
-            toast.error("Please type what you're buying, e.g. shoes")
         } else if(!amount) {
             toast.error("Please include the amount")
         } else {
@@ -65,54 +62,45 @@ function Pay() {
   return (
     <div>
         <Navbar />
-        <div className='flex justify-center mt-5'>
-        <form className='w-full mx-2 md:w-1/3 mb-8'>
-          <h1 className='text-xl text-center'>Make Payment</h1>
-      
-          <div className='mb-5 mt-10'>     
-            <label htmlFor="seller">Seller's Email</label> 
-            <input 
-                type="email" 
-                id='seller'
-                value={seller}
-                className="mt-1 focus:ring-2 focus:outline-none appearance-none w-full text-sm leading-6 text-slate-900 rounded-md py-2 pl-2 ring-1 ring-slate-200 shadow-sm" 
-                onChange={onChange}
-                placeholder='one@one.com'
-                required
-            />
-          </div>
-          <div className='mb-5'>     
-            <label htmlFor="item">What are you paying for?</label> 
-            <input 
-                type="text" 
-                id='item'
-                maxLength={25}
-                value={item}
-                className="mt-1 focus:ring-2 focus:outline-none appearance-none w-full text-sm leading-6 text-slate-900 rounded-md py-2 pl-2 ring-1 ring-slate-200 shadow-sm" 
-                onChange={onChange}
-                placeholder="Samsung TV, vacation to Thailand"
-                required
-            />
-          </div>
-          <div className='mb-5'>     
-            <label htmlFor="price">Amount</label> 
-            <input 
-                type="number" 
-                id='amount'
-                placeholder='KES'
-                value={amount}
-                className="mt-1 focus:ring-2 focus:outline-none appearance-none w-full text-sm leading-6 text-slate-900 rounded-md py-2 pl-2 ring-1 ring-slate-200 shadow-sm" 
-                onChange={onChange}
-                required
-            />
-          </div>
+        <div className='flex flex-col items-center mt-5'>
+            <form className='w-full mx-2 md:w-1/3 mb-8'>
+            <h1 className='text-xl text-center'>Make Payment</h1>
+        
+            <div className='mb-5 mt-10'>     
+                <label htmlFor="seller">Agent's Email</label> 
+                <input 
+                    type="email" 
+                    id='seller'
+                    value={seller}
+                    className="mt-1 focus:ring-2 focus:outline-none appearance-none w-full text-sm leading-6 text-slate-900 rounded-md py-2 pl-2 ring-1 ring-slate-200 shadow-sm" 
+                    onChange={onChange}
+                    placeholder='one@one.com'
+                    required
+                />
+            </div>
+            <div className='mb-5'>     
+                <label htmlFor="price">Amount</label> 
+                <input 
+                    type="number" 
+                    id='amount'
+                    placeholder='KES'
+                    value={amount}
+                    className="mt-1 focus:ring-2 focus:outline-none appearance-none w-full text-sm leading-6 text-slate-900 rounded-md py-2 pl-2 ring-1 ring-slate-200 shadow-sm" 
+                    onChange={onChange}
+                    required
+                />
+            </div>
 
-            <button type='submit' onClick={initiatePayment} disabled={loading} className="mt-4 bg-gradient-to-r from-green-700 via-slate-800 to-gray-950 hover:bg-gradient-to-l w-full text-white text-bold py-3">
-                Pay Now
-            </button>
+                <button type='submit' onClick={initiatePayment} disabled={loading} className="mt-4 bg-gradient-to-r from-green-700 via-slate-800 to-gray-950 hover:bg-gradient-to-l w-full text-white text-bold py-3">
+                    Pay Now
+                </button>
 
-        </form>
-      </div>
+            </form>
+            <div className='text-xs flex flex-col items-center'>
+                <p className='mb-2'>Your money is held till service is delivered.</p>
+                <p>In case of any issues with the service, you can always raise a dispute.</p>
+            </div>
+        </div>
 
     </div>
   )

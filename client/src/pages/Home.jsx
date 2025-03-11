@@ -6,9 +6,13 @@ import { useNavigate } from 'react-router-dom';
 import Navbar from '../components/Navbar';
 import TextField from '@mui/material/TextField';
 import { IoMdSend } from "react-icons/io";
-import HeelsImage from '../assets/images/heels.png';
-import JordanBlackImage from '../assets/images/jordanblack.png';
-import JordanYellowImage from '../assets/images/jordanyellow.png';
+import ImageOne from '../assets/images/image1.jpg';
+import ImageThree from '../assets/images/image3.jpg';
+import ImageFour from '../assets/images/image4.jpg';
+import ImageFive from '../assets/images/image5.jpg';
+import ImageSix from '../assets/images/image6.jpg';
+import ImageSeven from '../assets/images/image7.jpg';
+import ImageEight from '../assets/images/image8.jpg';
 import { motion, AnimatePresence } from 'framer-motion';
 
 
@@ -30,12 +34,16 @@ function Home() {
   const el = React.useRef(null);
 
   // Text and Image pairs
-  const textOptions = ['Sneaker Shoes', 'High Heels', 'Affordable cars', 'Electronics',];
+  const textOptions = ['Modern finishes', 'Open Kitchen', 'Spacious living', 'Walk-in closet', 'Master ensuite', 'Natural Lighting', '24-hour security'];
   const imageOptions = [
-    JordanBlackImage,
-    HeelsImage,
-    JordanYellowImage,
-    JordanBlackImage,
+    ImageOne,
+    ImageEight,
+    ImageSeven,
+    ImageSix,
+    ImageThree,
+    ImageFour,
+    ImageFive,
+
   ];
 
   React.useEffect(() => {
@@ -89,33 +97,32 @@ function Home() {
       <Navbar />
       <div className='flex flex-col mb-12 mt-12 h-[100dvh] items-center md:mb-0'>
         <div className='w-full h-1/2 flex flex-col md:flex-row justify-center items-center md:items-start text-3xl md:text-5xl'>
-        <div className='min-h-[3em]'>
-        <span ref={el} className='auto-type text-green-400 inline-flex items-center'></span>
-        </div>
+          <div className='min-h-[3em]'>
+          <span ref={el} className='auto-type text-green-400 inline-flex items-center'></span>
+          </div>
 
-          <AnimatePresence mode='wait'>
-            <motion.div
-              key={currentIndex}
-                className='mb-2'
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                exit={{ opacity: 0  }}
-                transition={{ duration: 0.8, ease: "easeInOut" }}
-            >
-              <img 
-                src={imageOptions[currentIndex]} 
-                alt={textOptions[currentIndex]} 
-                className="w-64 h-56 object-cover mt-4"
-              />
-            </motion.div>
-                              
-          </AnimatePresence>
-
+            <AnimatePresence mode='wait'>
+              <motion.div
+                key={currentIndex}
+                  className='mb-2'
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  exit={{ opacity: 0  }}
+                  transition={{ duration: 0.8, ease: "easeInOut" }}
+              >
+                <img 
+                  src={imageOptions[currentIndex]} 
+                  alt={textOptions[currentIndex]} 
+                  className="w-full md:w-64 h-56 object-cover mt-4 rounded-xl"
+                />
+              </motion.div>
+                                
+            </AnimatePresence>
         </div>
         <form onSubmit={handleSubmit} className='w-full h-1/2 md:w-3/5 flex md:flex-col items-end md:items-center justify-end py-8 px-4 text-center'>
           <TextField
               id="description"
-              label="What do you want to buy today?"
+              label="What kind of house are you looking for today?"
               fullWidth
               multiline
               variant='standard'

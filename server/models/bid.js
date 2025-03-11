@@ -16,16 +16,13 @@ const BidSchema = new Schema({
         type: String,
         required: [true, 'Please add some text'],
     },
+    bedrooms: Number,
+    price: Number,
     bookmarked: {
         type: Boolean,
         default: "false",
     },
     imgs: [ImageSchema],
-    coins: {
-        type: Number,
-        required: true,
-        default: 2
-    }
 }, {
     timestamps: true,
 });

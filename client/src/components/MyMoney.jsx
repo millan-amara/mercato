@@ -101,7 +101,6 @@ function MyMoney({ loadingTotal,totalPaidOut,totalApprovedAmount,totalPendingAmo
                                 <p className='font-semibold'>KES. {pay.amount}</p>
                                 <p>{format(new Date(pay.createdAt), "dd/MM/yyyy")}</p>
                                 <p>{pay.author.phone}</p>
-                                <p>{pay.item}</p>
                             </div>
                         </div>
                         <div className='flex flex-col justify-around px-2 w-2/5 md:w-1/6'>

@@ -70,7 +70,6 @@ function MyTransactions({ transactions,onPagination,activePage,items,loadingTran
                                     <p className='font-semibold'>KES. {pay.amount}</p>
                                     <p>{format(new Date(pay.createdAt), "dd/MM/yyyy 'at' hh:mm a")}</p>
                                     <p>{pay.author.phone}</p>
-                                    <p>{pay.item}</p>
                                 </div>
                             </div>
                             <div className='flex flex-col justify-around px-2 w-2/5 md:w-1/6'>

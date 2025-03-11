@@ -112,7 +112,7 @@ function ShowPost() {
                    aria-controls="panel3-content"
                    id="panel3-header"
                 >
-                  <Typography component="span">Post Details</Typography>
+                  <Typography component="span">View Your Request</Typography>
                   </AccordionSummary>
                   <AccordionDetails className='text-sm'>
                     {post.description}
