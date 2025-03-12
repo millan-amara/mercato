@@ -4,10 +4,13 @@ const IntaSend = require('intasend-node');
 const { v4: uuidv4 } = require('uuid');
 const ExpressError = require('../utils/ExpressError');
 
+const isTestMode = process.env.NODE_ENV !== 'production';
+console.log(process.env.PUB_KEY)
+console.log(process.env.SEC_KEY)
 const intasend = new IntaSend(
   process.env.PUB_KEY,
   process.env.SEC_KEY,
-  true, // Test ? Set true for test environment
+  isTestMode, // Test ? Set true for test environment
 );
 
 module.exports.createPayment = async (req, res) => {
@@ -43,7 +46,7 @@ module.exports.createPayment = async (req, res) => {
         res.status(201).json(response);
 
     } catch (error) {
-        console.error(`STK Push Resp error:`, error);
+        console.error(`STK Push Resp error:`, error.response ? error.response.data : error);
         res.status(500).json(error)
     }
 }
