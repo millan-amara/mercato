@@ -2,14 +2,16 @@ import React from 'react'
 import { FaWhatsapp } from 'react-icons/fa6'
 import { Link } from 'react-router-dom'
 import Navbar from '../components/Navbar'
-// import Logo from '../assets/images/LOGO.png'
+import { useLocation } from 'react-router-dom'
 
 
 function Success() {
+  const location = useLocation();
+  const phoneNumber = location.state?.phone;
 
   return (
     <div className='flex flex-col h-screen'>
-        <Navbar />
+      <Navbar />
       <div className="flex justify-center pb-16 h-1/6 items-center pt-12">
         {/* <img src={Logo} alt="" className='w-2/3 md:w-1/3 lg:w-1/4 xl:w-1/5' /> */}
       </div>
@@ -22,7 +24,7 @@ function Success() {
             
         </div>
         <div className='mt-4'>
-            <a href={`https://wa.me/+254700487751?`} className='flex justify-center items-center text-white font-bold bg-green-600 px-3 py-1 rounded-md'>
+            <a href={`https://wa.me/+${phoneNumber}`} className='flex justify-center items-center text-white font-bold bg-green-600 px-3 py-1 rounded-md'>
                 <FaWhatsapp />
                 <span className='ml-1'>Continue to chat</span>
 

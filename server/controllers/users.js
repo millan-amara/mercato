@@ -18,9 +18,18 @@ const mg = mailgun.client({username: 'api', key: apiKey, url: 'https://api.eu.ma
 module.exports.register = async (req, res) => {
     try {
         const {email,phone,business,password} = req.body;
+
+        const formatPhoneNumber = (phone) => {
+            // Ensure it starts with 254 and remove leading zero if present
+            if (phone.startsWith('0')) {
+                return '254' + phone.slice(1);
+            }
+            return phone; // Assume it's already in correct format
+        };
+
         const user = new User({
             email,
-            phone,
+            phone: formatPhoneNumber(phone),
             business,
         });
         
@@ -192,8 +201,16 @@ module.exports.updateUser = async (req, res) => {
 
     try {
         if(req.user.id === req.params.userId) {
+            const formatPhoneNumber = (phone) => {
+                // Ensure it starts with 254 and remove leading zero if present
+                if (phone.startsWith('0')) {
+                    return '254' + phone.slice(1);
+                }
+                return phone; // Assume it's already in correct format
+            };
             const user = await User.findByIdAndUpdate(req.user.id, {
-                ...req.body
+                ...req.body,
+                phone: formatPhoneNumber(req.body.phone)
             }, { new: true })
     
             await user.save()

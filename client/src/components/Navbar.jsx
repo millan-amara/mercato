@@ -34,8 +34,6 @@ function Navbar() {
         >
           {isOpen ? <FaTimes /> : <FaBars />}
         </button>
-
-
         
         <div className='hidden md:flex items-center'>
           <div className='flex items-center py-1'>

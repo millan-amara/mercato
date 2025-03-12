@@ -34,12 +34,12 @@ function Home() {
   const el = React.useRef(null);
 
   // Text and Image pairs
-  const textOptions = ['Modern finishes', 'Open Kitchen', 'Spacious living', 'Walk-in closet', 'Master ensuite', 'Natural Lighting', '24-hour security'];
+  const textOptions = ['Spacious living', 'Modern finishes', 'Natural Lighting', 'Open Kitchen', 'Walk-in closet', 'Master ensuite', '24-hour security'];
   const imageOptions = [
-    ImageOne,
-    ImageEight,
     ImageSeven,
     ImageSix,
+    ImageOne,
+    ImageEight,
     ImageThree,
     ImageFour,
     ImageFive,
@@ -113,10 +113,9 @@ function Home() {
                 <img 
                   src={imageOptions[currentIndex]} 
                   alt={textOptions[currentIndex]} 
-                  className="w-full md:w-64 h-56 object-cover mt-4 rounded-xl"
+                  className="md:w-64 h-56 object-cover mt-4 rounded-xl"
                 />
-              </motion.div>
-                                
+              </motion.div>                    
             </AnimatePresence>
         </div>
         <form onSubmit={handleSubmit} className='w-full h-1/2 md:w-3/5 flex md:flex-col items-end md:items-center justify-end py-8 px-4 text-center'>

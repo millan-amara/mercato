@@ -5,8 +5,7 @@ const { v4: uuidv4 } = require('uuid');
 const ExpressError = require('../utils/ExpressError');
 
 const isTestMode = process.env.NODE_ENV !== 'production';
-console.log(process.env.PUB_KEY)
-console.log(process.env.SEC_KEY)
+
 const intasend = new IntaSend(
   process.env.PUB_KEY,
   process.env.SEC_KEY,
@@ -17,6 +16,10 @@ module.exports.createPayment = async (req, res) => {
     try {
         const uniqueId = `ORDER-${uuidv4()}`;
         let collection = intasend.collection();
+
+        if (!req.user.phone) {
+            return res.status(400).json({ error: "Phone number is required" });
+        }
     
         const response = await collection.mpesaStkPush({
             first_name: req.user.fname,
@@ -24,7 +27,7 @@ module.exports.createPayment = async (req, res) => {
             email: req.user.email,
             host: 'https://peskaya-98bb2fd3d6e7.herokuapp.com',
             amount: req.body.amount,
-            phone_number: '254700487751',
+            phone_number: req.user.phone,
             api_ref: uniqueId,
         });
         const invoiceId = response.invoice.invoice_id;

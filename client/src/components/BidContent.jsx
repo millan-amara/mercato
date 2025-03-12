@@ -37,7 +37,7 @@ function BidContent({ bid, onBookmarkBid }) {
               <button onClick={onBookmarkBid} className='mr-2 border-2 py-2 px-2 rounded-md hover:text-xl'>
                 <FaRegBookmark className='' />
               </button>
-              <Link to='/success' type='button' className='bg-fuchsia-900 text-white hover:bg-fuchsia-800 flex items-center px-2 rounded-md py-1 text-sm'>
+              <Link to='/success' state={{ phone: bid.author.phone }} type='button' className='bg-fuchsia-900 text-white hover:bg-fuchsia-800 flex items-center px-2 rounded-md py-1 text-sm'>
                 <MdMail />
                 <span className='pl-1'>
                   Message
@@ -47,8 +47,8 @@ function BidContent({ bid, onBookmarkBid }) {
           </div> */}
 
           <div className='flex justify-between mb-5'>
-            <span className='bg-fuchsia-700 text-white px-2 py-1 text-sm rounded-md'>{bid.bedrooms}</span>
-            <span className='text-fuchsia-500 font-bold text-xl'>{bid.price}</span>
+            <span className='bg-fuchsia-700 text-white px-2 py-1 text-sm rounded-md'>{bid.bedrooms}-Bedroom</span>
+            <span className='text-fuchsia-500 font-bold text-xl'>KES {bid.price.toLocaleString()}</span>
           </div>
 
         {bid.imgs.length !== 0 &&
