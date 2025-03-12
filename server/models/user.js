@@ -28,7 +28,6 @@ const UserSchema = new Schema({
     fname: String,
     phone: String,
     website: String,
-    tiktok: String,
     resetPasswordToken: String,
     resetPasswordExpires: Date,
 }, {

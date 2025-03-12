@@ -5,8 +5,8 @@ const { v4: uuidv4 } = require('uuid');
 const ExpressError = require('../utils/ExpressError');
 
 const intasend = new IntaSend(
-  'ISPubKey_test_12d6d02b-fa7e-4f1e-b79f-b285af7c5331',
-  'ISSecretKey_test_cd24e510-2f1a-49a3-ba95-dfc874f32565',
+  process.env.PUB_KEY,
+  process.env.SEC_KEY,
   true, // Test ? Set true for test environment
 );
 

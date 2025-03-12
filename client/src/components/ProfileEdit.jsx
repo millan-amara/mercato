@@ -16,7 +16,7 @@ function ProfileEdit({ loggedInUser, isOwner }) {
         website: '',
     });
 
-    const {fname,business,phone,website} = formData;
+    const {fname,business,phone,website,tiktok} = formData;
 
     useEffect(() => {
         setFormData({
@@ -56,7 +56,7 @@ function ProfileEdit({ loggedInUser, isOwner }) {
             fname,
             business,
             phone,
-            website
+            website,
         }
     
         try {

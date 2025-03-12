@@ -62,7 +62,7 @@ function Pay() {
   return (
     <div>
         <Navbar />
-        <div className='flex flex-col items-center mt-5'>
+        <div className='flex flex-col items-center mt-5 px-2'>
             <form className='w-full mx-2 md:w-1/3 mb-8'>
             <h1 className='text-xl text-center'>Make Payment</h1>
         
@@ -97,7 +97,7 @@ function Pay() {
 
             </form>
             <div className='text-xs flex flex-col items-center'>
-                <p className='mb-2'>Your money is held till service is delivered.</p>
+                <p className='mb-2'>Your money is SAFELLY held till service is delivered.</p>
                 <p>In case of any issues with the service, you can always raise a dispute.</p>
             </div>
         </div>

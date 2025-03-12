@@ -11,7 +11,7 @@ function Success() {
   const {user} = useSelector((state) => state.auth);
 
   return (
-    <div className='flex flex-col h-screen justify-between'>
+    <div className='flex flex-col h-[100dvh] justify-between'>
         <Navbar />
 
       <div className='flex flex-col items-center justify-center bg-white px-4'>
