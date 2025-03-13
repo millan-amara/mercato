@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import Typed from 'typed.js';
 import { toast } from 'react-toastify';
 import axios from 'axios';
+import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import Navbar from '../components/Navbar';
 import TextField from '@mui/material/TextField';
@@ -23,6 +24,8 @@ function Home() {
   const navigate = useNavigate();
   const [postCount, setPostcount] = useState(0);
   const [currentIndex, setCurrentIndex] = useState(0); 
+
+  const { user } = useSelector((state) => state.auth);
   
   const [formData, setFormData] = useState({
     description: "",
@@ -80,7 +83,7 @@ function Home() {
         toast.error(response.data.error);
       } else {
         toast.success(`Saved successfully!`);
-        navigate(`/posts`)
+        navigate(`/profile/${user._id}`)
       }
     } catch (error) {
       if (error.response && error.response.status === 403) {
