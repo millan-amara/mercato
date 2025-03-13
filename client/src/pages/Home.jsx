@@ -83,7 +83,7 @@ function Home() {
         toast.error(response.data.error);
       } else {
         toast.success(`Saved successfully!`);
-        navigate(`/profile/${user._id}`)
+        navigate(`/user/profile/${user._id}`)
       }
     } catch (error) {
       if (error.response && error.response.status === 403) {
