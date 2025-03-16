@@ -22,12 +22,12 @@ function BidSidebarAll({ bids, bookmarkedBids, bidsIsLoading, activeBidId, onBid
                 <button 
                     onClick={() => handleTabChange('all')}  
                     className={`py-2 border-r-2 w-1/2 ${activeTab === 'all' ? 'bg-fuchsia-700 text-white' : 'bg-fuchsia-50'}`}>
-                        All Bids
+                        All
                 </button>
                 <button 
                     onClick={() => handleTabChange('bookmarked')}  
                     className={`py-2 w-1/2 ${activeTab === 'bookmarked' ? 'bg-fuchsia-700 text-white' : 'bg-fuchsia-50'}`}>
-                        Saved Bids
+                        Saved
                 </button>
             </div>
             {activeTab === 'all' && (

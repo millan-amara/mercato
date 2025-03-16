@@ -16,7 +16,7 @@ function Navbar() {
   const onLogout = () => {
     dispatch(logout())
     dispatch(reset())
-    navigate('/')
+    navigate('/landing')
   }
 
   if (!user) return null;
