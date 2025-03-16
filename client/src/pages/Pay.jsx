@@ -35,7 +35,7 @@ function Pay() {
             setLoading(true);
 
             try {
-                await axios.post(`${API_URL}/payments/makepay`, formData)
+                await axios.post(`${API_URL}/payments/makepay`, formData, { withCredentials: true })
                 navigate('/success-pay')
 
                 setLoading(false);

@@ -32,7 +32,7 @@ function Transactions() {
     useEffect(() => {
         const fetchTransactions = async () => {
             try {
-                const transactionsResponse = await axios.post(`${API_URL}/payments/transactions/search/page`, { page: 1 });
+                const transactionsResponse = await axios.post(`${API_URL}/payments/transactions/search/page`, { page: 1 }, {withCredentials: true});
                 setTransactions(transactionsResponse.data.transactions);
                 const rows = Array.from({ length: transactionsResponse.data.pages}, (_, i) => i + 1);
                 setItems(rows)
@@ -50,7 +50,7 @@ function Transactions() {
         e.preventDefault()
         setLoadingTransactions(true)
         const pageNumber = e.target.value;
-        await axios.post(`${API_URL}/payments/transactions/search/page`, { page: pageNumber })
+        await axios.post(`${API_URL}/payments/transactions/search/page`, { page: pageNumber }, { withCredentials: true })
         .then((response) => {
           setTransactions(response.data.transactions)
           setActivePage(pageNumber)
@@ -64,7 +64,7 @@ function Transactions() {
                 ...prevState,
                 [invoiceId]: true
             }));
-            const response = await axios.get(`${API_URL}/payments/status/${invoiceId}`)
+            const response = await axios.get(`${API_URL}/payments/status/${invoiceId}`, { withCredentials: true })
 
             console.log("Payment Status Response:", response.data);
             setTransactionStatuses(prevState => ({
@@ -86,7 +86,7 @@ function Transactions() {
 
     const disputeTransaction = async (txId) => {
         try {
-            const response = await axios.put(`${API_URL}/payments/transactions/${txId}/disputeTransaction`, formData)
+            const response = await axios.put(`${API_URL}/payments/transactions/${txId}/disputeTransaction`, formData, { withCredentials: true })
 
             setIssueSubmitted(true)
             setDisputed(txId)

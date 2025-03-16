@@ -1,22 +1,13 @@
 import { Link } from 'react-router-dom'
-import { useNavigate } from 'react-router-dom';
 import { FaLanguage } from 'react-icons/fa';
 import { FaUserLarge } from 'react-icons/fa6';
-import { BsPersonCircle, BsFillPersonFill } from 'react-icons/bs'
+import { BsPersonCircle } from 'react-icons/bs'
 import { BiSolidDashboard } from 'react-icons/bi';
 import { MdContactEmergency, MdPayment, MdSecurity } from 'react-icons/md'
-import axios from 'axios';
-import { useEffect, useState } from 'react';
 import Rating from '@mui/material/Rating';
 
 
 function ProfileSidebar({ handleTabChange,isOwner,activeTab,profileData,loggedInUser }) {
-
-  const [width, setWidth] = useState('52');
-  const [showMenu, setShowMenu] = useState(true);
-  const [arrow, setArrow] = useState('left');
-
-  const navigate = useNavigate();
 
   const menus = [
     { key: "1", title: "Requests", path:"posts", icon: <BiSolidDashboard /> },

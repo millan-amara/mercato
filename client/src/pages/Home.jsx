@@ -73,7 +73,7 @@ function Home() {
     e.preventDefault(); 
     try {
       console.log(postCount)
-      const response = await axios.post(`${API_URL}/posts/createpost`, formData);
+      const response = await axios.post(`${API_URL}/posts/createpost`, formData, { withCredentials: true });
       setPostcount(response.data.postCount)
 
       if(response.data.error) {

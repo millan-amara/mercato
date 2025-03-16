@@ -32,7 +32,7 @@ function PaymentInfoComponent() {
     const [showBankSubmit, setShowBankSubmit] = useState(true);
 
     useEffect(() => {
-        axios.get(`${API_URL}/logged-in`)
+        axios.get(`${API_URL}/logged-in`, { withCredentials: true })
         .then((response) => {
             setUser(response.data.user)
             if(response.data.user.bank){
@@ -84,7 +84,7 @@ function PaymentInfoComponent() {
         try{
             e.preventDefault();
             if(mpesaName && mpesaPhone && mpesaMethod){
-                await axios.put(`${API_URL}/users/${user._id}/update-mpesa`, mpesaFormData);
+                await axios.put(`${API_URL}/users/${user._id}/update-mpesa`, mpesaFormData, { withCredentials: true });
                 setShowMpesaForm(false);
                 toast.success('Successfully added Mpesa account')
             } else {
@@ -100,7 +100,7 @@ function PaymentInfoComponent() {
         e.preventDefault();
         try{
             if(beneficiaryName && beneficiaryCountry && beneficiaryPhone && bankName && bankCountry && accountNumber) {
-                await axios.put(`${API_URL}/users/${user._id}/update-bank`, bankFormData);
+                await axios.put(`${API_URL}/users/${user._id}/update-bank`, bankFormData, { withCredentials });
                 setShowBankForm(false);
                 toast.success('Successfully added Bank account')
             } else {

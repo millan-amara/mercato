@@ -37,7 +37,7 @@ function Dashboard() {
                 ...prevState,
                 [invoiceId]: true
             }));
-            const response = await axios.get(`${API_URL}/payments/status/${invoiceId}`)
+            const response = await axios.get(`${API_URL}/payments/status/${invoiceId}`, { withCredentials: true })
 
             console.log("Payment Status Response:", response.data);
             setTransactionStatuses(prevState => ({
@@ -59,7 +59,7 @@ function Dashboard() {
 
     const approveTransaction = async (txId) => {
         try {
-            const response = await axios.put(`${API_URL}/payments/transactions/${txId}/approveTransaction`)
+            const response = await axios.put(`${API_URL}/payments/transactions/${txId}/approveTransaction`, { withCredentials: true })
 
             setApproved(txId)
             toast.success("Success")

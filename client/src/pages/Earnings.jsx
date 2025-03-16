@@ -23,7 +23,7 @@ function Earnings() {
     useEffect(() => {
         const fetchPayments = async () => {
             try {
-                const paymentsResponse = await axios.post(`${API_URL}/payments/search/page`, { page: 1 });
+                const paymentsResponse = await axios.post(`${API_URL}/payments/search/page`, { page: 1 }, { withCredentials: true });
                 setPayments(paymentsResponse.data.payments);
                 const rows = Array.from({ length: paymentsResponse.data.pages}, (_, i) => i + 1);
 
@@ -31,7 +31,7 @@ function Earnings() {
                 setLoadingPayments(false)
 
                 // Fetch total amounts (only once)
-                const totalsResponse = await axios.get(`${API_URL}/payments/search/page/totals`);
+                const totalsResponse = await axios.get(`${API_URL}/payments/search/page/totals`, { withCredentials: true });
                 setTotalPaidOut(totalsResponse.data.totalPaidOut);
                 setTotalApprovedAmount(totalsResponse.data.totalApprovedAmount);
                 setTotalPendingAmount(totalsResponse.data.totalPendingAmount);
@@ -52,7 +52,7 @@ function Earnings() {
         const pageNumber = e.target.value;
 
         try {
-            const response = await axios.post(`${API_URL}/payments/search/page`, { page: pageNumber });
+            const response = await axios.post(`${API_URL}/payments/search/page`, { page: pageNumber }, { withCredentials: true });
             setPayments(response.data.payments);
             setActivePage(pageNumber);
         } catch (err) {
@@ -68,7 +68,7 @@ function Earnings() {
                 ...prevState,
                 [invoiceId]: true
             }));
-            const response = await axios.get(`${API_URL}/payments/status/${invoiceId}`)
+            const response = await axios.get(`${API_URL}/payments/status/${invoiceId}`, { withCredentials: true })
 
             console.log("Payment Status Response:", response.data);
             setPaymentStatuses(prevState => ({

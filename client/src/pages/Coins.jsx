@@ -36,7 +36,7 @@ function Coins({ loggedInUser }) {
         e.preventDefault()
         setLoadingTransactions(true)
         const pageNumber = e.target.value;
-        await axios.post(`${API_URL}/payments/recharge/search/page`, { page: pageNumber })
+        await axios.post(`${API_URL}/payments/recharge/search/page`, { page: pageNumber }, { withCredentials: true })
         .then((response) => {
           setTransactions(response.data.transactions)
           setActivePage(pageNumber)
@@ -50,7 +50,7 @@ function Coins({ loggedInUser }) {
                 ...prevState,
                 [invoiceId]: true
             }));
-            const response = await axios.get(`${API_URL}/payments/recharge/status/${invoiceId}`)
+            const response = await axios.get(`${API_URL}/payments/recharge/status/${invoiceId}`, {withCredentials: true})
 
             console.log("Payment Status Response:", response.data);
             setTransactionStatuses(prevState => ({
@@ -82,7 +82,7 @@ function Coins({ loggedInUser }) {
         } else {
 
             try {
-               const response = await axios.post(`${API_URL}/payments/recharge`, {amount: selectedOption});
+               const response = await axios.post(`${API_URL}/payments/recharge`, {amount: selectedOption}, { withCredentials: true });
                setTransactions((prevState) => [response.data, ...prevState]);
 
             } catch (error) {

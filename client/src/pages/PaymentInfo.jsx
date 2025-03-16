@@ -85,7 +85,7 @@ function PaymentInfo() {
         try{
             e.preventDefault();
             if(mpesaName && mpesaPhone && mpesaMethod){
-                await axios.put(`${API_URL}/users/${user._id}/update-mpesa`, mpesaFormData);
+                await axios.put(`${API_URL}/users/${user._id}/update-mpesa`, mpesaFormData, { withCredentials: true });
                 setShowMpesaForm(false);
                 toast.success('Successfully added Mpesa account')
             } else {
@@ -101,7 +101,7 @@ function PaymentInfo() {
         e.preventDefault();
         try{
             if(beneficiaryName && beneficiaryCountry && beneficiaryPhone && bankName && bankCountry && accountNumber) {
-                await axios.put(`${API_URL}/users/${user._id}/update-bank`, bankFormData);
+                await axios.put(`${API_URL}/users/${user._id}/update-bank`, bankFormData, { withCredentials: true });
                 setShowBankForm(false);
                 toast.success('Successfully added Bank account')
             } else {
