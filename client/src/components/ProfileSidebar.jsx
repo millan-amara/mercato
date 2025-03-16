@@ -65,7 +65,8 @@ function ProfileSidebar({ handleTabChange,isOwner,activeTab,profileData,loggedIn
                             </span>
                         </button>
                     ))}
-                    {links.map((menu) => (
+                    {loggedInUser.business && links.map((menu) => (
+
                         <Link to={`/user/profile/${loggedInUser._id}/${menu.path}`} key={menu.path} className={`text-gray-300 ${menu.path === 'coins' && 'bg-yellow-300 text-black'} text-sm no-underline flex items-center cursor-pointer p-2 hover:bg-green-700 rounded-md ${menu.spacing ? "mt-9" : "mt-2"}`}>
                             <span className='text-2xl block float-left mr-3'>
                             {menu.icon}
