@@ -34,7 +34,8 @@ const app = express();
 
 const allowedOrigins = [
     'http://localhost:5173', // Development
-    'https://peskaya-98bb2fd3d6e7.herokuapp.com' // Production
+    'https://peskaya-98bb2fd3d6e7.herokuapp.com', // Production
+    'https://www.peskaya.com',
 ];
 
 // Middleware

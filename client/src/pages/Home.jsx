@@ -17,9 +17,7 @@ import ImageEight from '../assets/images/image8.jpg';
 import { motion, AnimatePresence } from 'framer-motion';
 
 
-
 function Home() {
-
   const API_URL = import.meta.env.VITE_API_URL;
   const navigate = useNavigate();
   const [postCount, setPostcount] = useState(0);
@@ -46,7 +44,6 @@ function Home() {
     ImageThree,
     ImageFour,
     ImageFive,
-
   ];
 
   React.useEffect(() => {
@@ -124,7 +121,7 @@ function Home() {
         <form onSubmit={handleSubmit} className='w-full h-1/2 md:w-3/5 flex md:flex-col items-end md:items-center justify-end py-8 px-4 text-center'>
           <TextField
               id="description"
-              label="What kind of house are you looking for today?"
+              label="What kind of house are you looking for?"
               fullWidth
               multiline
               variant='standard'
