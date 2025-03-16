@@ -22,7 +22,6 @@ function PaymentInfo() {
         bankCountry: '',
         accountNumber: '',
     })
-    const [width, setWidth] = useState('52');
 
     const API_URL = import.meta.env.VITE_API_URL;
 
@@ -33,7 +32,7 @@ function PaymentInfo() {
     const [showBankSubmit, setShowBankSubmit] = useState(true);
 
     useEffect(() => {
-        axios.get(`${API_URL}/logged-in`)
+        axios.get(`${API_URL}/logged-in`, { withCredentials: true })
         .then((response) => {
             setUser(response.data.user)
             if(response.data.user.bank){
