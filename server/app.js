@@ -31,7 +31,6 @@ db.once("open", () => {
 
 
 const app = express();
-app.set('trust proxy', 1);
 
 const allowedOrigins = [
     'http://localhost:5173', // Development
@@ -59,7 +58,7 @@ app.use(express.urlencoded({extended: true, limit: '25mb'}));
 app.use(methodOverride('_method'));
 app.use(mongoSanitize());
 app.use(express.json({ limit: '25mb'}));
-
+app.set('trust proxy', 1);
 const secret = process.env.SECRET || '85AGTHRHGYZZ';
 const store = new MongoStore({
     mongoUrl: dbUrl,
@@ -79,7 +78,6 @@ const sessionConfig = session({
         httpOnly: true,
         secure: true, // Use secure cookies in production
         sameSite: "none", // Adjust for cross-origin
-        domain: ".peskaya.com",
         expires: new Date(Date.now() + 1000 * 60 * 60 * 24 * 7),
         maxAge: 1000 * 60 * 60 *24 * 7
     }
