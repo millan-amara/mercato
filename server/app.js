@@ -31,6 +31,7 @@ db.once("open", () => {
 
 
 const app = express();
+app.set('trust proxy', 1);
 
 const allowedOrigins = [
     'http://localhost:5173', // Development
@@ -58,7 +59,7 @@ app.use(express.urlencoded({extended: true, limit: '25mb'}));
 app.use(methodOverride('_method'));
 app.use(mongoSanitize());
 app.use(express.json({ limit: '25mb'}));
-app.set('trust proxy', 1);
+
 const secret = process.env.SECRET || '85AGTHRHGYZZ';
 const store = new MongoStore({
     mongoUrl: dbUrl,
