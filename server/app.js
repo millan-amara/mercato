@@ -78,6 +78,7 @@ const sessionConfig = session({
         httpOnly: true,
         secure: true, // Use secure cookies in production
         sameSite: "none", // Adjust for cross-origin
+        domain: ".peskaya.com",
         expires: new Date(Date.now() + 1000 * 60 * 60 * 24 * 7),
         maxAge: 1000 * 60 * 60 *24 * 7
     }
