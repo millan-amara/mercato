@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+    <url>
+        <loc>https://www.peskaya.com/landing</loc>
+        <lastmod>2025-03-17T02:50:11+01:00</lastmod>
+        <priority>1.0</priority>
+    </url>
+    <url>
+        <loc>https://www.peskaya.com/signup</loc>
+        <lastmod>2025-03-17T02:50:11+01:00</lastmod>
+        <priority>1.0</priority>
+    </url>
+    <url>
+        <loc>https://www.peskaya.com/login</loc>
+        <lastmod>2025-03-17T02:50:11+01:00</lastmod>
+        <priority>1.0</priority>
+    </url>
+    <url>
+        <loc>https://www.peskaya.com/</loc>
+        <lastmod>2025-03-17T02:50:11+01:00</lastmod>
+        <priority>1.0</priority>
+    </url>
+    <url>
+        <loc>https://www.peskaya.com/makepay</loc>
+        <lastmod>2025-03-17T02:50:11+01:00</lastmod>
+        <priority>0.8</priority>
+    </url>
+</urlset>
