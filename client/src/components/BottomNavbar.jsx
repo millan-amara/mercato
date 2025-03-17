@@ -28,7 +28,7 @@ const BottomNavbar = ({ user }) => {
       <Link to={`/user/profile/${user._id}`} className="flex flex-col items-center text-gray-700 hover:text-fuchsia-700">
         <FaUserLarge className="text-xl" />
         <span className="text-xs">Profile</span>
-      </Link>
+      </Link> 
     </div>
   );
 };

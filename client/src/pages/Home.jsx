@@ -118,7 +118,7 @@ function Home() {
               </motion.div>                    
             </AnimatePresence>
         </div>
-        <form onSubmit={handleSubmit} className='w-full h-1/2 md:w-3/5 flex md:flex-col items-end md:items-center justify-end py-20 md:py-8 px-4 text-center'>
+        <form onSubmit={handleSubmit} className='pb-safe w-full h-1/2 md:w-3/5 flex md:flex-col items-end md:items-center justify-end pb-20 md:py-8 px-4 text-center'>
           <TextField
               id="description"
               label="What kind of house are you looking for?"
