@@ -42,6 +42,14 @@ module.exports.addBid = async (req, res) => {
             throw new ExpressError('Not allowed to do that', 401)
         }
 
+        if(user.coins < req.body.coins) {
+            throw new ExpressError('Please recharge your coins', 401);
+        }
+
+        if(req.body.coins < 2) {
+            throw new ExpressError('Minimum of 2 coins', 401);
+        }
+
         const post = await Post.findById(req.params.postId);
 
         if(!post) {
@@ -70,16 +78,21 @@ module.exports.addBid = async (req, res) => {
         await bid.save();
         await post.save();
 
+        const updatedUser = await User.findByIdAndUpdate(req.user._id, {
+            coins: user.coins - req.body.coins,  
+        }, { new: true })
+
         res.status(200).json({
             user: {
-                _id: user._id,
-                email: user.email,
-                business: user.business,
-                fname: user.fname,
-                phone: user.phone,
-                website: user.website,
-                rating: user.rating,
-                reviews: user.reviews.length,
+                _id: updatedUser._id,
+                email: updatedUser.email,
+                business: updatedUser.business,
+                fname: updatedUser.fname,
+                phone: updatedUser.phone,
+                website: updatedUser.website,
+                rating: updatedUser.rating,
+                reviews: updatedUser.reviews.length,
+                coins: updatedUser.coins,
             },
             bid
         });

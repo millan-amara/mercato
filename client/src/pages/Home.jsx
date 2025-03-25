@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+
+import React, { useState, useEffect, useRef } from 'react';
 import Typed from 'typed.js';
 import { toast } from 'react-toastify';
 import axios from 'axios';
@@ -7,140 +8,143 @@ import { useNavigate } from 'react-router-dom';
 import Navbar from '../components/Navbar';
 import TextField from '@mui/material/TextField';
 import { IoMdSend } from "react-icons/io";
-import ImageOne from '../assets/images/image1.jpg';
-import ImageThree from '../assets/images/image3.jpg';
-import ImageFour from '../assets/images/image4.jpg';
-import ImageFive from '../assets/images/image5.jpg';
-import ImageSix from '../assets/images/image6.jpg';
-import ImageSeven from '../assets/images/image7.jpg';
-import ImageEight from '../assets/images/image8.jpg';
-import { motion, AnimatePresence } from 'framer-motion';
+import ImageOne from '../assets/images/airpods.jpg';
+import ImageTwo from '../assets/images/camera.jpg';
+import ImageThree from '../assets/images/controller.jpg';
+import ImageFour from '../assets/images/gamer.jpg';
+import ImageFive from '../assets/images/casings.jpg';
+import ImageSix from '../assets/images/earbuds.jpg';
+import ImageSeven from '../assets/images/iphone.jpg';
+import ImageEight from '../assets/images/playstation.jpg';
+import ImageNine from '../assets/images/nintendo.jpg';
+import ImageTen from '../assets/images/ps4.jpg';
+import { motion } from 'framer-motion';
 
+
+const images = [
+  [ImageThree, ImageTwo, ImageTen, ImageFour],
+  [ImageFive, ImageSix, ImageSeven, ImageEight]
+];
 
 function Home() {
   const API_URL = import.meta.env.VITE_API_URL;
   const navigate = useNavigate();
   const [postCount, setPostcount] = useState(0);
-  const [currentIndex, setCurrentIndex] = useState(0); 
-
   const { user } = useSelector((state) => state.auth);
   
-  const [formData, setFormData] = useState({
-    description: "",
-  })
-
+  const [formData, setFormData] = useState({ description: "" });
   const { description } = formData;
+  const [currentSet, setCurrentSet] = useState(0);
 
-  // Create reference to store the DOM element containing the animation
   const el = React.useRef(null);
+  const textareaRef = useRef(null);
 
-  // Text and Image pairs
-  const textOptions = ['Spacious living', 'Modern finishes', 'Natural Lighting', 'Open Kitchen', 'Walk-in closet', 'Master ensuite', '24-hour security'];
-  const imageOptions = [
-    ImageSeven,
-    ImageSix,
-    ImageOne,
-    ImageEight,
-    ImageThree,
-    ImageFour,
-    ImageFive,
-  ];
+  // React.useEffect(() => {
+  //   const typed = new Typed(el.current, {
+  //     strings: ['Latest Tech', 'Best Deals', 'New Arrivals', 'Top Brands'],
+  //     typeSpeed: 100,
+  //     backSpeed: 100,
+  //     loop: true,
+  //   });
 
-  React.useEffect(() => {
-    const typed = new Typed(el.current, {
-      strings: textOptions,
-      typeSpeed: 100,
-      backSpeed: 100,
-      loop: true,
-      smartBackspace: true,
-      onStringTyped: (index) => setCurrentIndex(index),
-    });
+  //   return () => typed.destroy();
+  // }, []);
 
-    return () => {
-      // Destroy Typed instance during cleanup to stop animation
-      typed.destroy();
-    };
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentSet((prev) => (prev === 0 ? 1 : 0));
+    }, 3000);
+
+    return () => clearInterval(interval);
   }, []);
 
   const onChange = (e) => {
     setFormData((prevState) => ({
       ...prevState,
       [e.target.id]: e.target.value
-    }))
-  }
+    }));
+  };
+
+  const adjustTextareaHeight = () => {
+    const textarea = textareaRef.current;
+    if (textarea) {
+      textarea.style.height = "40px";
+      textarea.style.height = Math.min(textarea.scrollHeight, 150) + "px";
+    }
+  };
 
   const handleSubmit = async (e) => {
-    e.preventDefault(); 
+    e.preventDefault();
     try {
-      console.log(postCount)
       const response = await axios.post(`${API_URL}/posts/createpost`, formData, { withCredentials: true });
-      setPostcount(response.data.postCount)
-
       if(response.data.error) {
         toast.error(response.data.error);
       } else {
+        setPostcount(response.data.postCount)
         toast.success(`Saved successfully!`);
-        navigate(`/user/profile/${user._id}`)
+        navigate(`/user/profile/${user._id}`);
       }
     } catch (error) {
-      if (error.response && error.response.status === 403) {
+        if (error.response && error.response.status === 403) {
         toast.error("You have reached your daily post limit.");
       } else {
         console.log(error);
         toast.error("Something went wrong.");
       }
     }
-  }
- 
-  return (
-    <div className='h-[100dvh] flex flex-col'>
-      <Navbar />
-      <div className='flex flex-col mb-12 mt-12 h-[100dvh] items-center md:mb-0'>
-        <div className='w-full h-1/2 flex flex-col md:flex-row justify-center items-center md:items-start text-3xl md:text-5xl'>
-          <div className='min-h-[3em]'>
-          <span ref={el} className='auto-type text-green-400 inline-flex items-center'></span>
-          </div>
+  };
 
-            <AnimatePresence mode='wait'>
-              <motion.div
-                key={currentIndex}
-                  className='mb-2'
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  exit={{ opacity: 0  }}
-                  transition={{ duration: 0.8, ease: "easeInOut" }}
-              >
-                <img 
-                  src={imageOptions[currentIndex]} 
-                  alt={textOptions[currentIndex]} 
-                  className="md:w-64 h-56 object-cover mt-4 rounded-xl"
-                />
-              </motion.div>                    
-            </AnimatePresence>
+  return (
+    <div className='h-[100dvh] flex flex-col justify-between'>
+      <Navbar />
+      <div className='flex flex-col md:flex-row md:w-full justify-between mt-2 h-5/6 pt-2 px-4 text-center'>
+        <div className='text-3xl md:text-5xl md:w-1/3 min-h-[3em]'>
+          
+
+          <div className='grid grid-cols-2 gap-4 mt-6 w-full max-w-sm h-56'>
+            {images[currentSet].map((image, index) => (
+              <motion.img
+                key={index}
+                src={image}
+                alt={`Tech ${index + 1}`}
+                className='w-full h-24 object-cover rounded-lg'
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -20 }}
+                transition={{ duration: 0.5 }}
+              />
+            ))}
+          </div>
+          <div className='grid grid-cols-2 gap-4 mt-6 w-full max-w-sm'>
+            <img src={ImageOne} alt='Tech 1' className='w-full h-24 object-cover rounded-lg' />
+            <img src={ImageTwo} alt='Tech 2' className='w-full h-24 object-cover rounded-lg' />
+
+          </div>
         </div>
-        <form onSubmit={handleSubmit} className='w-full h-1/2 md:w-3/5 flex md:flex-col items-end md:items-center justify-end pb-20 md:py-8 px-4 text-center'>
-          <TextField
-              id="description"
-              label="What kind of house are you looking for?"
-              fullWidth
-              multiline
-              variant='standard'
-              className='' 
-              value={description} 
-              onChange={onChange}
-              required
+        
+        <form onSubmit={handleSubmit} className='w-full md:w-2/3 md:px-12 mt-6 pb-20 flex flex-col items-center justify-center'>
+        {/* <div><span ref={el} className='auto-type text-blue-500 min-h-[3em]'></span></div> */}
+          <textarea
+            id="description"
+            ref={textareaRef}
+            placeholder="White wireless Buletooth headphones"
+            className='w-full p-2 focus:ring-2 focus:outline-none appearance-none text-sm leading-6 text-slate-900 ring-1 ring-slate-200 shadow-sm rounded-lg resize-none overflow-auto'
+            value={description} 
+            onChange={onChange}
+            rows={3}
+            style={{ minHeight: '40px', maxHeight: '500px' }}
+            required
           />
 
-          <button className='md:bg-fuchsia-900 border md:border-0 border-fuchsia-800 flex justify-center items-center text-white px-3 md:w-1/4 md:mt-4 md:hover:bg-fuchsia-800 py-1 md:py-2 rounded-md md:rounded-lg md:text-xs ml-1 md:ml-0'>
-            <span className='mr-2 hidden md:flex'>Submit</span>
-            <span className='text-lg md:text-sm text-fuchsia-800 md:text-white'><IoMdSend /></span>
+          <button className='bg-fuchsia-800 text-white px-4 py-2 mt-4 rounded-lg flex items-center'>
+            <span className='mr-2'>Submit</span>
+            <IoMdSend />
           </button>
-
         </form>
       </div>
-
     </div>
-  )
+  );
 }
 
-export default Home
+export default Home;
+

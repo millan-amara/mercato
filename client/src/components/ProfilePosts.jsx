@@ -28,7 +28,7 @@ function ProfilePosts({ userId, cacheRef, isOwner }) {
     {postsLoading ? (
         <Skeleton 
           variant="rounded"
-          className='' width={300} height={192} 
+          className='' width={400} height={192} 
         />
     ) : (
       <div className='px-2 grid grid-cols-1 md:grid-cols-2 gap-4 xl:grid-cols-3'>

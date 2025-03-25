@@ -2,23 +2,6 @@ const User = require('./models/user');
 const Post = require('./models/post');
 const ExpressError = require('./utils/ExpressError')
 
-// module.exports.isLoggedIn = (req, res, next) => {
-//     try {
-//         console.log(req.params.id)
-//         console.log(req.user._id)
-
-//         if (!req.isAuthenticated()) {
-//             req.session.returnTo = req.originalUrl;
-//             return res.redirect('/login');
-//         }
-//         next()
-//     } catch (error) {
-//         console.log('gone wrong')
-//     }
-
-
-// }
-
 module.exports.isLoggedIn = (req, res, next) => {
     if (!req.isAuthenticated()) {
         if (req.originalUrl.startsWith('/api')) {

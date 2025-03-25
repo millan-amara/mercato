@@ -22,14 +22,14 @@ function BidContent({ bid, onBookmarkBid }) {
         <p>No bids yet</p>
       ) : (
         <div>
-          {/* <div className='border-b-2 mb-8 pb-4 flex justify-between items-center'>
+          <div className='border-b-2 mb-8 pb-4 flex justify-between items-center'>
             <div className=''>
               <div className='flex items-center mb-2'>
                 <Link to={`/user/profile/${bid.author._id}`} className='mr-2 font-semibold text-lg underline'>{bid.author.fname}</Link>
-                <MdVerified />
+                {/* <MdVerified /> */}
               </div>
 
-              <p className='text-sm'>{bid.author.reviews.length} client{bid.author.reviews.length === 1 ? '' : 's'}</p>
+              <p className='text-sm'>{bid.author.reviews.length} review{bid.author.reviews.length === 1 ? '' : 's'}</p>
               <Rating name="read-only" value={bid.author.rating} size='small' readOnly />
               
             </div>
@@ -44,10 +44,9 @@ function BidContent({ bid, onBookmarkBid }) {
                 </span>
               </Link>
             </div>
-          </div> */}
+          </div>
 
-          <div className='flex justify-between mb-5'>
-            <span className='bg-fuchsia-700 text-white px-2 py-1 text-sm rounded-md'>{bid.bedrooms}-Bedroom</span>
+          <div className='flex justify-end mb-5'>
             <span className='text-fuchsia-500 font-bold text-xl'>KES {bid.price.toLocaleString()}</span>
           </div>
 
@@ -74,16 +73,11 @@ function BidContent({ bid, onBookmarkBid }) {
                   <div
                     className="py-8 flex justify-center" 
                   >
-                    <img src={img.url} className="max-h-80" alt="product" />
+                    <img src={img.url} className="max-h-80 rounded-2xl" alt="product" />
                   </div>
               </SwiperSlide>
             ))}
           </Swiper>
-          {/* <div className='grid grid-cols-2'>
-            {bid.imgs.map((img, index) => (
-              <img src={img.url} className="h-48" alt="product" />
-            ))}
-          </div> */}
 
           </>
 

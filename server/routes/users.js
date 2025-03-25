@@ -4,6 +4,7 @@ const users = require('../controllers/users');
 const catchAsync = require('../utils/catchAsync');
 const { isLoggedIn } = require('../middleware');
 
+router.get('/', users.fetchUsers);
 router.post('/users/forgot', users.forgot);
 router.post('/users/reset/:token', users.reset);
 

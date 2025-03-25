@@ -99,7 +99,7 @@ function Login() {
           <div className='text-xs mb-8 flex justify-end font-semibold'>
             <a href="/forgot" className='text-fuchsia-600'>Forgot password?</a>
           </div>
-          <button type="submit" className='w-full rounded-md text-lg px-3 py-3 mb-2 font-semibold bg-gradient-to-r from-black to-slate-500 hover:bg-gradient-to-l text-white'>Log In</button>
+          <button type="submit" className='w-full rounded-md text-lg px-3 py-3 mb-2 font-semibold bg-slate-800 hover:bg-slate-900 text-white'>Log In</button>
           <div className='text-xs mb-5 flex justify-center mt-5 font-semibold'>
             <Link to="/register" className='underline-offset-3 underline'>Create Account</Link>
           </div>

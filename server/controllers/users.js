@@ -31,6 +31,7 @@ module.exports.register = async (req, res) => {
             email,
             phone: formatPhoneNumber(phone),
             business,
+            coins: 50,
         });
         
             const registeredUser = await User.register(user, password);
@@ -46,6 +47,7 @@ module.exports.register = async (req, res) => {
                     business: registeredUser.business,
                     reviews: registeredUser.reviews,
                     rating: registeredUser.rating,
+                    coins: registeredUser.coins,
                 });
 
             });
@@ -82,6 +84,7 @@ module.exports.login = async (req, res, next) => {
                 website: user.website,
                 reviews: user.reviews.length,
                 rating: user.rating,
+                coins: user.coins,
             }); 
         });
     })(req, res, next);
@@ -189,6 +192,7 @@ module.exports.getProfileOwner = async (req, res) => {
         website: user.website,
         rating: user.rating,
         business: user.business,
+        coins: user.coins,
     })
 }
 
@@ -223,6 +227,7 @@ module.exports.updateUser = async (req, res) => {
                 website: user.website,
                 rating: user.rating,
                 reviews: user.reviews.length,
+                coins: user.coins,
             })
         } 
     } catch (error) {
@@ -373,3 +378,9 @@ module.exports.updateBank = async (req, res) => {
     await user.save();
     res.json(user)
 }
+
+
+module.exports.fetchUsers = async (req, res) => {
+
+
+};

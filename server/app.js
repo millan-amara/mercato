@@ -76,8 +76,10 @@ const sessionConfig = session({
     saveUninitialized: false,
     cookie: {
         httpOnly: true,
-        secure: true, // Use secure cookies in production
-        sameSite: "none", // Adjust for cross-origin
+        secure: process.env.NODE_ENV === "production", // Use secure cookies in production
+        sameSite: process.env.NODE_ENV === "production" ? "none" : "lax", // Adjust for cross-origin
+        // secure: true, // Use secure cookies in production
+        // sameSite: "none", // Adjust for cross-origin
         expires: new Date(Date.now() + 1000 * 60 * 60 * 24 * 7),
         maxAge: 1000 * 60 * 60 *24 * 7
     }

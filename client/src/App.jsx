@@ -25,6 +25,7 @@ import ResetSuccess from './pages/ResetSuccess.jsx';
 import Coins from './pages/Coins.jsx';
 import Dashboard from './pages/Dashboard.jsx';
 import PaymentInfo from './pages/PaymentInfo.jsx';
+import DashboardUsers from './pages/DashboardUsers.jsx';
 
 
 function App() {
@@ -76,6 +77,9 @@ function App() {
       </Route>
       <Route path='/dashboard' element={<PrivateRoute />} >
         <Route path='/dashboard' element={<Dashboard />} />
+      </Route>
+      <Route path='/dashboard/users' element={<PrivateRoute />} >
+        <Route path='/dashboard/users' element={<DashboardUsers />} />
       </Route>
       <Route path='/success-pay' element={<PrivateRoute />} >
         <Route path='/success-pay' element={<SuccessPay />} />
