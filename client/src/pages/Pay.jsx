@@ -58,7 +58,7 @@ function Pay() {
   }
 
   return (
-    <div className='min-h-screen flex flex-col'>
+    <div className='h-[100dvh] md:min-h-screen flex flex-col'>
       <Navbar />
       <div className='flex flex-col items-center justify-center flex-grow px-4'>
         <form className='w-full max-w-md bg-white p-6 rounded-lg shadow-lg' onSubmit={initiatePayment}>
@@ -85,7 +85,7 @@ function Pay() {
                 value={item}
                 className="mt-2 focus:ring-2 focus:outline-none appearance-none w-full text-sm leading-6 text-slate-900 rounded-md py-2 pl-2 ring-1 ring-slate-200 shadow-sm" 
                 onChange={onChange}
-                placeholder="Samsung TV, vacation to Thailand"
+                placeholder="Samsung TV, washing machine"
                 required
             />
           </div>
