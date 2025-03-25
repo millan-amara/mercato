@@ -97,11 +97,11 @@ function Home() {
   return (
     <div className='h-[100dvh] flex flex-col justify-between'>
       <Navbar />
-      <div className='flex flex-col md:flex-row md:w-full justify-between mt-2 h-5/6 pt-2 px-4 text-center'>
-        <div className='text-3xl md:text-5xl md:w-1/3 min-h-[3em]'>
+      <div className='flex flex-col md:flex-row md:w-full justify-between h-5/6 pt-2 px-4 text-center'>
+        <div className='md:w-1/3 min-h-[3em]'>
           
 
-          <div className='grid grid-cols-2 gap-4 mt-6 w-full max-w-sm h-56'>
+          <div className='grid grid-cols-2 gap-2 md:mt-6 w-full max-w-sm h-56'>
             {images[currentSet].map((image, index) => (
               <motion.img
                 key={index}
@@ -115,14 +115,14 @@ function Home() {
               />
             ))}
           </div>
-          <div className='grid grid-cols-2 gap-4 mt-6 w-full max-w-sm'>
+          <div className='grid grid-cols-2 gap-2 md:mt-6 w-full max-w-sm'>
             <img src={ImageOne} alt='Tech 1' className='w-full h-24 object-cover rounded-lg' />
             <img src={ImageTwo} alt='Tech 2' className='w-full h-24 object-cover rounded-lg' />
 
           </div>
         </div>
         
-        <form onSubmit={handleSubmit} className='w-full md:w-2/3 md:px-12 mt-6 pb-20 flex flex-col items-center justify-center'>
+        <form onSubmit={handleSubmit} className='w-full md:w-2/3 md:px-12 pb-24 flex flex-col items-center justify-center'>
         {/* <div><span ref={el} className='auto-type text-blue-500 min-h-[3em]'></span></div> */}
           <textarea
             id="description"
