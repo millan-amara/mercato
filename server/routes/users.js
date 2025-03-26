@@ -4,7 +4,7 @@ const users = require('../controllers/users');
 const catchAsync = require('../utils/catchAsync');
 const { isLoggedIn } = require('../middleware');
 
-router.get('/', users.fetchUsers);
+router.get('/users', users.fetchUsers);
 router.post('/users/forgot', users.forgot);
 router.post('/users/reset/:token', users.reset);
 
@@ -29,6 +29,7 @@ router.put('/users/:id/update-mpesa', isLoggedIn, users.updateMpesa);
 router.put('/users/:id/update-bank', isLoggedIn, users.updateBank);
 
 router.put('/users/:userId/updateuser', isLoggedIn, users.updateUser);
+router.put('/users/:userId/updateverified', isLoggedIn, users.updateVerified);
 router.get('/users/:userId', isLoggedIn, catchAsync(users.getProfileOwner));
 
 

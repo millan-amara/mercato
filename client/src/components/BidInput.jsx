@@ -49,48 +49,49 @@ function BidInput({ postId }) {
   
   const handleSubmit = async (e) => {
     e.preventDefault()
-    setLoading(true)
+    console.log('submitted')
+    // setLoading(true)
 
-    if(images.length > 6) {
-        setLoading(false)
-        toast.error('Max 6 images')
-        return;
-    }
+    // if(images.length > 6) {
+    //     setLoading(false)
+    //     toast.error('Max 6 images')
+    //     return;
+    // }
 
-    if(coins < 2) {
-      setLoading(false)
-      toast.error('Minimu coins is 2')
-      return
-    }
+    // if(coins < 2) {
+    //   setLoading(false)
+    //   toast.error('Minimu coins is 2')
+    //   return
+    // }
 
-    const requestBody = new FormData();
+    // const requestBody = new FormData();
     
-    requestBody.append('text', bidText);
-    requestBody.append('price', price);
-    requestBody.append('postId', postId);
-    requestBody.append('coins', coins)
+    // requestBody.append('text', bidText);
+    // requestBody.append('price', price);
+    // requestBody.append('postId', postId);
+    // requestBody.append('coins', coins)
 
 
-    const compressedImages = await Promise.all(selectedImages.map(file => compressImage(file)));
+    // const compressedImages = await Promise.all(selectedImages.map(file => compressImage(file)));
 
-    compressedImages.forEach((image) => {
-      requestBody.append('files', image); // Assuming 'files' is the key for the backend
-    });
+    // compressedImages.forEach((image) => {
+    //   requestBody.append('files', image); // Assuming 'files' is the key for the backend
+    // });
 
-    for (const pair of requestBody.entries()) {
-      console.log(pair[0], pair[1]);
-    }
+    // for (const pair of requestBody.entries()) {
+    //   console.log(pair[0], pair[1]);
+    // }
 
-    try {
-      await dispatch(createBid(requestBody)).unwrap();
-      toast.success('Saved successfully!');
-      setLoading(false);
-      navigate('/posts')
-    } catch (error) {
-      console.log(error)
-      setLoading(false);
-      toast.error("couldn't add")
-    }
+    // try {
+    //   await dispatch(createBid(requestBody)).unwrap();
+    //   toast.success('Saved successfully!');
+    //   setLoading(false);
+    //   navigate('/posts')
+    // } catch (error) {
+    //   console.log(error)
+    //   setLoading(false);
+    //   toast.error("couldn't add")
+    // }
 
 
   }
@@ -187,9 +188,9 @@ function BidInput({ postId }) {
               </div>
             </div>
 
-            <div id='search-button' className='flex justify-center mb-24 md:mb-8'>
+            {/* <div id='search-button' className='flex justify-center mb-24 md:mb-8'>
                 <button onClick={handleSubmit} type='submit' className='flex bg-black text-white w-1/2 sm:w-2/5 md:w-1/3 py-2 rounded-md items-center justify-center hover:opacity-80'>Submit Bid <span className='ml-2'><FaArrowRight /></span></button>
-            </div>
+            </div> */}
         </form>
 
     </div>

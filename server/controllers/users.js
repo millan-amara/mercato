@@ -381,6 +381,36 @@ module.exports.updateBank = async (req, res) => {
 
 
 module.exports.fetchUsers = async (req, res) => {
+    const users = await User.find({})
 
+    console.log(users)
+    res.json(users)
 
 };
+
+
+module.exports.updateVerified = async (req, res) => {
+
+    try {
+ 
+        const user = await User.findByIdAndUpdate(req.params.userId, {
+            isVerified: true,
+        }, { new: true })
+    
+        res.status(201).json({
+            _id: user._id,
+            email: user.email,
+            business: user.business,
+            fname: user.fname,
+            phone: user.phone,
+            website: user.website,
+            rating: user.rating,
+            reviews: user.reviews.length,
+            coins: user.coins,
+            isVerified: user.isVerified
+        })
+    } catch (error) {
+        console.log(error)
+    }
+
+}
