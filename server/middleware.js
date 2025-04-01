@@ -1,6 +1,7 @@
 const User = require('./models/user');
 const Post = require('./models/post');
-const ExpressError = require('./utils/ExpressError')
+const Listing = require('./models/listing');
+const ExpressError = require('./utils/ExpressError');
 
 module.exports.isLoggedIn = (req, res, next) => {
     if (!req.isAuthenticated()) {
@@ -17,6 +18,16 @@ module.exports.isPostAuthor = async (req, res, next) => {
     const { id } = req.params;
     const post = await Post.findById(id);
     if (!post.author.equals(req.user._id)) {
+        console.log('not allowed to do that')
+        throw new ExpressError('Not allowed to do that', 403)
+    }
+    next();
+}
+
+module.exports.isListingAuthor = async (req, res, next) => {
+    const { id } = req.params;
+    const listing = await Listing.findById(id);
+    if (!listing.author.equals(req.user._id)) {
         console.log('not allowed to do that')
         throw new ExpressError('Not allowed to do that', 403)
     }

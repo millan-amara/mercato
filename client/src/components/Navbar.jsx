@@ -34,6 +34,10 @@ function Navbar() {
         >
           {isOpen ? <FaTimes /> : <FaBars />}
         </button>
+        <div className='hidden md:flex'>
+          <Link to={`/explore`} className='hover:underline font-semibold mr-2'>Explore</Link>
+          <Link to={`/postad`} className='hover:underline font-semibold'>Post Ad</Link>
+        </div>
         
         <div className='hidden md:flex items-center'>
           <div className='flex items-center py-1'>

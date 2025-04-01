@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import { FaDollarSign, FaPlus, FaUserLarge } from "react-icons/fa6";
 import { FaThList } from "react-icons/fa";
 import { PlusCircle, PlusSquare } from "lucide-react";
+import { MdExplore } from "react-icons/md";
 
 const BottomNavbar = ({ user }) => {
   if (!user) return null; // Hide if user isn't logged in
@@ -19,6 +20,10 @@ const BottomNavbar = ({ user }) => {
           <span className="text-xs">Requests</span>
         </Link>
       )}
+      <Link to="/explore" className="flex flex-col items-center text-gray-700 hover:text-fuchsia-700">
+        <MdExplore className="text-xl" />
+        <span className="text-xs">Explore</span>
+      </Link>
 
       <Link to="/makepay" className="flex flex-col items-center text-gray-700 hover:text-fuchsia-700">
         <FaDollarSign className="text-xl" />

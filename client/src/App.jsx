@@ -4,9 +4,11 @@ import {ToastContainer} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Home from './pages/Home';
 import Posts from './pages/Posts';
+import Explore from './pages/Explore.jsx';
 import Login from './pages/Login';
 import Register from './pages/Register';
 import ShowPost from './pages/ShowPost';
+import ShowListing from './pages/ShowListing';
 import PrivateRoute from './components/PrivateRoute';
 import BusinessPrivateRoute from './components/BusinessPrivateRoute.jsx';
 import Profile from './pages/Profile';
@@ -26,6 +28,7 @@ import Coins from './pages/Coins.jsx';
 import Dashboard from './pages/Dashboard.jsx';
 import PaymentInfo from './pages/PaymentInfo.jsx';
 import DashboardUsers from './pages/DashboardUsers.jsx';
+import PostAd from './pages/PostAd.jsx';
 
 
 function App() {
@@ -49,6 +52,12 @@ function App() {
       <Route path="/posts" element={<BusinessPrivateRoute />}>
         <Route path="/posts" element={<Posts />} />
       </Route>
+      <Route path="/explore" element={<PrivateRoute />}>
+        <Route path="/explore" element={<Explore />} />
+      </Route>
+      <Route path="/postad" element={<PrivateRoute />}>
+        <Route path="/postad" element={<PostAd />} />
+      </Route>
 
       <Route path='/user/profile/:userId/earnings' element={<BusinessPrivateRoute />} >
         <Route path='/user/profile/:userId/earnings' element={<Earnings />} />
@@ -61,6 +70,9 @@ function App() {
       </Route>
       <Route path='/user/profile/:userId/coins' element={<PrivateRoute />} >
         <Route path='/user/profile/:userId/coins' element={<Coins />} />
+      </Route>
+      <Route path='/listings/:listingId' element={<PrivateRoute />} >
+        <Route path='/listings/:listingId' element={<ShowListing />} />
       </Route>
       <Route path='/posts/post/:postId' element={<PrivateRoute />} >
         <Route path='/posts/post/:postId' element={<ShowPost />} />

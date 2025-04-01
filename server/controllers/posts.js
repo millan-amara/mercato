@@ -63,35 +63,35 @@ module.exports.fetchPosts = async (req, res) => {
     }
 }
 
-module.exports.fetchPagePosts = async (req, res) => {
-    const searchQuery = req.body.search;
-    const limit = 9;
-    const pageNumber = req.body.page - 1;
+// module.exports.fetchPagePosts = async (req, res) => {
+//     const searchQuery = req.body.search;
+//     const limit = 9;
+//     const pageNumber = req.body.page - 1;
 
-    if(req.body.search) {
-        const posts = await Post.aggregate([
-            {
-                $search: {
-                    index: 'default',
-                    text: {
-                        path: {
-                            'wildcard' : '*'
-                        },
-                        query: searchQuery,
-                        fuzzy: {
-                            maxEdits: 2,
-                            prefixLength: 2
-                        }
-                    }
-                }
-            },
-            { $skip: limit * pageNumber },
-            { $limit: limit }
-        ]);
+//     if(req.body.search) {
+//         const posts = await Post.aggregate([
+//             {
+//                 $search: {
+//                     index: 'default',
+//                     text: {
+//                         path: {
+//                             'wildcard' : '*'
+//                         },
+//                         query: searchQuery,
+//                         fuzzy: {
+//                             maxEdits: 2,
+//                             prefixLength: 2
+//                         }
+//                     }
+//                 }
+//             },
+//             { $skip: limit * pageNumber },
+//             { $limit: limit }
+//         ]);
 
-        res.status(200).json(posts)
-    }
-}
+//         res.status(200).json(posts)
+//     }
+// }
 
 module.exports.createPost = async (req, res) => {
     try {
