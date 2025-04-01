@@ -5,7 +5,7 @@ import Navbar from '../components/Navbar';
 import { useSelector } from 'react-redux';
 import SearchForm from '../components/SearchForm'
 import axios from 'axios';
-import ListingItem from '../components/ListingITEM.JSX';
+import ListingItem from '../components/ListingItem.jsx';
 
 const API_URL = import.meta.env.VITE_API_URL;
 
