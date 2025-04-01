@@ -89,9 +89,6 @@ function Navbar() {
                 <FaDollarSign className='text-fuchsia-700 inline-block mr-2' />
                 My Money
               </Link>
-              <Link to={`/user/profile/${user._id}/coins`} className='bg-yellow-300 px-2 py-2 rounded-md text-center'>
-                Coins: {user.coins}
-              </Link>
               <Link to={`/user/profile/${user._id}/payment-info`} className='flex items-center justify-center hover:bg-fuchsia-300 py-2 rounded-md mt-2 mb-2 border'>
                 <FaDollarSign className='text-fuchsia-700 inline-block mr-2' />
                   Payment Info

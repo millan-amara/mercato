@@ -16,7 +16,6 @@ const BidSchema = new Schema({
         type: String,
         required: [true, 'Please add some text'],
     },
-    price: Number,
     bookmarked: {
         type: Boolean,
         default: "false",

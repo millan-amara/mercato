@@ -14,7 +14,6 @@ function PostAd() {
   const [loading, setLoading] = useState(false);
   const [formData, setFormData] = useState({
     title: '',
-    stock: '',
     actualPrice: '',
     offerPrice: '',
     images: [],
@@ -174,21 +173,12 @@ function PostAd() {
           <div className='mb-5'>     
             <label htmlFor="offerPrice">Offer Price</label> 
             <input 
-                type="number" 
-                id='offerPrice'
-                value={offerPrice}
-                className="mt-1 focus:ring-2 focus:outline-none appearance-none w-full text-sm leading-6 text-slate-900 rounded-md py-2 pl-2 ring-1 ring-slate-200 shadow-sm" 
-                onChange={onChange}
-            />
-          </div>
-          <div className='mb-5'>     
-            <label htmlFor="stock">Stock</label> 
-            <input 
-                type="number" 
-                id='stock'
-                value={stock}
-                className="mt-1 focus:ring-2 focus:outline-none appearance-none w-full text-sm leading-6 text-slate-900 rounded-md py-2 pl-2 ring-1 ring-slate-200 shadow-sm" 
-                onChange={onChange}
+              type="number" 
+              id='offerPrice'
+              value={offerPrice}
+              placeholder='Ukikata bei'
+              className="mt-1 focus:ring-2 focus:outline-none appearance-none w-full text-sm leading-6 text-slate-900 rounded-md py-2 pl-2 ring-1 ring-slate-200 shadow-sm" 
+              onChange={onChange}
             />
           </div>
           <div className='w-full h-80 md:h-72 max-w-screen-md mb-8'>

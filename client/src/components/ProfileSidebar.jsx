@@ -20,7 +20,6 @@ function ProfileSidebar({ handleTabChange,isOwner,activeTab,profileData,loggedIn
 
   const links = [
     { key: "6", title: "My Money", path: "earnings", icon: <MdSecurity /> },  
-    { key: "7", title: `Coins: ${loggedInUser.coins}`, path: "coins", icon: <MdSecurity /> },
   ]
   
   return (

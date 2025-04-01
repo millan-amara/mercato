@@ -1,8 +1,6 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
 import Navbar from '../components/Navbar';
-import { useSelector } from 'react-redux';
 import SearchForm from '../components/SearchForm'
 import axios from 'axios';
 import ListingItem from '../components/ListingItem.jsx';
@@ -22,7 +20,6 @@ const fetchListings = async ({ queryKey }) => {
 
 function Explore() {
 
-  const { user } = useSelector((state) => state.auth);
   const [currentPage, setCurrentPage] = useState(1);
   const [searchQuery, setSearchQuery] = useState('');
   const [submittedQuery, setSubmittedQuery] = useState('');

@@ -7,6 +7,7 @@ import Navbar from '../components/Navbar';
 import { useSelector } from 'react-redux';
 import ListingItemSimilar from '../components/ListingItemSimilar';
 import ListingItemMore from '../components/ListingItemMore';
+import Footer from '../components/Footer';
 
 import { Navigation, Pagination, Scrollbar, A11y } from 'swiper/modules';
 import { Swiper, SwiperSlide } from 'swiper/react';
@@ -91,14 +92,14 @@ function ShowListing() {
                     <div
                       className="relative flex justify-center" 
                     >
-                      <img src={url.url} className="" alt={listing.title} />
+                      <img src={url.url} className="max-h-80" alt={listing.title} />
                     </div>
                 </SwiperSlide>
             ))}
         </Swiper>
-        {user && user._id === listing.author._id &&
+        {user && user._id === listing.author &&
         <div className='flex justify-center'>
-          <Link className='bg-green-300 mr-2 rounded-md w-1/3 md:w-1/5 py-2 text-center'>Edit</Link>
+          <Link to={`/listings/${listing._id}/edit`} className='bg-green-300 mr-2 rounded-md w-1/3 md:w-1/5 py-2 text-center'>Edit</Link>
           <button onClick={handleDelete} className='bg-orange-400 ml-2 rounded-md w-1/3 md:w-1/5 py-2 text-white'>Delete</button>
         </div>}
 
@@ -204,8 +205,9 @@ function ShowListing() {
 
 
 
-      </main>
-      </>
+    </main>
+    <Footer />
+  </>
 
   )
 }

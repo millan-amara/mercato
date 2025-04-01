@@ -13,7 +13,7 @@ router.route('/')
 router.get('/fetchlistings', catchAsync(listings.fetchListings));
 
 router.get('/:id', catchAsync(listings.showListing));
-router.put('/:id', isLoggedIn, isListingAuthor, catchAsync(listings.updateListing));
+router.put('/:id', [isLoggedIn, isBusiness, isListingAuthor, upload.array('files')], catchAsync(listings.updateListing));
 router.delete('/:id', isLoggedIn, isListingAuthor, catchAsync(listings.deleteListing));
 
 module.exports = router;

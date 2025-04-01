@@ -1,5 +1,6 @@
 const User = require('../models/user');
 const Listing = require('../models/listing');
+const { cloudinary } = require("../cloudinary");
 const ExpressError = require('../utils/ExpressError');
 
 module.exports.createListing = async (req, res) => {
@@ -100,16 +101,32 @@ module.exports.deleteListing = async (req, res) => {
 }
 
 module.exports.updateListing = async (req, res) => {
-
     try {
-        const listing = await Listing.findByIdAndUpdate(req.params.id, {
-            ...req.body,
-        }, { new: true })
+        const listing = await Listing.findByIdAndUpdate(req.params.id, req.body);
+        if (!listing) {
+            return res.status(404).json({ error: "Listing not found" });
+        }
 
-        await listing.save()
+        const listingImages = req.files.map(f => ({ url: f.path, filename: f.filename }));
+        listing.imgs = listing.imgs.concat(listingImages);
+    
+        if (req.body.deleted) {
+            const deleteImages = req.body.deleted;
+            
+            const images = [...deleteImages]
+           
+            for (let filename of images) {
+                await cloudinary.uploader.destroy(filename);
+            }
+            await listing.updateOne({ $pull: { imgs: { filename: { $in: deleteImages } } } });
+        }
+
+        await listing.save();
+
         res.status(201).json(listing)
-    } catch (error) {
-        console.log(error)
+    
+    } catch (e) {
+        console.log(e)
     }
 
 }

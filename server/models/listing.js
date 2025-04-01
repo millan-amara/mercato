@@ -16,7 +16,6 @@ const ListingSchema = new Schema({
     actualPrice: Number,
     offerPrice: Number,
     title: String,
-    stock: Number,
     imgs: [ImageSchema],
 }, {
     timestamps: true,

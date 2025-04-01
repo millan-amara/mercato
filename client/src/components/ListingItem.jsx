@@ -14,7 +14,7 @@ function ListingItem({ listing }) {
             <img
                 src={listing.imgs[0].url}
                 alt={listing.title}
-                className='w-2/5 h-28 lg:w-1/2 lg:h-36'
+                className='w-2/5 h-24 lg:w-1/2 lg:h-32'
             />
 
             <div className="w-1/2 lg:ml-2">

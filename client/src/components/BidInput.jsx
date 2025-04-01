@@ -16,21 +16,12 @@ function BidInput({ postId }) {
   const [loading, setLoading] = useState(false);
   const [formData, setFormData] = useState({
     images: [],
-    price: '',
   });
 
-  const {price} = formData;
-  const [coins, setCoins] = useState(2);
+
   const [bidText, setBidText] = useState("");
   const navigate = useNavigate();
   const dispatch = useDispatch();
-
-  const onChange = (e) => {
-    setFormData((prevState) => ({
-        ...prevState,
-        [e.target.id]: e.target.value
-    }))
-  }
 
   const compressImage = (file) => {
     return new Promise((resolve, reject) => {
@@ -50,52 +41,37 @@ function BidInput({ postId }) {
   const handleSubmit = async (e) => {
     e.preventDefault()
     console.log('submitted')
-    // setLoading(true)
+    setLoading(true)
 
-    // if(images.length > 6) {
-    //     setLoading(false)
-    //     toast.error('Max 6 images')
-    //     return;
-    // }
+    if(images.length > 6) {
+        setLoading(false)
+        toast.error('Max 6 images')
+        return;
+    }
 
-    // if(coins < 2) {
-    //   setLoading(false)
-    //   toast.error('Minimu coins is 2')
-    //   return
-    // }
-
-    // const requestBody = new FormData();
+    const requestBody = new FormData();
     
-    // requestBody.append('text', bidText);
-    // requestBody.append('price', price);
-    // requestBody.append('postId', postId);
-    // requestBody.append('coins', coins)
+    requestBody.append('text', bidText);
+    requestBody.append('postId', postId);
 
 
-    // const compressedImages = await Promise.all(selectedImages.map(file => compressImage(file)));
+    const compressedImages = await Promise.all(selectedImages.map(file => compressImage(file)));
 
-    // compressedImages.forEach((image) => {
-    //   requestBody.append('files', image); // Assuming 'files' is the key for the backend
-    // });
+    compressedImages.forEach((image) => {
+      requestBody.append('files', image); // Assuming 'files' is the key for the backend
+    });
 
-    // for (const pair of requestBody.entries()) {
-    //   console.log(pair[0], pair[1]);
-    // }
-
-    // try {
-    //   await dispatch(createBid(requestBody)).unwrap();
-    //   toast.success('Saved successfully!');
-    //   setLoading(false);
-    //   navigate('/posts')
-    // } catch (error) {
-    //   console.log(error)
-    //   setLoading(false);
-    //   toast.error("couldn't add")
-    // }
-
-
+    try {
+      await dispatch(createBid(requestBody)).unwrap();
+      toast.success('Saved successfully!');
+      setLoading(false);
+      navigate('/posts')
+    } catch (error) {
+      console.log(error)
+      setLoading(false);
+      toast.error("couldn't add")
+    }
   }
-
 
 
   const onSelectFile = (event) => {
@@ -140,19 +116,6 @@ function BidInput({ postId }) {
     <div>
         <form className=''>
             <div className='flex flex-col items-center mb-12'>
-
-            <div className='w-full max-w-screen-md mb-5'>     
-              <label htmlFor="price">Price</label> 
-              <input 
-                  type="number" 
-                  id='price'
-                  placeholder='KES'
-                  value={price}
-                  className="mt-1 focus:ring-2 focus:outline-none appearance-none w-full text-sm leading-6 text-slate-900 rounded-md py-2 pl-2 ring-1 ring-slate-200 shadow-sm" 
-                  onChange={onChange}
-                  required
-              />
-            </div>
             
             <div className='w-full h-80 md:h-72 max-w-screen-md'>
               <ReactQuill 
@@ -169,28 +132,10 @@ function BidInput({ postId }) {
             </div>
 
             <ImageUpload onSelectFile={onSelectFile} deleteHandler={deleteHandler} selectedImages={selectedImages} />
-
-            <div className='flex flex-col items-center justify-center'>
-              {/* <label htmlFor="seller" className='text-sm mb-2'>Do you wish to boost this bid? (Optional)</label> */}
-              <div className='mb-5 flex w-full md:w-1/3 bg-yellow-300 py-1 px-1 rounded-md'>
-                  <input 
-                      type="number" 
-                      name='coins'
-                      id='coins'
-                      min={2}
-                      value={coins}
-                      disabled
-                      onChange={(e) => setCoins(Number(e.target.value))}
-                      required
-                      className="mt-1 focus:ring-2 focus:outline-none appearance-none w-3/4 md:w-3/5 xl:w-4/5 text-sm leading-6 text-slate-900 rounded-md py-2 pl-2 ring-1 ring-slate-200 shadow-sm" 
-                  />
-                  <p className='px-2 py-1 rounded-md flex items-center text-sm w-1/4 md:w-2/5 xl:w-1/5'>Coins: <span className='font-semibold'>{user.coins - coins}</span></p>
-              </div>
-            </div>
-
-            {/* <div id='search-button' className='flex justify-center mb-24 md:mb-8'>
+            
+            <div id='search-button' className='flex justify-center mb-24 md:mb-8'>
                 <button onClick={handleSubmit} type='submit' className='flex bg-black text-white w-1/2 sm:w-2/5 md:w-1/3 py-2 rounded-md items-center justify-center hover:opacity-80'>Submit Bid <span className='ml-2'><FaArrowRight /></span></button>
-            </div> */}
+            </div>
         </form>
 
     </div>

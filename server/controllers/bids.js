@@ -22,9 +22,9 @@ module.exports.getBids = async (req, res) => {
             throw new ExpressError('Not authorized', 401)
         }
         
-        // Sorting: First by coins (descending), then by createdAt (newest first)
+        // Sorting by createdAt (newest first)
         const bids = post.bids.sort((a, b) => {
-            return new Date(a.createdAt) - new Date(b.createdAt); // Sort by createdAt (latest first)
+            return new Date(b.createdAt) - new Date(a.createdAt); // Sort by createdAt (latest first)
         });
     
         res.status(200).json(bids)
@@ -40,14 +40,6 @@ module.exports.addBid = async (req, res) => {
 
         if(!user) {
             throw new ExpressError('Not allowed to do that', 401)
-        }
-
-        if(user.coins < req.body.coins) {
-            throw new ExpressError('Please recharge your coins', 401);
-        }
-
-        if(req.body.coins < 2) {
-            throw new ExpressError('Minimum of 2 coins', 401);
         }
 
         const post = await Post.findById(req.params.postId);
@@ -78,24 +70,7 @@ module.exports.addBid = async (req, res) => {
         await bid.save();
         await post.save();
 
-        const updatedUser = await User.findByIdAndUpdate(req.user._id, {
-            coins: user.coins - req.body.coins,  
-        }, { new: true })
-
-        res.status(200).json({
-            user: {
-                _id: updatedUser._id,
-                email: updatedUser.email,
-                business: updatedUser.business,
-                fname: updatedUser.fname,
-                phone: updatedUser.phone,
-                website: updatedUser.website,
-                rating: updatedUser.rating,
-                reviews: updatedUser.reviews.length,
-                coins: updatedUser.coins,
-            },
-            bid
-        });
+        res.status(200).json({ user, bid });
     
 
     } catch (error) {

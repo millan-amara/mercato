@@ -24,11 +24,11 @@ import Forgot from './pages/Forgot';
 import ResetPassword from './pages/ResetPassword';
 import ResetFail from './pages/ResetFail';
 import ResetSuccess from './pages/ResetSuccess.jsx';
-import Coins from './pages/Coins.jsx';
 import Dashboard from './pages/Dashboard.jsx';
 import PaymentInfo from './pages/PaymentInfo.jsx';
 import DashboardUsers from './pages/DashboardUsers.jsx';
 import PostAd from './pages/PostAd.jsx';
+import EditListing from './pages/EditListing.jsx';
 
 
 function App() {
@@ -42,6 +42,8 @@ function App() {
       <Route path='/register' element={<Register />} />
       <Route path='/login' element={<Login />} />
       <Route path='/forgot' element={<Forgot />} />
+      <Route path="/explore" element={<Explore />} />
+      <Route path='/listings/:listingId' element={<ShowListing />} />
       <Route path='/reset-password/:token' element={<ResetPassword />} />
       <Route path='/forgot-password/success' element={<ResetSuccess />} />
       <Route path='/reset-password/failed' element={<ResetFail />} />
@@ -52,9 +54,7 @@ function App() {
       <Route path="/posts" element={<BusinessPrivateRoute />}>
         <Route path="/posts" element={<Posts />} />
       </Route>
-      <Route path="/explore" element={<PrivateRoute />}>
-        <Route path="/explore" element={<Explore />} />
-      </Route>
+
       <Route path="/postad" element={<PrivateRoute />}>
         <Route path="/postad" element={<PostAd />} />
       </Route>
@@ -68,12 +68,10 @@ function App() {
       <Route path='/user/profile/:userId/payment-info' element={<PrivateRoute />} >
         <Route path='/user/profile/:userId/payment-info' element={<PaymentInfo />} />
       </Route>
-      <Route path='/user/profile/:userId/coins' element={<PrivateRoute />} >
-        <Route path='/user/profile/:userId/coins' element={<Coins />} />
+      <Route path='/listings/:listingId/edit' element={<PrivateRoute />} >
+        <Route path='/listings/:listingId/edit' element={<EditListing />} />
       </Route>
-      <Route path='/listings/:listingId' element={<PrivateRoute />} >
-        <Route path='/listings/:listingId' element={<ShowListing />} />
-      </Route>
+
       <Route path='/posts/post/:postId' element={<PrivateRoute />} >
         <Route path='/posts/post/:postId' element={<ShowPost />} />
       </Route>

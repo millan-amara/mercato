@@ -46,10 +46,6 @@ function BidContent({ bid, onBookmarkBid }) {
             </div>
           </div>
 
-          <div className='flex justify-end mb-5'>
-            <span className='text-fuchsia-500 font-bold text-xl'>KES {bid.price.toLocaleString()}</span>
-          </div>
-
         {bid.imgs.length !== 0 &&
    <>
           <Swiper 
