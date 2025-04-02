@@ -39,7 +39,7 @@ module.exports.fetchListings = async (req, res) => {
             const foundListings = await Listing.aggregate([
                 {
                     $search: {
-                        index: 'default',
+                        index: 'adsquery',
                         text: {
                             path: {
                                 'wildcard' : '*'
@@ -59,7 +59,7 @@ module.exports.fetchListings = async (req, res) => {
             const allListings = await Listing.aggregate([
                 {
                     $search: {
-                        index: 'default',
+                        index: 'adsquery',
                         text: {
                             path: {
                                 'wildcard' : '*'

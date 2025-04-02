@@ -4,7 +4,7 @@ import { FaBars, FaUserLarge, FaDollarSign, FaPowerOff, FaMoneyBill, FaMoneyChec
 import { useNavigate } from 'react-router-dom';
 import { logout, reset } from '../features/auth/authSlice';
 import { useDispatch, useSelector } from 'react-redux';
-import { FaTimes } from 'react-icons/fa';
+import { FaEdit, FaPiggyBank, FaTimes } from 'react-icons/fa';
 
 
 function Navbar() {
@@ -34,10 +34,11 @@ function Navbar() {
         >
           {isOpen ? <FaTimes /> : <FaBars />}
         </button>
+        {user.business &&
         <div className='hidden md:flex'>
-          <Link to={`/explore`} className='hover:underline font-semibold mr-2'>Explore</Link>
+          <Link to={`/explore`} className='hover:underline font-semibold mr-4'>Explore</Link>
           <Link to={`/postad`} className='hover:underline font-semibold'>Post Ad</Link>
-        </div>
+        </div>}
         
         <div className='hidden md:flex items-center'>
           <div className='flex items-center py-1'>
@@ -80,25 +81,40 @@ function Navbar() {
 
         <div className="flex flex-col mx-auto p-6 mt-10 text-sm">
           <Link to={`/user/profile/${user._id}/transactions`} className='flex items-center justify-center hover:bg-fuchsia-300 py-2 rounded-md border'>
-            <FaMoneyCheck className='text-fuchsia-700 inline-block mr-2' />
-            <span>Transactions</span>
+            <div className='flex w-1/2 items-center'>
+              <FaMoneyCheck className='text-fuchsia-700 inline-block mr-2' />
+              <span>Transactions</span>
+            </div>
+
           </Link>
           {user.business && (
             <>
               <Link to={`/user/profile/${user._id}/earnings`} className='flex items-center justify-center hover:bg-fuchsia-300 py-2 rounded-md mt-2 mb-2 border'>
-                <FaDollarSign className='text-fuchsia-700 inline-block mr-2' />
-                My Money
+                <div className='flex w-1/2 items-center'>
+                  <FaDollarSign className='text-fuchsia-700 inline-block mr-2' />
+                  My Money
+                </div>
+              </Link>
+              <Link to={`/user/profile/${user._id}/earnings`} className='flex items-center justify-center bg-black text-white hover:bg-fuchsia-300 py-2 rounded-md mt-2 mb-2'>
+                <div className='flex w-1/2 items-center'>
+                  <FaEdit className='inline-block mr-2' />
+                  Post Ad
+                </div>
               </Link>
               <Link to={`/user/profile/${user._id}/payment-info`} className='flex items-center justify-center hover:bg-fuchsia-300 py-2 rounded-md mt-2 mb-2 border'>
-                <FaDollarSign className='text-fuchsia-700 inline-block mr-2' />
+                <div className='flex w-1/2 items-center'>
+                  <FaPiggyBank className='text-fuchsia-700 inline-block mr-2' />
                   Payment Info
+                </div>
               </Link>
             </>
           )}
 
-          <button onClick={onLogout} className='hover:bg-fuchsia-300 py-2 rounded-md mt-2 border'>
-            <FaPowerOff className='text-fuchsia-700 inline-block mr-2' />
-            Logout
+          <button onClick={onLogout} className='flex items-center justify-center hover:bg-fuchsia-300 py-2 rounded-md mt-2 mb-2 border'>
+      
+              <FaPowerOff className='text-fuchsia-700 inline-block mr-2' />
+              Logout
+    
           </button>
         </div>
       </div>

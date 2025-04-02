@@ -139,7 +139,7 @@ function ProfileEdit({ loggedInUser, isOwner }) {
             </div>
         </div>
 
-        <button onClick={onSubmit} type='submit' className="flex justify-center bg-gradient-to-r from-fuchsia-700 via-slate-800 to-gray-950 hover:bg-gradient-to-l w-full text-white text-bold rounded-md py-3">
+        <button onClick={onSubmit} type='submit' className="flex justify-center bg-fuc bg-black hover:bg-slate-800 w-full text-white text-bold rounded-md py-3">
             <span>Edit profile</span>
             {loading &&
                 <div className='ml-2 w-6 h-6 md:w-8 md:h-6 border-4 border-slate-300 border-t-transparent rounded-full animate-spin'></div>
