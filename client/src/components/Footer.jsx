@@ -5,7 +5,7 @@ import { FaMeta } from "react-icons/fa6";
 
 function Footer() {
   return (
-    <div id="footer" className="text-white px-5 md:px-0 pt-14 pb-8 text-sm bg-slate-800">
+    <div id="footer" className="text-white px-5 md:px-0 pt-14 pb-24 text-sm bg-slate-800">
         <div className="flex flex-col md:flex-row justify-around mb-5">
             <div className="w-full md:w-1/4 md:flex md:flex-col md:justify-center md:items-center">
                 <p className="text-lg mb-3">ABOUT</p>
