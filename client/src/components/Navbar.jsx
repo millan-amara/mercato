@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { FaBars, FaUserLarge, FaDollarSign, FaPowerOff, FaMoneyBill, FaMoneyCheck } from "react-icons/fa6";
+import { FaBars, FaUserLarge, FaDollarSign, FaPowerOff, FaMoneyBill, FaMoneyCheck, FaList, FaWhatsapp } from "react-icons/fa6";
 import { useNavigate } from 'react-router-dom';
 import { logout, reset } from '../features/auth/authSlice';
 import { useDispatch, useSelector } from 'react-redux';
-import { FaEdit, FaPiggyBank, FaTimes } from 'react-icons/fa';
+import { FaEdit, FaExternalLinkAlt, FaPiggyBank, FaTimes } from 'react-icons/fa';
 
 
 function Navbar() {
@@ -107,17 +107,39 @@ function Navbar() {
                   Payment Info
                 </div>
               </Link>
+              <Link to={`/user/profile/${user._id}/ads`} className='flex items-center justify-center hover:bg-fuchsia-300 py-2 rounded-md mt-2 mb-2 border'>
+                <div className='flex w-1/2 items-center'>
+                  <FaList className='text-fuchsia-700 inline-block mr-2' />
+                  My Ads
+                </div>
+              </Link>
             </>
           )}
 
           <button onClick={onLogout} className='flex items-center justify-center hover:bg-fuchsia-300 py-2 rounded-md mt-2 mb-2 border'>
-      
+            <div className='flex w-1/2 items-center'>
               <FaPowerOff className='text-fuchsia-700 inline-block mr-2' />
               Logout
-    
+            </div>
           </button>
         </div>
+
+        {/* Contact Support section */}
+        <div className="absolute bottom-6 left-0 w-full text-center text-sm text-slate-600 px-4">
+          <div className="mb-1 font-semibold text-black">Contact Support</div>
+          <div className="mb-1">
+            <a href={`https://wa.me/+254700487751`} className="font-medium flex justify-center items-center">
+              <span className='text-green-700 mr-1'>Chat on WhatsApp</span>
+              <FaExternalLinkAlt />
+            </a>
+          </div>
+          <div>
+            <span className="font-medium">Email:</span> <span className="">support@peskaya.com</span>
+          </div>
+        </div>
+
       </div>
+
 
 
       {isOpen && (

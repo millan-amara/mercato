@@ -29,7 +29,7 @@ import PaymentInfo from './pages/PaymentInfo.jsx';
 import DashboardUsers from './pages/DashboardUsers.jsx';
 import PostAd from './pages/PostAd.jsx';
 import EditListing from './pages/EditListing.jsx';
-
+import MyAds from './pages/MyAds.jsx';
 
 function App() {
   const { user } = useSelector((state) => state.auth);
@@ -61,6 +61,9 @@ function App() {
 
       <Route path='/user/profile/:userId/earnings' element={<BusinessPrivateRoute />} >
         <Route path='/user/profile/:userId/earnings' element={<Earnings />} />
+      </Route>
+      <Route path='/user/profile/:userId/ads' element={<BusinessPrivateRoute />} >
+        <Route path='/user/profile/:userId/ads' element={<MyAds />} />
       </Route>
       <Route path='/user/profile/:userId/transactions' element={<PrivateRoute />} >
         <Route path='/user/profile/:userId/transactions' element={<Transactions />} />

@@ -17,7 +17,7 @@ import 'swiper/css';
 import 'swiper/css/navigation'; 
 import 'swiper/css/pagination';
 import 'swiper/css/scrollbar'; 
-import { FaLocationPin, FaShare } from 'react-icons/fa6';
+import { FaLocationPin, FaShare, FaWhatsapp } from 'react-icons/fa6';
 import { FaShareAlt } from 'react-icons/fa';
 
 const API_URL = import.meta.env.VITE_API_URL;
@@ -137,21 +137,24 @@ function ShowListing() {
             <p>Free shipping</p>
             <p>Same day delivery</p>
           </div>
-          <div className='mt-4 flex items-center'>
+          {/* <div className='mt-4 flex items-center'>
             <FaLocationPin />
             <span className='ml-2'>Deliver to <button className='underline underline-offset-2 text-sm'>Add Location</button> </span>
-          </div>
+          </div> */}
           <div className='mt-4'>
             <p className='text-lg lg:text-2xl text-green-600 font-medium'>In Stock</p>
-            <p className='bg-slate-200 w-full mt-1 py-2 rounded-md px-1 flex items-center'>
+            {/* <p className='bg-slate-200 w-full mt-1 py-2 rounded-md px-1 flex items-center'>
               <span className='w-1/4 md:w-2/5'>Quantity: </span>
               <select name="" id="" className='w-3/4 md:w-3/5 rounded-md py-2 px-1'>
                 <option value="1">1</option>
                 <option value="2">2</option>
                 <option value="3">3</option>
               </select>
-            </p>
-            <button className='rounded-md bg-fuchsia-600 hover:bg-fuchsia-700 text-white w-full mt-2 py-2 lg:py-4'>Buy Now</button>
+            </p> */}
+            <a href={`https://wa.me/+${listing.author.phone}`} className='rounded-md font-semibold flex items-center justify-center bg-black hover:bg-slate-800 text-white w-full mt-2 py-2 lg:py-4'>
+              <FaWhatsapp />
+              <span className='ml-2'>Talk to Seller</span>
+            </a>
           </div>
         </div>
 

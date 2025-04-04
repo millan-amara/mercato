@@ -130,3 +130,27 @@ module.exports.updateListing = async (req, res) => {
     }
 
 }
+
+module.exports.fetchUserListings = async (req, res) => {
+    try {
+        const { page = 1, limit = 2 } = req.query;
+        const userId = req.user._id;
+        if (!userId) return res.status(400).json({ error: "User ID is required" });
+        const pageNumber = parseInt(page);
+        const limitNumber = parseInt(limit);
+    
+        const listings = await Listing.find({ author: userId })
+          .sort({ createdAt: -1 })
+          .skip((pageNumber - 1) * limitNumber)
+          .limit(limitNumber);
+    
+        const totalListings = await Listing.countDocuments({ author: userId });
+        const hasMore = pageNumber * limitNumber < totalListings;
+        const pages = Math.ceil(totalListings / limitNumber);
+    
+        res.json({ listings, hasMore, pages });
+      } catch (error) {
+        console.log(error)
+        res.status(500).json({ error: "Server error" });
+      }
+}

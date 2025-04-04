@@ -11,6 +11,7 @@ router.route('/')
     .post([isLoggedIn, isBusiness, upload.array('files')], catchAsync(listings.createListing))
 
 router.get('/fetchlistings', catchAsync(listings.fetchListings));
+router.get('/fetchuserlistings', isLoggedIn, catchAsync(listings.fetchUserListings));
 
 router.get('/:id', catchAsync(listings.showListing));
 router.put('/:id', [isLoggedIn, isBusiness, isListingAuthor, upload.array('files')], catchAsync(listings.updateListing));
