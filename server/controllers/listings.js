@@ -133,7 +133,7 @@ module.exports.updateListing = async (req, res) => {
 
 module.exports.fetchUserListings = async (req, res) => {
     try {
-        const { page = 1, limit = 2 } = req.query;
+        const { page = 1, limit = 9 } = req.query;
         const userId = req.user._id;
         if (!userId) return res.status(400).json({ error: "User ID is required" });
         const pageNumber = parseInt(page);

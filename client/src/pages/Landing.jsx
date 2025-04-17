@@ -1,21 +1,20 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import BackImage from '../assets/images/earbuds.jpg';
-import ImageOne from '../assets/images/airpods.jpg';
-import ImageTwo from '../assets/images/camera.jpg';
-import ImageThree from '../assets/images/controller.jpg';
-import ImageFour from '../assets/images/gamer.jpg';
-import ImageFive from '../assets/images/casings.jpg';
-import ImageSix from '../assets/images/earbuds.jpg';
-import ImageSeven from '../assets/images/iphone.jpg';
+import BackImage from '../assets/house/apartment.jpg';
+import ImageOne from '../assets/house/apartment.jpg';
+import ImageTwo from '../assets/house/apartment.jpg';
+import ImageThree from '../assets/house/balcony.jpg';
+import ImageFour from '../assets/house/bed.jpg';
+import ImageFive from '../assets/house/mattress.jpg';
+import ImageSix from '../assets/house/outdoor.jpg';
+import ImageSeven from '../assets/house/bedroom.jpg';
 import ImageEight from '../assets/images/playstation.jpg';
-import ImageNine from '../assets/images/nintendo.jpg';
-import ImageTen from '../assets/images/ps4.jpg';
-import ImageEleven from '../assets/images/printer.jpg';
+import ImageNine from '../assets/house/chairs.jpg';
+import ImageTen from '../assets/house/bathtub.jpg';
+import ImageEleven from '../assets/house/living.jpg';
 import { CiLogin } from "react-icons/ci";
 import { SiGnuprivacyguard } from "react-icons/si";
-
 
 
 const images = [

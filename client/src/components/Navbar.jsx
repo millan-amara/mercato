@@ -43,9 +43,14 @@ function Navbar() {
         <div className='hidden md:flex items-center'>
           <div className='flex items-center py-1'>
             {user.business && (
-              <div className='mr-4'>
-                <Link to="/posts" className='hover:underline font-semibold'>Requests</Link>
-              </div>
+              <>
+                <div className='mr-4'>
+                  <Link to={`/user/profile/${user._id}/ads`} className='hover:underline font-semibold'>My Ads</Link>
+                </div>
+                <div className='mr-4'>
+                  <Link to="/posts" className='hover:underline font-semibold'>Requests</Link>
+                </div>
+              </>
             )}
             <div>
               <Link to={`/user/profile/${user._id}/transactions`} className='hover:underline font-semibold'>Transactions</Link>
@@ -125,7 +130,7 @@ function Navbar() {
         </div>
 
         {/* Contact Support section */}
-        <div className="absolute bottom-6 left-0 w-full text-center text-sm text-slate-600 px-4">
+        <div className="absolute bottom-24 left-0 w-full text-center text-sm text-slate-600 px-4">
           <div className="mb-1 font-semibold text-black">Contact Support</div>
           <div className="mb-1">
             <a href={`https://wa.me/+254700487751`} className="font-medium flex justify-center items-center">

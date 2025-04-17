@@ -12,7 +12,7 @@ const API_URL = import.meta.env.VITE_API_URL;
 const fetchUserListings = async ({ queryKey }) => {
     const [_key, page] = queryKey;
     const { data } = await axios.get(
-      `${API_URL}/listings/fetchuserlistings?page=${page}&limit=2`
+      `${API_URL}/listings/fetchuserlistings?page=${page}&limit=9`
     );
     return data;
 };
@@ -62,7 +62,7 @@ function MyAds() {
                 <button 
                     disabled={currentPage === 1} 
                     onClick={() => setCurrentPage((p) => p - 1)}
-                    className={`border border-slate-800 rounded-md py-2 px-2 w-1/4 md:w-1/5 flex justify-center items-center ${currentPage === 1 ? 'bg-slate-100 cursor-not-allowed text-gray-400' : 'hover:bg-slate-100'}`}
+                    className={`border border-slate-800 rounded-md py-2 px-2 w-1/4 md:w-1/5 flex justify-center items-center ${currentPage === 1 ? 'bg-slate-100 cursor-not-allowed text-gray-400' : 'hover:text-sm'}`}
                 >
                     <GrFormPrevious />
                     <span className='ml-1'>Previous</span>
@@ -71,7 +71,7 @@ function MyAds() {
                 <button 
                     disabled={!data?.listings.length || !data?.hasMore} 
                     onClick={() => setCurrentPage((p) => p + 1)}
-                    className={`border border-slate-800 rounded-md py-2 px-2 w-1/4 md:w-1/5 flex justify-center items-center ${!data?.listings.length || !data?.hasMore ? 'bg-slate-100 cursor-not-allowed text-gray-400' : 'hover:bg-slate-100'}`}
+                    className={`border border-slate-800 rounded-md py-2 px-2 w-1/4 md:w-1/5 flex justify-center items-center ${!data?.listings.length || !data?.hasMore ? 'bg-slate-100 cursor-not-allowed text-gray-400' : 'hover:text-sm'}`}
                 >
                     <span className='mr-1'>Next</span>
                     <GrFormNext />
