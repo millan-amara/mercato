@@ -111,8 +111,6 @@ function Home() {
       <Navbar />
       <div className='flex flex-col md:flex-row md:w-full justify-between h-5/6 pt-2 px-4 text-center'>
         <div className='md:w-1/3 min-h-[3em]'>
-          
-
           <div className='grid grid-cols-2 gap-2 md:mt-6 w-full max-w-sm h-56'>
             {images[currentSet].map((image, index) => (
               <motion.img
@@ -130,7 +128,6 @@ function Home() {
           <div className='grid grid-cols-2 gap-2 md:mt-6 w-full max-w-sm'>
             <img src={ImageOne} alt='Tech 1' className='w-full h-24 object-cover rounded-lg' />
             <img src={ImageTwo} alt='Tech 2' className='w-full h-24 object-cover rounded-lg' />
-
           </div>
         </div>
         
