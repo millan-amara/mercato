@@ -19,7 +19,7 @@ function PostAd() {
     images: [],
   })
 
-  const {title,stock,actualPrice,offerPrice} = formData;
+  const {title,actualPrice,offerPrice} = formData;
   const API_URL = import.meta.env.VITE_API_URL;
 
   const navigate = useNavigate();
