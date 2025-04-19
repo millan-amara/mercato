@@ -12,18 +12,16 @@ function ProfileEdit({ loggedInUser, isOwner }) {
     const [formData, setFormData] = useState({
         fname: '',
         phone: '',
-        business: '',
         website: '',
     });
 
-    const {fname,business,phone,website,tiktok} = formData;
+    const {fname,phone,website,tiktok} = formData;
 
     useEffect(() => {
         setFormData({
             fname: loggedInUser.fname,
             phone: loggedInUser.phone,
             website: loggedInUser.website,
-            business: loggedInUser.business,
         })
         console.log(loggedInUser)
     }, [])
@@ -54,7 +52,6 @@ function ProfileEdit({ loggedInUser, isOwner }) {
         setLoading(true)
         const userData = {
             fname,
-            business,
             phone,
             website,
         }
@@ -115,7 +112,7 @@ function ProfileEdit({ loggedInUser, isOwner }) {
             required
         />
       </div>
-        <div className='mb-8 flex items-center justify-between text-sm'>
+        {/* <div className='mb-8 flex items-center justify-between text-sm'>
             <label htmlFor="business" className='font-semibold mb-2'>Are you a Business?</label>
             <div className='w-1/3'>
             <button
@@ -137,7 +134,7 @@ function ProfileEdit({ loggedInUser, isOwner }) {
                 No
             </button>
             </div>
-        </div>
+        </div> */}
 
         <button onClick={onSubmit} type='submit' className="flex justify-center bg-fuc bg-black hover:bg-slate-800 w-full text-white text-bold rounded-md py-3">
             <span>Edit profile</span>

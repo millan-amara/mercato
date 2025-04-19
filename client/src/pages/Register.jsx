@@ -154,7 +154,7 @@ function Register() {
             }
           </div>   
         </div>
-        <div className='mb-5 flex items-center justify-between text-sm'>
+        {/* <div className='mb-5 flex items-center justify-between text-sm'>
           <label htmlFor="business" className='font-semibold mb-2'>Are you a Business?</label>
           <div className='w-1/3'>
             <button
@@ -176,7 +176,7 @@ function Register() {
               No
             </button>
           </div>
-        </div>
+        </div> */}
         <div className='text-xs mb-5 flex justify-end font-semibold'>
           <Link to="/login" className='text-fuchsia-600'>Have an account?</Link>
         </div>

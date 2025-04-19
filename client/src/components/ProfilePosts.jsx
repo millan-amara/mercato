@@ -41,7 +41,7 @@ function ProfilePosts({ userId, cacheRef, isOwner }) {
           {post.description.substr(0, 174)}...
           <p 
             className='mt-2 text-center w-fit px-2 rounded-sm bg-fuchsia-800 text-white text-xs'
-          >{post.bids.length} {post.bids.length === 1 ? ('Bid') : ('Bids')}</p>
+          >{post?.status !== undefined ? (post.status) : ("pending") }</p>
         </Link>
       ))} 
       </div>

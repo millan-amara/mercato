@@ -48,19 +48,7 @@ function Home() {
   const { description } = formData;
   const [currentSet, setCurrentSet] = useState(0);
 
-  const el = React.useRef(null);
   const textareaRef = useRef(null);
-
-  // React.useEffect(() => {
-  //   const typed = new Typed(el.current, {
-  //     strings: ['Latest Tech', 'Best Deals', 'New Arrivals', 'Top Brands'],
-  //     typeSpeed: 100,
-  //     backSpeed: 100,
-  //     loop: true,
-  //   });
-
-  //   return () => typed.destroy();
-  // }, []);
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -75,14 +63,6 @@ function Home() {
       ...prevState,
       [e.target.id]: e.target.value
     }));
-  };
-
-  const adjustTextareaHeight = () => {
-    const textarea = textareaRef.current;
-    if (textarea) {
-      textarea.style.height = "40px";
-      textarea.style.height = Math.min(textarea.scrollHeight, 150) + "px";
-    }
   };
 
   const handleSubmit = async (e) => {
@@ -132,7 +112,6 @@ function Home() {
         </div>
         
         <form onSubmit={handleSubmit} className='w-full md:w-2/3 md:px-12 pb-24 flex flex-col items-center justify-center'>
-        {/* <div><span ref={el} className='auto-type text-blue-500 min-h-[3em]'></span></div> */}
           <textarea
             id="description"
             ref={textareaRef}

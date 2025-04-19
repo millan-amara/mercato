@@ -6,7 +6,6 @@ import Navbar from '../components/Navbar';
 import ProfileEdit from '../components/ProfileEdit';
 import ProfilePosts from '../components/ProfilePosts';
 import ProfileBids from '../components/ProfileBids';
-import ProfileReviews from '../components/ProfileReviews';
 import TopProfile from '../components/TopProfile';
 import axios from 'axios';
 import ProfileLoader from '../components/ProfileLoader';
@@ -18,7 +17,7 @@ function Profile() {
 
     const navigate = useNavigate();
     const dispatch = useDispatch();
-    const [activeTab, setActiveTab] = useState('');
+    const [activeTab, setActiveTab] = useState('posts');
     const [profileData, setProfileData] = useState(null);
     const { userId } = useParams();
     const cacheRef = useRef({});
@@ -33,12 +32,12 @@ function Profile() {
         console.log('trying to fetch')
         console.log(`user id ${userId}`)
         console.log(`loggedInUser ${loggedInUser._id}`)
-        if (userId && userId !== loggedInUser._id) {
-          // Fetch the other user's profile data from your API
-          setActiveTab('reviews')
-        } else {
-          setActiveTab('posts')
-        }
+        // if (userId && userId !== loggedInUser._id) {
+        //   // Fetch the other user's profile data from your API
+        //   setActiveTab('reviews')
+        // } else {
+        //   setActiveTab('posts')
+        // }
         console.log(`${API_URL}/users/${userId}`, { withCredentials: true })
         const response = await axios.get(`${API_URL}/users/${userId}`, { withCredentials: true });
         console.log(`RESPONSE: ${response.data}`)
@@ -88,18 +87,16 @@ function Profile() {
                 isOwner={isOwner}
               />
             </div>
-  
             <div className='md:w-4/5 md:overflow-y-auto mb-12 md:ml-60'>
               {activeTab === 'posts' && <ProfilePosts userId={userId} cacheRef={cacheRef} isOwner={isOwner} />}
   
               {activeTab === 'bids' && <ProfileBids userId={userId} cacheRef={cacheRef} />}
   
-              {activeTab === 'reviews' && <ProfileReviews userId={userId} loggedInUser={loggedInUser} cacheRef={cacheRef} />}
+              {/* {activeTab === 'reviews' && <ProfileReviews userId={userId} loggedInUser={loggedInUser} cacheRef={cacheRef} />} */}
   
               {activeTab === 'editProfile' && <ProfileEdit loggedInUser={loggedInUser} />}
 
-              {activeTab === 'paymentInfo' && <PaymentInfoComponent loggedInUser={loggedInUser} />}
-
+              {/* {activeTab === 'paymentInfo' && <PaymentInfoComponent loggedInUser={loggedInUser} />} */}
             </div>
 
           </div>

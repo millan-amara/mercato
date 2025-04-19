@@ -105,13 +105,14 @@ module.exports.createPost = async (req, res) => {
             createdAt: { $gte: todayStart, $lte: todayEnd }
         });
 
-        if (postCount >= 3) {
+        if (postCount >= 1) {
             return res.status(403).json({ error: "Daily post limit reached. Try again tomorrow." });
         }
 
         // Create new post
         const post = new Post({
             ...req.body,
+            status: 'pending',
             author: userId,
         });
 

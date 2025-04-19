@@ -3,14 +3,14 @@ import { useQuery } from '@tanstack/react-query';
 import Navbar from '../components/Navbar';
 import SearchForm from '../components/SearchForm'
 import axios from 'axios';
-import HouseItem from '../components/HouseItem.jsx';
+import ListingItem from '../components/ListingItem.jsx';
 
 const API_URL = import.meta.env.VITE_API_URL;
 
 // Fetch Posts Function
-const fetchHouses = async ({ queryKey }) => {
+const fetchListings = async ({ queryKey }) => {
   const [, page, searchQuery] = queryKey;
-  const { data } = await axios.get(`${API_URL}/houses/fetchhouses`, {
+  const { data } = await axios.get(`${API_URL}/listings/fetchlistings`, {
     params: { page, limit: 9, searchQuery: searchQuery || '' },
     withCredentials: true
   });
@@ -18,7 +18,7 @@ const fetchHouses = async ({ queryKey }) => {
   return data;
 };
 
-function Explore() {
+function Shop() {
 
   const [currentPage, setCurrentPage] = useState(1);
   const [searchQuery, setSearchQuery] = useState('');
@@ -26,8 +26,8 @@ function Explore() {
 
   // React Query Fetch Hook
   const { data, isLoading, isError, error } = useQuery({
-    queryKey: ['houses', currentPage, submittedQuery],
-    queryFn: fetchHouses,
+    queryKey: ['listings', currentPage, submittedQuery],
+    queryFn: fetchListings,
     keepPreviousData: true, // Preserve previous data during pagination
   });
 
@@ -67,14 +67,14 @@ function Explore() {
           
         </div>
         ) : (
-          data.houses.length > 0 ? (
+          data.listings.length > 0 ? (
             <>
             <div className='px-2 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-1 md:gap-2 mt-6'>
             
-              {data.houses.map((house) => (
-                <HouseItem 
-                  key={house._id} 
-                  house={house}
+              {data.listings.map((listing) => (
+                <ListingItem 
+                  key={listing._id} 
+                  listing={listing}
                 />
               ))}
     
@@ -110,4 +110,4 @@ function Explore() {
   )
 }
 
-export default Explore
+export default Shop

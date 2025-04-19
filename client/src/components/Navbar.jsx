@@ -55,10 +55,10 @@ function Navbar() {
             <div>
               <Link to={`/user/profile/${user._id}/transactions`} className='hover:underline font-semibold'>Transactions</Link>
             </div>
-            <Link to='/makepay' className='flex justify-center items-center ml-5 mr-2 bg-black hover:bg-slate-600 font-semibold text-white text-xs px-3 py-1 rounded-sm border-none'>
+            {/* <Link to='/makepay' className='flex justify-center items-center ml-5 mr-2 bg-black hover:bg-slate-600 font-semibold text-white text-xs px-3 py-1 rounded-sm border-none'>
               <FaDollarSign />
               <span>Pay</span>
-            </Link>
+            </Link> */}
             <Link to={`/user/profile/${user._id}`} className='md:mr-2 hover:bg-fuchsia-300 px-2 py-2 rounded-full'>
               <FaUserLarge className='text-fuchsia-700' />
             </Link>

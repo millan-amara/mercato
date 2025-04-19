@@ -13,10 +13,10 @@ function TopProfile({ handleTabChange,isOwner,activeTab,profileData,loggedInUser
 
             <p className='mt-3 font-medium text-xl'>{profileData.fname}</p>
             <a href={`${profileData.website}`} className='my-2 text-lime-600'>{profileData.website}</a>
-            <div className='flex'>
+            {/* <div className='flex'>
                 <Rating name="read-only" value={profileData.rating} size='small' readOnly />
                 <span className='ml-2 text-sm'>{profileData.reviews} Review{profileData.reviews === 1 ? '' : 's'}</span>
-            </div>
+            </div> */}
         </div> 
     
         <div className='mt-6 mb-2 flex justify-center py-2'>
@@ -32,10 +32,10 @@ function TopProfile({ handleTabChange,isOwner,activeTab,profileData,loggedInUser
                 className={`mr-4 px-2 py-1 flex justify-self-start ${activeTab === 'bids' ? 'border-b-4 border-b-lime-600 text-lime-600 font-semibold' : ''}`}
                 >BIDS</button>
             )}
-            <button 
+            {/* <button 
             onClick={() => handleTabChange('reviews')} 
             className={`mr-4 px-2 py-1 ${activeTab === 'reviews' ? 'border-b-4 border-b-lime-600 text-lime-600 font-semibold' : ''}`}
-            >REVIEWS</button>
+            >REVIEWS</button> */}
             {isOwner &&
             <button 
             onClick={() => handleTabChange('editProfile')} 

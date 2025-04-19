@@ -4,6 +4,7 @@ const Bid = require('./bid');
 
 const PostSchema = new Schema({
     description: String,
+    status: String,
     cantBid: [],
     author: {
         type: Schema.Types.ObjectId,

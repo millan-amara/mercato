@@ -18,6 +18,7 @@ const MongoStore = require('connect-mongo');
 
 const userRoutes = require('./routes/users');
 const postRoutes = require('./routes/posts');
+const houseRoutes = require('./routes/houses');
 const listingRoutes = require('./routes/listings');
 const paymentRoutes = require('./routes/payments');
 
@@ -106,6 +107,7 @@ app.use((req, res, next) => {
 
 app.use('/api', userRoutes);
 app.use('/api/posts', postRoutes);
+app.use('/api/houses', houseRoutes);
 app.use('/api/listings', listingRoutes);
 app.use('/api/payments', paymentRoutes);
 

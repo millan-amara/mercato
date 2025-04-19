@@ -1,5 +1,6 @@
 const User = require('./models/user');
 const Post = require('./models/post');
+const House = require('./models/house');
 const Listing = require('./models/listing');
 const ExpressError = require('./utils/ExpressError');
 
@@ -28,6 +29,16 @@ module.exports.isListingAuthor = async (req, res, next) => {
     const { id } = req.params;
     const listing = await Listing.findById(id);
     if (!listing.author.equals(req.user._id)) {
+        console.log('not allowed to do that')
+        throw new ExpressError('Not allowed to do that', 403)
+    }
+    next();
+}
+
+module.exports.isHouseAuthor = async (req, res, next) => {
+    const { id } = req.params;
+    const house = await House.findById(id);
+    if (!house.author.equals(req.user._id)) {
         console.log('not allowed to do that')
         throw new ExpressError('Not allowed to do that', 403)
     }
