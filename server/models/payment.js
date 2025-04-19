@@ -10,10 +10,7 @@ const PaymentSchema = new Schema({
         type: Number,
         required: true
     },
-    item: {
-        type: String,
-        required: true
-    },
+    cartItems: [],
     status: {
         type: String,
         required: true
@@ -22,23 +19,6 @@ const PaymentSchema = new Schema({
         type: String,
         required: true,
         unique: true
-    },
-    disputed: {
-        type: Boolean,
-        default: 'false',
-    },
-    disputeReason: {
-        type: String,
-        required: true,
-        default: "none"
-    },
-    approved: {
-        type: Boolean,
-        default: 'false',
-    },
-    paidOut: {
-        type: Boolean,
-        default: 'false',
     },
     author: {
         type: Schema.Types.ObjectId,

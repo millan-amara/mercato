@@ -33,6 +33,7 @@ import EditHouse from './pages/EditHouse.jsx';
 import EditListing from './pages/EditListing.jsx';
 import MyAds from './pages/MyAds.jsx';
 import Shop from './pages/Shop.jsx';
+import Cart from './pages/Cart.jsx';
 
 function App() {
   const { user } = useSelector((state) => state.auth);
@@ -101,6 +102,9 @@ function App() {
       </Route> */}
       <Route path='/dashboard' element={<PrivateRoute />} >
         <Route path='/dashboard' element={<Dashboard />} />
+      </Route>
+      <Route path='/products/cart/checkout' element={<PrivateRoute />} >
+        <Route path='/products/cart/checkout' element={<Cart />} />
       </Route>
       <Route path='/dashboard/users' element={<PrivateRoute />} >
         <Route path='/dashboard/users' element={<DashboardUsers />} />

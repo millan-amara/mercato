@@ -18,7 +18,7 @@ import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 import 'swiper/css/scrollbar'; 
 import { FaLocationPin, FaShare, FaWhatsapp } from 'react-icons/fa6';
-import { FaShareAlt } from 'react-icons/fa';
+import { FaShareAlt, FaShoppingBag, FaShoppingBasket, FaShoppingCart } from 'react-icons/fa';
 
 const API_URL = import.meta.env.VITE_API_URL;
 
@@ -62,6 +62,31 @@ function ShowListing() {
       toast.success('successfully deleted product')
       navigate('/')
     }
+
+    const handleAddToCart = () => {
+      const currentCart = JSON.parse(localStorage.getItem('cart')) || [];
+      const quantity = parseInt(document.querySelector('select').value); // assuming the select only contains quantity options
+    
+      const newItem = {
+        listingId: listing._id,
+        title: listing.title,
+        price: listing.offerPrice,
+        image: listing.imgs?.[0]?.url || '',
+        quantity,
+      };
+    
+      // If item already exists, update quantity
+      const existingItemIndex = currentCart.findIndex(item => item.listingId === listing._id);
+      if (existingItemIndex !== -1) {
+        currentCart[existingItemIndex].quantity += quantity;
+      } else {
+        currentCart.push(newItem);
+      }
+    
+      localStorage.setItem('cart', JSON.stringify(currentCart));
+      toast.success('Added to cart');
+    };
+    
  
 
 
@@ -151,10 +176,13 @@ function ShowListing() {
                 <option value="3">3</option>
               </select>
             </p>
-            <a href={`https://wa.me/+${listing.author.phone}`} className='rounded-md font-semibold flex items-center justify-center bg-black hover:bg-slate-800 text-white w-full mt-2 py-2 lg:py-4'>
-              <FaWhatsapp />
-              <span className='ml-2'>Talk to Seller</span>
-            </a>
+            <button  className='rounded-md font-semibold flex items-center justify-center bg-slate-800 hover:bg-slate-700 text-white w-full mt-2 py-2 lg:py-4'>
+              <span className='ml-2'>Buy Now</span>
+            </button>
+            <button onClick={handleAddToCart}  className='rounded-md font-semibold flex items-center justify-center bg-black hover:bg-slate-800 text-white w-full mt-2 py-2 lg:py-4'>
+              <FaShoppingCart />
+              <span className='ml-2'>Add to Cart</span>
+            </button>
           </div>
         </div>
 

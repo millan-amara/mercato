@@ -14,6 +14,7 @@ const intasend = new IntaSend(
 
 module.exports.createPayment = async (req, res) => {
     try {
+        console.log(req.body)
         const uniqueId = `ORDER-${uuidv4()}`;
         let collection = intasend.collection();
 

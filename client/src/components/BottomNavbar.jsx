@@ -29,11 +29,6 @@ const BottomNavbar = ({ user }) => {
         <span className="text-xs">Explore</span>
       </Link>
 
-      {/* <Link to="/makepay" className="flex flex-col items-center text-gray-700 hover:text-fuchsia-700">
-        <FaDollarSign className="text-xl" />
-        <span className="text-xs">Pay</span>
-      </Link> */}
-
       <Link to={`/user/profile/${user._id}`} className="flex flex-col items-center text-gray-700 hover:text-fuchsia-700">
         <FaUserLarge className="text-xl" />
         <span className="text-xs">Profile</span>

@@ -46,9 +46,6 @@ function AdminSidebar() {
               
             </ul>
           </div>
-          {/* <div id='avatar' className='flex justify-center'>
-                <img src={Potrait} alt="" className='w-14 rounded-full h-14 bottom-4 absolute' />
-          </div> */}
           
         </div>
     </>
