@@ -143,14 +143,14 @@ function ShowListing() {
           </div> */}
           <div className='mt-4'>
             <p className='text-lg lg:text-2xl text-green-600 font-medium'>In Stock</p>
-            {/* <p className='bg-slate-200 w-full mt-1 py-2 rounded-md px-1 flex items-center'>
+            <p className='bg-slate-200 w-full mt-1 py-2 rounded-md px-1 flex items-center'>
               <span className='w-1/4 md:w-2/5'>Quantity: </span>
               <select name="" id="" className='w-3/4 md:w-3/5 rounded-md py-2 px-1'>
                 <option value="1">1</option>
                 <option value="2">2</option>
                 <option value="3">3</option>
               </select>
-            </p> */}
+            </p>
             <a href={`https://wa.me/+${listing.author.phone}`} className='rounded-md font-semibold flex items-center justify-center bg-black hover:bg-slate-800 text-white w-full mt-2 py-2 lg:py-4'>
               <FaWhatsapp />
               <span className='ml-2'>Talk to Seller</span>

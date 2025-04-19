@@ -17,10 +17,11 @@ function PostHouse() {
     bedrooms: '',
     price: '',
     location: '',
+    caretaker: '',
     images: [],
   })
 
-  const {title,bedrooms,price,location} = formData;
+  const {title,bedrooms,price,location,caretaker} = formData;
   const API_URL = import.meta.env.VITE_API_URL;
 
   const navigate = useNavigate();
@@ -161,6 +162,12 @@ function PostHouse() {
                 className="mt-1 focus:ring-2 focus:outline-none appearance-none w-full text-sm leading-6 text-slate-900 rounded-md py-2 pl-2 ring-1 ring-slate-200 shadow-sm" 
                 onChange={onChange}
             />
+          </div>
+          <div className='mb-5 flex flex-col text-sm'>
+            <label htmlFor="caretaker">Caretaker's Phone Number</label>
+              <input 
+                className='mt-1 focus:ring-2 focus:outline-none appearance-none w-full text-sm leading-6 text-slate-900 rounded-md py-2 pl-2 ring-1 ring-slate-200 shadow-sm' 
+                type="number" name="caretaker" id="caretaker" value={caretaker} onChange={onChange} placeholder='07...' />
           </div>
           <div className='mb-5'>     
             <label htmlFor="bedrooms">Number of Bedrooms</label> 

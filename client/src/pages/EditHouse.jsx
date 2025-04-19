@@ -19,6 +19,7 @@ function EditHouse() {
     bedrooms: '',
     price: '',
     location: '',
+    caretaker: '',
     images: [],
     deleteImages: [],
   });
@@ -35,6 +36,7 @@ function EditHouse() {
           bedrooms: data.bedrooms,
           price: data.price,
           location: data.location,
+          caretaker: data.caretaker,
           images: data.imgs || [],
           deleteImages: [],
         });
@@ -173,6 +175,12 @@ function EditHouse() {
           <div className='mb-5'>
             <label htmlFor='price'>Rent Price</label>
             <input type='number' id='price' value={formData.price} onChange={onChange} className='mt-1 focus:ring-2 focus:outline-none appearance-none w-full text-sm leading-6 text-slate-900 rounded-md py-2 pl-2 ring-1 ring-slate-200 shadow-sm' />
+          </div>
+          <div className='mb-5 flex flex-col text-sm'>
+            <label htmlFor="caretaker">Caretaker's Phone Number</label>
+              <input 
+                className='mt-1 focus:ring-2 focus:outline-none appearance-none w-full text-sm leading-6 text-slate-900 rounded-md py-2 pl-2 ring-1 ring-slate-200 shadow-sm' 
+                type="number" name="caretaker" id="caretaker" value={caretaker} onChange={onChange} placeholder='07...' />
           </div>
           <div className='w-full h-80 max-w-screen-md mb-8'>
             <ReactQuill theme='snow' value={description} onChange={setDescription} className='h-72 mb-12' />

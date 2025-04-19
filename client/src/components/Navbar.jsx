@@ -17,10 +17,9 @@ function Navbar() {
     dispatch(logout())
     dispatch(reset())
     navigate('/landing')
-  }
+  };
 
   if (!user) return null;
-
 
   return (
     <nav className="flex justify-between items-center px-2 md:px-6 py-4">
@@ -36,9 +35,13 @@ function Navbar() {
         </button>
         {user.business &&
         <div className='hidden md:flex'>
-          <Link to={`/explore`} className='hover:underline font-semibold mr-4'>Explore</Link>
-          <Link to={`/postad`} className='hover:underline font-semibold'>Post Ad</Link>
+          <Link to={`/posthouse`} className='hover:underline font-semibold mr-4'>Post House</Link>
+          <Link to={`/postad`} className='hover:underline font-semibold'>Post Product</Link>
         </div>}
+        <div className='hidden md:flex'>
+          <Link to={`/explore`} className='hover:underline font-semibold mr-4'>Explore</Link>
+          <Link to={`/shop`} className='hover:underline font-semibold'>Shop</Link>
+        </div>
         
         <div className='hidden md:flex items-center'>
           <div className='flex items-center py-1'>
@@ -59,7 +62,7 @@ function Navbar() {
               <FaDollarSign />
               <span>Pay</span>
             </Link> */}
-            <Link to={`/user/profile/${user._id}`} className='md:mr-2 hover:bg-fuchsia-300 px-2 py-2 rounded-full'>
+            <Link to={`/user/profile/${user._id}`} className='md:mr-2 md:ml-3 hover:bg-fuchsia-300 px-2 py-2 rounded-full'>
               <FaUserLarge className='text-fuchsia-700' />
             </Link>
             <button onClick={onLogout} className='hover:bg-fuchsia-300 px-2 py-2 rounded-full'>

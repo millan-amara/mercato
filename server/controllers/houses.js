@@ -5,7 +5,16 @@ const ExpressError = require('../utils/ExpressError');
 
 module.exports.createHouse = async (req, res) => {
     try {
+        const {caretaker} = req.body;
         const user = await User.findById(req.user.id)
+
+        const formatPhoneNumber = (phone) => {
+            // Ensure it starts with 254 and remove leading zero if present
+            if (phone.startsWith('0')) {
+                return '254' + phone.slice(1);
+            }
+            return phone; // Assume it's already in correct format
+        };
 
         if(!user) {
             throw new ExpressError('Not allowed to do that', 401)
@@ -13,6 +22,7 @@ module.exports.createHouse = async (req, res) => {
 
         const house = new House({
             ...req.body,
+            caretaker: formatPhoneNumber(caretaker),
             author: req.user._id
         });
         if(req.files) {

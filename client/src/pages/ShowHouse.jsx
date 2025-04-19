@@ -135,7 +135,7 @@ function ShowHouse() {
             <span className='ml-2'>{house.location}</span>
           </div>
           <div className='mt-4'>
-            <a href={`https://wa.me/+${house.author.phone}`} className='rounded-md font-semibold flex items-center justify-center bg-black hover:bg-slate-800 text-white w-full mt-2 py-2 lg:py-4'>
+            <a href={`https://wa.me/+${house.caretaker}`} className='rounded-md font-semibold flex items-center justify-center bg-black hover:bg-slate-800 text-white w-full mt-2 py-2 lg:py-4'>
               <FaWhatsapp />
               <span className='ml-2'>Talk to CareTaker</span>
             </a>

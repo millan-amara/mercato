@@ -17,6 +17,7 @@ const HouseSchema = new Schema({
     title: String,
     description: String,
     location: String,
+    caretaker: String,
     imgs: [ImageSchema],
 }, {
     timestamps: true,
