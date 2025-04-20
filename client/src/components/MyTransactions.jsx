@@ -1,11 +1,17 @@
 import React, { useState } from 'react';
 import { format } from "date-fns";
 import { motion, AnimatePresence } from 'framer-motion';
+import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
+
 
 
 function MyTransactions({ transactions,onPagination,activePage,items,loadingTransactions,loadingStatuses,transactionStatuses,checkTransactionStatus,disputeTransaction,onChange,issue,issueSubmitted,setIssueSubmitted,disputed }) {
 
-    const [disputedTransactionId, setDisputedTransactionId] = useState(null);
+    const [openTransactionId, setOpenTransactionId] = useState(null);
+
+    const toggleShow = (id) => {
+        setOpenTransactionId(prev => (prev === id ? null : id));
+    };
 
   return (
     <>
@@ -69,7 +75,7 @@ function MyTransactions({ transactions,onPagination,activePage,items,loadingTran
                                 <div>
                                     <p className='font-semibold'>KES. {pay.amount}</p>
                                     <p>{format(new Date(pay.createdAt), "dd/MM/yyyy 'at' hh:mm a")}</p>
-                                    <p>{pay.author.phone}</p>
+                                    <p>{pay.author.phone}</p> 
                                 </div>
                             </div>
                             <div className='flex flex-col justify-around px-2 w-2/5 md:w-1/6'>
@@ -101,8 +107,20 @@ function MyTransactions({ transactions,onPagination,activePage,items,loadingTran
 
                             </div>
                         </div>
+
+                        <div>
+                            <button onClick={() => toggleShow(pay._id)} className='flex items-center font-semibold'>
+                                <span className='mr-2'>
+                                    {openTransactionId === pay._id ? 'Hide Details' : 'View Details'}
+                                </span>
+                                {openTransactionId === pay._id ? <IoIosArrowUp /> : <IoIosArrowDown />}
+                            </button>
+
+                        </div>
+
+
                         <AnimatePresence>
-                            {disputedTransactionId === pay._id && !issueSubmitted && (
+                            {openTransactionId === pay._id && (
                                 <motion.div
                                     className='mb-2'
                                     initial={{ opacity: 0, height: 0 }}
@@ -110,19 +128,19 @@ function MyTransactions({ transactions,onPagination,activePage,items,loadingTran
                                     exit={{ opacity: 0, height: 0 }}
                                     transition={{ duration: 0.3, ease: "easeInOut" }}
                                 >
-                                    <textarea 
-                                        type="text" 
-                                        placeholder='Describe the issue'
-                                        id='issue'
-                                        value={issue}
-                                        className="bg-slate-50 focus:ring-2 focus:outline-none appearance-none w-full text-sm leading-6 text-slate-900 rounded-md py-2 pl-2 ring-1 ring-slate-200" 
-                                        onChange={onChange}
-                                        maxLength={500}
-                                        required
-                                    />
-                                    <button type='submit' onClick={() => disputeTransaction(pay._id)} className="w-full md:w-1/4 border-2 bg-gradient-to-r from-slate-50 via-slate-200 to-gray-100 hover:bg-gradient-to-l text-bold py-3">
-                                        Submit Issue
-                                    </button>
+                                    <div className="space-y-4 mt-5">
+                                      {pay.cartItems.map(item => (
+                                        <div key={item.listingId} className="flex items-center justify-between border p-4 rounded-md shadow-sm">
+                                          <div className="flex items-center space-x-4">
+                                            <img src={item.image} alt={item.title} className="w-16 h-16 object-cover rounded-md" />
+                                            <div>
+                                              <h2 className="font-medium">{item.title}</h2>
+                                              <p>Ksh. {item.price.toLocaleString()} × {item.quantity}</p>
+                                            </div>
+                                          </div>
+                                        </div>
+                                      ))}
+                                    </div>
                                 </motion.div>
                             )}
                         </AnimatePresence>
