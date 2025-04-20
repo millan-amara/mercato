@@ -25,7 +25,7 @@ module.exports.createPayment = async (req, res) => {
             first_name: req.user.fname,
             last_name: 'Doe',
             email: req.user.email,
-            host: 'https://peskaya-98bb2fd3d6e7.herokuapp.com',
+            host: 'https://www.peskaya.com',
             amount: req.body.amount,
             phone_number: req.user.phone,
             api_ref: uniqueId,
