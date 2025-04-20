@@ -11,6 +11,7 @@ const PaymentSchema = new Schema({
         required: true
     },
     cartItems: [],
+    address: String,
     status: {
         type: String,
         required: true

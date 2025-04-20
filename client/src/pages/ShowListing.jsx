@@ -73,7 +73,7 @@ function ShowListing() {
 
     const handleAddToCart = () => {
       const currentCart = JSON.parse(localStorage.getItem('cart')) || [];
-      const quantity = parseInt(document.querySelector('select').value); // assuming the select only contains quantity options
+      const quantity = parseInt(document.querySelector('select').value);
     
       const newItem = {
         listingId: listing._id,
@@ -184,9 +184,9 @@ function ShowListing() {
                 <option value="3">3</option>
               </select>
             </p>
-            <button  className='rounded-md font-semibold flex items-center justify-center bg-slate-800 hover:bg-slate-700 text-white w-full mt-2 py-4'>
+            {/* <button  className='rounded-md font-semibold flex items-center justify-center bg-slate-800 hover:bg-slate-700 text-white w-full mt-2 py-4'>
               <span className='ml-2'>Buy Now</span>
-            </button>
+            </button> */}
             <button onClick={handleAddToCart}  className='rounded-md font-semibold flex items-center justify-center bg-black hover:bg-slate-800 text-white w-full mt-2 py-4'>
               <FaShoppingCart />
               <span className='ml-2'>Add to Cart</span>

@@ -16,10 +16,13 @@ function PostAd() {
     title: '',
     actualPrice: '',
     offerPrice: '',
+    shipping: '',
+    delivery: '',
+    stock: '',
     images: [],
   })
 
-  const {title,actualPrice,offerPrice} = formData;
+  const {title,actualPrice,offerPrice,shipping,delivery,stock} = formData;
   const API_URL = import.meta.env.VITE_API_URL;
 
   const navigate = useNavigate();
@@ -146,7 +149,7 @@ function PostAd() {
       <Navbar />
       <div className='flex justify-center mt-10 pb-24'>
         <form onSubmit={onSubmit} className='w-full mx-2 md:w-1/3 mb-8'>
-          <h1 className='text-2xl mb-4 text-center'>Create Listing</h1>
+          <h1 className='text-2xl mb-4 text-center'>Post A Product</h1>
       
 
           <div className='mb-5 mt-8'>     
@@ -179,6 +182,39 @@ function PostAd() {
               placeholder='Ukikata bei'
               className="mt-1 focus:ring-2 focus:outline-none appearance-none w-full text-sm leading-6 text-slate-900 rounded-md py-2 pl-2 ring-1 ring-slate-200 shadow-sm" 
               onChange={onChange}
+            />
+          </div>
+          <div className='mb-5'>     
+            <label htmlFor="shipping">Shipping</label> 
+            <input 
+              type="number" 
+              id='shipping'
+              value={shipping}
+              placeholder='0'
+              className="mt-1 focus:ring-2 focus:outline-none appearance-none w-full text-sm leading-6 text-slate-900 rounded-md py-2 pl-2 ring-1 ring-slate-200 shadow-sm" 
+              onChange={onChange}
+            />
+          </div>
+          <div className='mb-5'>     
+            <label htmlFor="delivery">Delivery</label> 
+            <input 
+                type="text" 
+                id='delivery'
+                value={delivery}
+                placeholder='Same day delivery,'
+                className="mt-1 focus:ring-2 focus:outline-none appearance-none w-full text-sm leading-6 text-slate-900 rounded-md py-2 pl-2 ring-1 ring-slate-200 shadow-sm" 
+                onChange={onChange}
+            />
+          </div>
+          <div className='mb-5'>     
+            <label htmlFor="title">Stock</label> 
+            <input 
+                type="text" 
+                id='stock'
+                value={stock}
+                placeholder='In Stock, only 2 left, out of stock'
+                className="mt-1 focus:ring-2 focus:outline-none appearance-none w-full text-sm leading-6 text-slate-900 rounded-md py-2 pl-2 ring-1 ring-slate-200 shadow-sm" 
+                onChange={onChange}
             />
           </div>
           <div className='w-full h-80 md:h-72 max-w-screen-md mb-8'>

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { FaBars, FaUserLarge, FaDollarSign, FaPowerOff, FaMoneyBill, FaMoneyCheck, FaList, FaWhatsapp } from "react-icons/fa6";
+import { FaBars, FaUserLarge, FaDollarSign, FaPowerOff, FaMoneyBill, FaMoneyCheck, FaList, FaWhatsapp, FaHouse } from "react-icons/fa6";
 import { useNavigate } from 'react-router-dom';
 import { logout, reset } from '../features/auth/authSlice';
 import { useDispatch, useSelector } from 'react-redux';
@@ -103,10 +103,16 @@ function Navbar() {
                   My Money
                 </div>
               </Link>
-              <Link to={`/user/profile/${user._id}/earnings`} className='flex items-center justify-center bg-black text-white hover:bg-fuchsia-300 py-2 rounded-md mt-2 mb-2'>
+              <Link to={`/postad`} className='flex items-center justify-center bg-black text-white hover:bg-fuchsia-300 py-2 rounded-md mt-2 mb-2'>
                 <div className='flex w-1/2 items-center'>
                   <FaEdit className='inline-block mr-2' />
                   Post Ad
+                </div>
+              </Link>
+              <Link to={`/posthouse`} className='flex items-center justify-center bg-black text-white hover:bg-fuchsia-300 py-2 rounded-md mt-2 mb-2'>
+                <div className='flex w-1/2 items-center'>
+                  <FaHouse className='inline-block mr-2' />
+                  Post House
                 </div>
               </Link>
               <Link to={`/user/profile/${user._id}/payment-info`} className='flex items-center justify-center hover:bg-fuchsia-300 py-2 rounded-md mt-2 mb-2 border'>

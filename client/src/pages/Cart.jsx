@@ -7,6 +7,7 @@ import axios from 'axios';
 
 function Cart() {
   const [cartItems, setCartItems] = useState([]);
+  const [address, setAddress] = useState('');
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
@@ -30,7 +31,7 @@ function Cart() {
     const payload = {
         cartItems,
         amount: totalAmount,
-        // You can include additional data here if needed (e.g. phone, userId, etc.)
+        address,
     };
 
     try {
@@ -77,6 +78,17 @@ function Cart() {
                 </div>
               ))}
             </div>
+
+            <textarea
+              id='address'
+              placeholder="(Phone number, Name, Location) e.g. 0712345678, James Jane, Makueni Town."
+              className='w-full mt-5 p-2 focus:ring-2 focus:outline-none appearance-none text-sm leading-6 text-slate-900 ring-1 ring-slate-200 shadow-sm rounded-lg resize-none overflow-auto'
+              value={address}
+              onChange={(e) => setAddress(e.target.value)}
+              rows={3}
+              style={{ minHeight: '40px', maxHeight: '500px' }}
+              required
+            />
 
             <div className="mt-8 border-t pt-4">
               <h2 className="text-xl font-semibold">Total: Ksh. {totalAmount.toLocaleString()}</h2>
