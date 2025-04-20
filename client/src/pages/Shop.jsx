@@ -1,9 +1,10 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import Navbar from '../components/Navbar';
 import SearchForm from '../components/SearchForm'
 import axios from 'axios';
 import ListingItem from '../components/ListingItem.jsx';
+import CartButton from '../components/CartButton.jsx';
 
 const API_URL = import.meta.env.VITE_API_URL;
 
@@ -19,6 +20,12 @@ const fetchListings = async ({ queryKey }) => {
 };
 
 function Shop() {
+  const [cartItems, setCartItems] = useState(0);
+
+  useEffect(() => {
+    const storedCart = JSON.parse(localStorage.getItem('cart')) || [];
+    setCartItems(storedCart.length);
+  }, []);
 
   const [currentPage, setCurrentPage] = useState(1);
   const [searchQuery, setSearchQuery] = useState('');
@@ -104,6 +111,8 @@ function Shop() {
           </div>
         ) 
       } 
+
+      <CartButton cartItems={cartItems} />
 
 
     </div>
