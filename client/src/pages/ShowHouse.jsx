@@ -5,8 +5,7 @@ import { toast } from 'react-toastify';
 import { useQuery, useQueryClient } from '@tanstack/react-query'
 import Navbar from '../components/Navbar';
 import { useSelector } from 'react-redux';
-// import HouseItemSimilar from '../components/HouseItemSimilar';
-// import HouseItemMore from '../components/HouseItemMore';
+import StaticMap from '../components/StaticMap';
 import Footer from '../components/Footer';
 
 import { Navigation, Pagination, Scrollbar, A11y } from 'swiper/modules';
@@ -141,6 +140,24 @@ function ShowHouse() {
             </a>
           </div>
         </div>
+
+        {house.coordinates && (
+          <div className="mb-6">
+            <h2 className="text-lg font-semibold mb-2">Location</h2>
+            <StaticMap lat={house.coordinates.lat} lng={house.coordinates.lng} />
+
+            <a
+              href={`https://www.google.com/maps/search/?api=1&query=${house.coordinates.lat},${house.coordinates.lng}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="bg-fuchsia-700 text-white py-2 px-4 rounded-md hover:bg-fuchsia-800 inline-block mt-2"
+              // bg-fuchsia-700 text-white py-2 px-4 rounded-md hover:bg-fuchsia-800 inline-block mt-2
+            >
+              Open in Google Maps
+            </a>
+
+          </div>
+        )}
 
         {/* <div id="similar" className='mt-16 lg:mt-20'>
           {houses.length > 0 && (

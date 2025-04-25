@@ -5,7 +5,7 @@ const ExpressError = require('../utils/ExpressError');
 
 module.exports.createHouse = async (req, res) => {
     try {
-        const {caretaker} = req.body;
+        const { caretaker, latitude, longitude } = req.body;
         const user = await User.findById(req.user.id)
 
         const formatPhoneNumber = (phone) => {
@@ -23,6 +23,10 @@ module.exports.createHouse = async (req, res) => {
         const house = new House({
             ...req.body,
             caretaker: formatPhoneNumber(caretaker),
+            coordinates: {
+                lat: parseFloat(latitude),
+                lng: parseFloat(longitude)
+            },
             author: req.user._id
         });
         if(req.files) {
@@ -117,8 +121,35 @@ module.exports.updateHouse = async (req, res) => {
             return res.status(404).json({ error: "House not found" });
         }
 
-        const houseImages = req.files.map(f => ({ url: f.path, filename: f.filename }));
-        house.imgs = house.imgs.concat(houseImages);
+        const { caretaker, latitude, longitude } = req.body;
+
+        const user = await User.findById(req.user.id);
+        if (!user) {
+            throw new ExpressError('Not allowed to do that', 401);
+        }
+
+        // Format phone number if caretaker info is provided
+        const formatPhoneNumber = (phone) => {
+            if (phone.startsWith('0')) {
+                return '254' + phone.slice(1);
+            }
+            return phone;
+        };
+
+        house.caretaker = caretaker ? formatPhoneNumber(caretaker) : house.caretaker;
+
+        // Update coordinates if latitude and longitude are provided
+        if (latitude && longitude) {
+            house.coordinates = {
+                lat: parseFloat(latitude),
+                lng: parseFloat(longitude)
+            };
+        }
+
+        if (req.files) {
+            const houseImages = req.files.map(f => ({ url: f.path, filename: f.filename }));
+            house.imgs = house.imgs.concat(houseImages);
+        }
     
         if (req.body.deleted) {
             const deleteImages = req.body.deleted;
@@ -136,7 +167,8 @@ module.exports.updateHouse = async (req, res) => {
         res.status(201).json(house)
     
     } catch (e) {
-        console.log(e)
+        console.error(error);
+        res.status(500).json({ error: "Something went wrong" });
     }
 }
 

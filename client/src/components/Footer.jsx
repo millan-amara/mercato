@@ -12,9 +12,9 @@ function Footer() {
         <div className="flex flex-col md:flex-row justify-around mb-5">
             <div className="w-full md:w-1/4 md:flex md:flex-col md:justify-center md:items-center">
                 <p className="text-lg mb-3">ABOUT</p>
-                <p className="mb-5 text-base">Get the best deals on electronics, today!</p>
+                <p className="mb-5 text-base">Don't see what you're looking for? Describe what it is, and we'll go look for it!</p>
                 {user ? (
-                    <Link to="/explore" className="bg-fuchsia-600 hover:bg-fuchsia-700 py-2 px-4 rounded-md font-bold">Go to Search<i className="fa-solid fa-arrow-right ml-3"></i></Link>
+                    <Link to="/" className="bg-fuchsia-600 hover:bg-fuchsia-700 py-2 px-4 rounded-md font-bold">Go to Find<i className="fa-solid fa-arrow-right ml-3"></i></Link>
                 ) : (
                     <Link to="/register" className="bg-fuchsia-600 hover:bg-fuchsia-700 py-2 px-4 rounded-md font-bold">Sign Up<i className="fa-solid fa-arrow-right ml-3"></i></Link>
                 )}

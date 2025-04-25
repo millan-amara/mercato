@@ -4,6 +4,7 @@ import { toast } from 'react-toastify';
 import axios from 'axios';
 import Navbar from '../components/Navbar';
 import ImageEdit from '../components/ImageEdit';
+import MapPicker from '../components/MapPicker';
 import Compressor from 'compressorjs';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
@@ -26,6 +27,7 @@ function EditHouse() {
   });
   const [description, setDescription] = useState('');
   const [selectedImages, setSelectedImages] = useState([]);
+  const [pin, setPin] = useState({ lat: null, lng: null });
 
   useEffect(() => {
     const fetchHouse = async () => {
@@ -44,6 +46,7 @@ function EditHouse() {
         });
         setDescription(data.description);
         setSelectedImages(data.imgs || []);
+        setPin({ lat: data.latitude, lng: data.longitude });
       } catch (error) {
         toast.error('Failed to fetch house');
       }
@@ -79,6 +82,9 @@ function EditHouse() {
           requestBody.append('deleted', `${image.filename}`);
         });
     }
+
+    requestBody.append('latitude', pin.lat);
+    requestBody.append('longitude', pin.lng);
       
 
     try {
@@ -186,7 +192,12 @@ function EditHouse() {
             <label htmlFor="caretaker">Caretaker's Phone Number</label>
               <input 
                 className='mt-1 focus:ring-2 focus:outline-none appearance-none w-full text-sm leading-6 text-slate-900 rounded-md py-2 pl-2 ring-1 ring-slate-200 shadow-sm' 
-                type="number" name="caretaker" id="caretaker" value={caretaker} onChange={onChange} placeholder='07...' />
+                type="number" name="caretaker" id="caretaker" value={formData.caretaker} onChange={onChange} placeholder='07...' />
+          </div>
+          <div className="mb-5">
+            <label>Pick Location on Map</label>
+            <MapPicker setLatLng={setPin} />
+            {pin.lat && <p className="text-sm mt-2">Lat: {pin.lat}, Lng: {pin.lng}</p>}
           </div>
           <div className='w-full h-80 max-w-screen-md mb-8'>
             <ReactQuill theme='snow' value={description} onChange={setDescription} className='h-72 mb-12' />

@@ -3,6 +3,7 @@ import Navbar from '../components/Navbar';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import ImageUpload from '../components/ImageUpload';
+import MapPicker from '../components/MapPicker';
 import Compressor from 'compressorjs';
 import axios from 'axios';
 import ReactQuill from 'react-quill';
@@ -21,6 +22,7 @@ function PostHouse() {
     caretaker: '',
     images: [],
   })
+  const [pin, setPin] = useState({ lat: null, lng: null });
 
   const {title,bedrooms,price,location,url,caretaker} = formData;
   const API_URL = import.meta.env.VITE_API_URL;
@@ -54,6 +56,9 @@ function PostHouse() {
     }
   
     const requestBody = new FormData();
+    requestBody.append("latitude", pin.lat);
+    requestBody.append("longitude", pin.lng);
+
     requestBody.append("description", Array.isArray(description) ? description.join("") : description);
   
     // Append all form fields except images
@@ -199,6 +204,11 @@ function PostHouse() {
               className="mt-1 focus:ring-2 focus:outline-none appearance-none w-full text-sm leading-6 text-slate-900 rounded-md py-2 pl-2 ring-1 ring-slate-200 shadow-sm" 
               onChange={onChange}
             />
+          </div>
+          <div className="mb-5">
+            <label>Pick Location on Map</label>
+            <MapPicker setLatLng={setPin} />
+            {pin.lat && <p className="text-sm mt-2">Lat: {pin.lat}, Lng: {pin.lng}</p>}
           </div>
           <div className='mb-5'>     
             <label htmlFor="price">Rent Price</label> 

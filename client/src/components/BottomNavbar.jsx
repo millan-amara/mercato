@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import { FaThList } from "react-icons/fa";
-import { UserRound, PlusSquare, ShoppingCartIcon } from "lucide-react";
+import { UserRound, PlusSquare, ShoppingCartIcon, House } from "lucide-react";
 import { MdOutlineExplore } from "react-icons/md";
 
 const BottomNavbar = ({ user }) => {
@@ -24,7 +24,7 @@ const BottomNavbar = ({ user }) => {
         <span className="text-xs">Shop</span>
       </Link>
       <Link to="/explore" className="flex flex-col items-center text-gray-700 hover:text-fuchsia-700">
-        <MdOutlineExplore className="text-xl" />
+        <House className="text-xl" />
         <span className="text-xs">Explore</span>
       </Link>
 

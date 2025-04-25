@@ -20,6 +20,11 @@ const HouseSchema = new Schema({
     location: String,
     caretaker: String,
     imgs: [ImageSchema],
+    coordinates: {
+        lat: Number,
+        lng: Number
+    }
+      
 }, {
     timestamps: true,
 });
