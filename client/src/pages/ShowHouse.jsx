@@ -16,7 +16,7 @@ import 'swiper/css';
 import 'swiper/css/navigation'; 
 import 'swiper/css/pagination';
 import 'swiper/css/scrollbar'; 
-import { FaLocationPin, FaShare, FaWhatsapp } from 'react-icons/fa6';
+import { FaLocationPin, FaShare, FaTiktok, FaWhatsapp } from 'react-icons/fa6';
 import { FaShareAlt } from 'react-icons/fa';
 
 const API_URL = import.meta.env.VITE_API_URL;
@@ -133,7 +133,11 @@ function ShowHouse() {
             <FaLocationPin />
             <span className='ml-2'>{house.location}</span>
           </div>
-          <div className='mt-4'>
+          <div className='mt-4 flex items-center text-green-600 underline underline-offset-2 hover:text-green-500'>
+            <FaTiktok />
+            <a href={house.url} target="_blank" rel="noopener noreferrer" className='ml-2 '>Watch House video</a>
+          </div>
+          <div className='mt-6'>
             <a href={`https://wa.me/+${house.caretaker}`} className='rounded-md font-semibold flex items-center justify-center bg-black hover:bg-slate-800 text-white w-full mt-2 py-2 lg:py-4'>
               <FaWhatsapp />
               <span className='ml-2'>Talk to CareTaker</span>
@@ -142,7 +146,7 @@ function ShowHouse() {
         </div>
 
         {house.coordinates && (
-          <div className="mb-6">
+          <div className="my-8 lg:w-1/2 mx-auto">
             <h2 className="text-lg font-semibold mb-2">Location</h2>
             <StaticMap lat={house.coordinates.lat} lng={house.coordinates.lng} />
 

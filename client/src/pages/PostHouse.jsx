@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Navbar from '../components/Navbar';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
@@ -10,6 +10,8 @@ import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 
 function PostHouse() {
+  const [coords, setCoords] = useState({ latitude: null, longitude: null });
+  const [useCurrentLocation, setUseCurrentLocation] = useState(true);
 
   const [selectedImages, setSelectedImages] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -22,7 +24,7 @@ function PostHouse() {
     caretaker: '',
     images: [],
   })
-  const [pin, setPin] = useState({ lat: null, lng: null });
+  // const [pin, setPin] = useState({ lat: null, lng: null });
 
   const {title,bedrooms,price,location,url,caretaker} = formData;
   const API_URL = import.meta.env.VITE_API_URL;
@@ -45,6 +47,28 @@ function PostHouse() {
     });
   };
 
+  // Auto-detect location
+  useEffect(() => {
+    if (useCurrentLocation) {
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          setCoords({
+            latitude: position.coords.latitude,
+            longitude: position.coords.longitude,
+          });
+        },
+        (err) => {
+          console.error("Location access denied:", err);
+          setUseCurrentLocation(false); // fallback to manual
+        }
+      );
+    }
+  }, [useCurrentLocation]);
+
+  const handleLocationChange = (lat, lng) => {
+    setCoords({ latitude: lat, longitude: lng });
+  };
+
   const onSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
@@ -56,8 +80,8 @@ function PostHouse() {
     }
   
     const requestBody = new FormData();
-    requestBody.append("latitude", pin.lat);
-    requestBody.append("longitude", pin.lng);
+    requestBody.append("latitude", coords.latitude);
+    requestBody.append("longitude", coords.longitude);
 
     requestBody.append("description", Array.isArray(description) ? description.join("") : description);
   
@@ -205,11 +229,27 @@ function PostHouse() {
               onChange={onChange}
             />
           </div>
-          <div className="mb-5">
+          <div className="my-4">
+            <label>
+              <input
+                type="checkbox"
+                checked={useCurrentLocation}
+                onChange={() => setUseCurrentLocation(prev => !prev)}
+              />
+              Use my current location
+            </label>
+          </div>
+          {!useCurrentLocation && coords.latitude && coords.longitude && (
+            <MapPicker
+              defaultLocation={{ lat: coords.latitude, lng: coords.longitude }}
+              onChangeLocation={handleLocationChange}
+            />
+          )}
+          {/* <div className="mb-5">
             <label>Pick Location on Map</label>
             <MapPicker setLatLng={setPin} />
             {pin.lat && <p className="text-sm mt-2">Lat: {pin.lat}, Lng: {pin.lng}</p>}
-          </div>
+          </div> */}
           <div className='mb-5'>     
             <label htmlFor="price">Rent Price</label> 
             <input 
