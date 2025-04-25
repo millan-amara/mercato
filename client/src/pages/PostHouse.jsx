@@ -17,11 +17,12 @@ function PostHouse() {
     bedrooms: '',
     price: '',
     location: '',
+    url: '',
     caretaker: '',
     images: [],
   })
 
-  const {title,bedrooms,price,location,caretaker} = formData;
+  const {title,bedrooms,price,location,url,caretaker} = formData;
   const API_URL = import.meta.env.VITE_API_URL;
 
   const navigate = useNavigate();
@@ -177,6 +178,16 @@ function PostHouse() {
                 value={bedrooms}
                 className="mt-1 focus:ring-2 focus:outline-none appearance-none w-full text-sm leading-6 text-slate-900 rounded-md py-2 pl-2 ring-1 ring-slate-200 shadow-sm" 
                 onChange={onChange}
+            />
+          </div>
+          <div className='mb-5'>     
+            <label htmlFor="url">Video URL</label> 
+            <input 
+              type="text"
+              id='url'
+              value={url}
+              className="mt-1 focus:ring-2 focus:outline-none appearance-none w-full text-sm leading-6 text-slate-900 rounded-md py-2 pl-2 ring-1 ring-slate-200 shadow-sm" 
+              onChange={onChange}
             />
           </div>
           <div className='mb-5'>     

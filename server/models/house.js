@@ -16,6 +16,7 @@ const HouseSchema = new Schema({
     price: Number,
     title: String,
     description: String,
+    url: String,
     location: String,
     caretaker: String,
     imgs: [ImageSchema],

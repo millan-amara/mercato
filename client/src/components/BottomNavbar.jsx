@@ -1,8 +1,7 @@
 import { Link } from "react-router-dom";
-import { FaDollarSign, FaPlus, FaUserLarge } from "react-icons/fa6";
 import { FaThList } from "react-icons/fa";
-import { PlusCircle, PlusSquare, ShoppingCartIcon } from "lucide-react";
-import { MdExplore } from "react-icons/md";
+import { UserRound, PlusSquare, ShoppingCartIcon } from "lucide-react";
+import { MdOutlineExplore } from "react-icons/md";
 
 const BottomNavbar = ({ user }) => {
   if (!user) return null; // Hide if user isn't logged in
@@ -25,14 +24,16 @@ const BottomNavbar = ({ user }) => {
         <span className="text-xs">Shop</span>
       </Link>
       <Link to="/explore" className="flex flex-col items-center text-gray-700 hover:text-fuchsia-700">
-        <MdExplore className="text-xl" />
+        <MdOutlineExplore className="text-xl" />
         <span className="text-xs">Explore</span>
       </Link>
 
       <Link to={`/user/profile/${user._id}`} className="flex flex-col items-center text-gray-700 hover:text-fuchsia-700">
-        <FaUserLarge className="text-xl" />
+        <UserRound className="text-xl" />
         <span className="text-xs">Profile</span>
       </Link> 
+
+
     </div>
   );
 };

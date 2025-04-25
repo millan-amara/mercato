@@ -18,6 +18,7 @@ function EditHouse() {
     title: '',
     bedrooms: '',
     price: '',
+    url: '',
     location: '',
     caretaker: '',
     images: [],
@@ -35,6 +36,7 @@ function EditHouse() {
           title: data.title,
           bedrooms: data.bedrooms,
           price: data.price,
+          url: data.url,
           location: data.location,
           caretaker: data.caretaker,
           images: data.imgs || [],
@@ -167,6 +169,10 @@ function EditHouse() {
           <div className='mb-5'>
             <label htmlFor='bedrooms'>Number of Bedrooms</label>
             <input type='text' id='bedrooms' value={formData.bedrooms} onChange={onChange} className='mt-1 focus:ring-2 focus:outline-none appearance-none w-full text-sm leading-6 text-slate-900 rounded-md py-2 pl-2 ring-1 ring-slate-200 shadow-sm' />
+          </div>
+          <div className='mb-5'>
+            <label htmlFor='url'>Video URL</label>
+            <input type='text' id='url' value={formData.url} onChange={onChange} className='mt-1 focus:ring-2 focus:outline-none appearance-none w-full text-sm leading-6 text-slate-900 rounded-md py-2 pl-2 ring-1 ring-slate-200 shadow-sm' />
           </div>
           <div className='mb-5'>
             <label htmlFor='location'>Location</label>
