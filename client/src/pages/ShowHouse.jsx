@@ -138,7 +138,7 @@ function ShowHouse() {
             <a href={house.url} target="_blank" rel="noopener noreferrer" className='ml-2 '>Watch House video</a>
           </div>
           <div className='mt-6'>
-            <a href={`https://wa.me/+${house.caretaker}`} className='rounded-md font-semibold flex items-center justify-center bg-black hover:bg-slate-800 text-white w-full mt-2 py-2 lg:py-4'>
+            <a href={`https://wa.me/+${house.caretaker}`} target="_blank" rel="noopener noreferrer" className='rounded-md font-semibold flex items-center justify-center bg-black hover:bg-slate-800 text-white w-full mt-2 py-2 lg:py-4'>
               <FaWhatsapp />
               <span className='ml-2'>Talk to CareTaker</span>
             </a>

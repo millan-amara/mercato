@@ -99,7 +99,7 @@ function Transactions() {
   return (
     <div>
         <Navbar />
-        <div className='mx-4 md:mx-8'>
+        <div className='mx-4 md:mx-8 mt-5'>
             <MyTransactions
                 transactions={transactions}
                 onPagination={onPagination}

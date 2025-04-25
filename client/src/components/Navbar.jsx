@@ -265,9 +265,9 @@ function Navbar() {
         </div>
 
         {/* Contact */}
-        <div className="absolute bottom-24 px-6 text-sm text-gray-600">
+        <div className="absolute flex flex-col items-center bottom-24 px-6 text-sm text-gray-600">
           <div className="font-semibold text-black mb-1">Contact Support</div>
-          <a href="https://wa.me/+254700487751" className="flex items-center space-x-1 hover:underline">
+          <a href="https://wa.me/+254700487751" target="_blank" rel="noopener noreferrer" className="flex items-center space-x-1 hover:underline">
             <FaWhatsapp className="text-green-600" />
             <span>Chat on WhatsApp</span>
           </a>

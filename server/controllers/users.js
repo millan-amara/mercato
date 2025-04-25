@@ -15,7 +15,7 @@ const DOMAIN = 'freelients.com';
 const mg = mailgun.client({username: 'api', key: apiKey, url: 'https://api.eu.mailgun.net' });
 
 
-module.exports.register = async (req, res) => {
+module.exports.register = async (req, res, next) => {
     try {
         const {email,phone,business,password} = req.body;
 
@@ -53,7 +53,7 @@ module.exports.register = async (req, res) => {
             });
         } catch (error) {
 
-            if (e.message === 'A user with the given username is already registered') {
+            if (error.message === 'A user with the given username is already registered') {
                 return next(new ExpressError('User exists', 409));
             }
     
@@ -66,14 +66,14 @@ module.exports.register = async (req, res) => {
 module.exports.login = async (req, res, next) => {
     passport.authenticate('local', (err, user) => {
         if (err) {
-            return next(new ExpressError('Authentication failed', 500));
+            return next(new ExpressError('An error occurred during authentication.', 500));
         }
         if (!user) {
-            return next(new ExpressError('Invalid credentials', 401));
+            return next(new ExpressError('Invalid email or password.', 401));
         }
         req.logIn(user, (err) => {
             if (err) {
-                return next(new ExpressError('Login failed', 500));
+                return next(new ExpressError('Failed to log you in. Please try again.', 500));
             }
             res.status(200).json({
                 _id: user._id,

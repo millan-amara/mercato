@@ -133,16 +133,22 @@ app.all('*', (req, res, next) => {
 
 
 app.use((err, req, res, next) => {
-    const statusCode = err.status || 500;
-    console.log(`ERROR MESSAGE: ${err.message}`)
-    res.status(statusCode).json({
+    const statusCode = err.statusCode || 500;
+
+    const response = {
         error: {
-            message: err.message || 'Internal Server Error',
+            message: err.message || 'Something went wrong.',
             status: statusCode,
-            stack: process.env.NODE_ENV === 'development' ? err.stack : null,
         },
-    });
+    };
+
+    if (process.env.NODE_ENV === 'development') {
+        response.error.stack = err.stack;
+    }
+
+    res.status(statusCode).json(response);
 });
+
 
 const port = process.env.PORT || 5000;
 
