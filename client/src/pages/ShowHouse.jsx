@@ -80,7 +80,7 @@ function ShowHouse() {
   return (
     <>
     <Navbar />
-    <main className='mb-24 px-2 mt-8'>
+    <main className='mb-24 px-2 mt-8 relative z-0'>
       <Swiper 
             modules={[Navigation, Pagination, Scrollbar, A11y]}
             pagination={{clickable: true}}

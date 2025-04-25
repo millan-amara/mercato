@@ -178,7 +178,7 @@ function PostHouse() {
   return (
     <div>
       <Navbar />
-      <div className='flex justify-center mt-10 pb-24'>
+      <div className='flex justify-center mt-10 pb-24 relative z-0'>
         <form onSubmit={onSubmit} className='w-full mx-2 md:w-1/3 mb-8'>
           <h1 className='text-2xl mb-4 text-center'>Create House</h1>
 
