@@ -76,7 +76,7 @@ function Shop() {
         ) : (
           data.listings.length > 0 ? (
             <>
-            <div className='px-2 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-1 md:gap-2 mt-6'>
+            {/* <div className='px-2 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-1 md:gap-2 mt-6'>
             
               {data.listings.map((listing) => (
                 <ListingItem 
@@ -85,6 +85,11 @@ function Shop() {
                 />
               ))}
     
+            </div> */}
+            <div className='px-4 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mt-6'>
+              {data.listings.map((listing) => (
+                <ListingItem key={listing._id} listing={listing} />
+              ))}
             </div>
 
             {/* // Pagination */}

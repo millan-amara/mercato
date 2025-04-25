@@ -34,6 +34,7 @@ import EditListing from './pages/EditListing.jsx';
 import MyAds from './pages/MyAds.jsx';
 import Shop from './pages/Shop.jsx';
 import Cart from './pages/Cart.jsx';
+import ScrollToTop from './components/Scroll.jsx';
 
 function App() {
   const { user } = useSelector((state) => state.auth);
@@ -41,6 +42,7 @@ function App() {
   return (
     <>
     <Router>
+      <ScrollToTop />
     <Routes>
       <Route path='/landing' element={<Landing />} />
       <Route path='/register' element={<Register />} />
