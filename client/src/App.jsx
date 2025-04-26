@@ -49,15 +49,15 @@ function App() {
       <Route path='/login' element={<Login />} />
       <Route path='/forgot' element={<Forgot />} />
       <Route path="/shop" element={<Shop />} />
-      <Route path="/explore" element={<Explore />} />
+      <Route path="/" element={<Explore />} />
       <Route path='/houses/:houseId' element={<ShowHouse />} />
       <Route path='/listings/:listingId' element={<ShowListing />} />
       <Route path='/reset-password/:token' element={<ResetPassword />} />
       <Route path='/forgot-password/success' element={<ResetSuccess />} />
       <Route path='/reset-password/failed' element={<ResetFail />} />
 
-      <Route path='/' element={<PrivateRoute />} >
-        <Route path='/' element={<Home />} />
+      <Route path='/custom-search' element={<PrivateRoute />} >
+        <Route path='/custom-search' element={<Home />} />
       </Route>
       <Route path="/posts" element={<BusinessPrivateRoute />}>
         <Route path="/posts" element={<Posts />} />

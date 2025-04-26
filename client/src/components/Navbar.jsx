@@ -209,7 +209,7 @@ function Navbar() {
 
       {/* Desktop Nav */}
       <div className="hidden md:flex space-x-6 items-center text-sm font-medium">
-        <Link to="/explore" className="hover:text-fuchsia-700 transition">Explore</Link>
+        <Link to="/" className="hover:text-fuchsia-700 transition">Explore</Link>
         <Link to="/shop" className="hover:text-fuchsia-700 transition">Shop</Link>
 
         {user.business && (

@@ -14,7 +14,7 @@ function Footer() {
                 <p className="text-lg mb-3">ABOUT</p>
                 <p className="mb-5 text-base">Don't see what you're looking for? Describe what it is, and we'll go look for it!</p>
                 {user ? (
-                    <Link to="/" className="bg-fuchsia-600 hover:bg-fuchsia-700 py-2 px-4 rounded-md font-bold">Go to Find<i className="fa-solid fa-arrow-right ml-3"></i></Link>
+                    <Link to="/custom-search" className="bg-fuchsia-600 hover:bg-fuchsia-700 py-2 px-4 rounded-md font-bold">Go to Find<i className="fa-solid fa-arrow-right ml-3"></i></Link>
                 ) : (
                     <Link to="/register" className="bg-fuchsia-600 hover:bg-fuchsia-700 py-2 px-4 rounded-md font-bold">Sign Up<i className="fa-solid fa-arrow-right ml-3"></i></Link>
                 )}
