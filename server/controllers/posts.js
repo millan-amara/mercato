@@ -96,18 +96,18 @@ module.exports.fetchPosts = async (req, res) => {
 module.exports.createPost = async (req, res) => {
     try {
         const userId = req.user._id;
-        const todayStart = moment().startOf('day').toDate();
-        const todayEnd = moment().endOf('day').toDate();
+        // const todayStart = moment().startOf('day').toDate();
+        // const todayEnd = moment().endOf('day').toDate();
 
         // Count the user's posts created today
-        const postCount = await Post.countDocuments({
-            author: userId,
-            createdAt: { $gte: todayStart, $lte: todayEnd }
-        });
+        // const postCount = await Post.countDocuments({
+        //     author: userId,
+        //     createdAt: { $gte: todayStart, $lte: todayEnd }
+        // });
 
-        if (postCount >= 1) {
-            return res.status(403).json({ error: "Daily post limit reached. Try again tomorrow." });
-        }
+        // if (postCount >= 1) {
+        //     return res.status(403).json({ error: "Daily post limit reached. Try again tomorrow." });
+        // }
 
         // Create new post
         const post = new Post({
@@ -117,7 +117,7 @@ module.exports.createPost = async (req, res) => {
         });
 
         await post.save();
-        res.status(201).json({ post, postCount });
+        res.status(201).json({ post });
 
     } catch (error) {
         console.error(error);

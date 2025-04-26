@@ -22,7 +22,7 @@ module.exports.createPayment = async (req, res) => {
         }
     
         const response = await collection.mpesaStkPush({
-            first_name: req.user.fname,
+            first_name: req.user.fname || req.user.email,
             last_name: 'Doe',
             email: req.user.email,
             host: 'https://www.peskaya.com',
@@ -36,11 +36,17 @@ module.exports.createPayment = async (req, res) => {
             throw new ExpressError("Failed to initiate payment", 401)
         }
 
+        const { amount, postId, address, cartItems } = req.body;
+
         const payment = new Payment({
-            ...req.body,
+            amount,
+            postId,
+            address,
+            cartItems,
             invoiceId: invoiceId,
             author: req.user._id,
             status: "PROCESSING",
+            postId: postId || null,
         });
 
         await payment.save();
@@ -76,6 +82,15 @@ module.exports.getPaymentStatus = async (req, res) => {
                 user.canReview.push(req.body.seller);
             }
             await user.save();
+
+            // If this payment is for a Custom Search Post, update post status
+            if (payment.postId) {
+                const post = await Post.findById(payment.postId);
+                if (post && post.status === 'pending_payment') {
+                    post.status = 'processing';
+                    await post.save();
+                }
+            }
         }
 
         res.status(200).json(response);

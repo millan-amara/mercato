@@ -17,6 +17,7 @@ const PaymentSchema = new Schema({
         required: true,
         unique: true
     },
+    postId: String,
     author: {
         type: Schema.Types.ObjectId,
         ref: 'User'

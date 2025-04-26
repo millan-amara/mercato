@@ -41,7 +41,7 @@ const images = [
 function Home() {
   const API_URL = import.meta.env.VITE_API_URL;
   const navigate = useNavigate();
-  const [postCount, setPostcount] = useState(0);
+  // const [postCount, setPostcount] = useState(0);
   const { user } = useSelector((state) => state.auth);
   
   const [formData, setFormData] = useState({ description: "" });
@@ -68,14 +68,30 @@ function Home() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post(`${API_URL}/posts/createpost`, formData, { withCredentials: true });
-      if(response.data.error) {
-        toast.error(response.data.error);
-      } else {
-        setPostcount(response.data.postCount)
-        toast.success(`Saved successfully!`);
-        navigate(`/user/profile/${user._id}`);
+      const postResponse = await axios.post(`${API_URL}/posts/createpost`, formData, { withCredentials: true });
+      if(postResponse.data.error) {
+        toast.error(postResponse.data.error);
+        return;
+      } 
+
+      const postId = postResponse.data.post._id;  // Get the created post's ID
+
+      // Now trigger payment
+      const paymentData = {
+        amount: 2,
+        postId: postId
+      };
+  
+      const paymentResponse = await axios.post(`${API_URL}/payments/makepay`, paymentData, { withCredentials: true });
+  
+      if (paymentResponse.data.error) {
+        toast.error(paymentResponse.data.error);
+        return;
       }
+
+      toast.success(`Request submitted and payment initiated!`);
+      navigate(`/user/profile/${user._id}`);
+      
     } catch (error) {
         if (error.response && error.response.status === 403) {
         toast.error("You have reached your daily post limit.");
@@ -89,9 +105,11 @@ function Home() {
   return (
     <div className='h-[100dvh] flex flex-col justify-between'>
       <Navbar />
+      <p className='text-center mt-5 text-2xl'>Create a Custom Request</p>
       <div className='flex flex-col md:flex-row md:w-full justify-between h-5/6 pt-2 px-4 text-center'>
+      
         <div className='md:w-1/3 min-h-[3em]'>
-        <p>If you're looking for something not in our <Link to='/explore' className='underline underline-offset-2'>Explore Page</Link>, create a custom request below.</p>
+        {/* <p>If you're looking for something not in our <Link to='/explore' className='underline underline-offset-2'>Explore Page</Link>, create a custom request below.</p> */}
           <div className='grid grid-cols-2 gap-2 mt-4 md:mt-6 w-full max-w-sm h-56'>
             {images[currentSet].map((image, index) => (
               <motion.img
