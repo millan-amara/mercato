@@ -18,6 +18,7 @@ import 'swiper/css/pagination';
 import 'swiper/css/scrollbar'; 
 import { FaLocationPin, FaShare, FaTiktok, FaWhatsapp } from 'react-icons/fa6';
 import { FaShareAlt } from 'react-icons/fa';
+import MapPicker from '../components/MapPicker';
 
 const API_URL = import.meta.env.VITE_API_URL;
 
@@ -138,14 +139,22 @@ function ShowHouse() {
             <a href={house.url} target="_blank" rel="noopener noreferrer" className='ml-2 '>Watch House video</a>
           </div>
           <div className='mt-6'>
-            <a href={`https://wa.me/+${house.caretaker}`} target="_blank" rel="noopener noreferrer" className='rounded-md font-semibold flex items-center justify-center bg-black hover:bg-slate-800 text-white w-full mt-2 py-2 lg:py-4'>
-              <FaWhatsapp />
-              <span className='ml-2'>Talk to CareTaker</span>
-            </a>
+            {user ? (
+              <a href={`https://wa.me/+${house.caretaker}`} target="_blank" rel="noopener noreferrer" className='rounded-md font-semibold flex items-center justify-center bg-black hover:bg-slate-800 text-white w-full mt-2 py-2 lg:py-4'>
+                <FaWhatsapp />
+                <span className='ml-2'>Talk to CareTaker</span>
+              </a>
+            ) : (
+              <Link to='/login' className='rounded-md font-semibold flex flex-col items-center justify-center bg-black hover:bg-slate-800 text-white w-full mt-2 py-2 lg:py-4'>
+                <span className='my-2'>Login to talk to CareTaker</span>
+                <span className='text-xs'>It's <span className='text-fuchsia-500'>free</span> to create an account</span>
+              </Link>
+            )}
+
           </div>
         </div>
 
-        {house.coordinates && (
+        {user && house.coordinates ? (
           <div className="my-8 lg:w-1/2 mx-auto">
             <h2 className="text-lg font-semibold mb-2">Location</h2>
             <StaticMap lat={house.coordinates.lat} lng={house.coordinates.lng} />
@@ -161,6 +170,11 @@ function ShowHouse() {
             </a>
 
           </div>
+        ) : (
+          <div className='mt-8 md:w-1/2 mx-auto'>
+            <MapPicker />
+          </div>
+          
         )}
 
         {/* <div id="similar" className='mt-16 lg:mt-20'>

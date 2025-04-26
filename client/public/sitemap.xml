@@ -5,9 +5,14 @@
         <lastmod>2025-03-17T02:50:11+01:00</lastmod>
         <priority>1.0</priority>
     </url>
-        <url>
-        <loc>https://www.peskaya.com/explore</loc>
-        <lastmod>2025-03-29T02:50:11+01:00</lastmod>
+    <url>
+        <loc>https://www.peskaya.com</loc>
+        <lastmod>2025-04-27T02:50:11+01:00</lastmod>
+        <priority>1.0</priority>
+    </url>
+    <url>
+        <loc>https://www.peskaya.com/shop</loc>
+        <lastmod>2025-04-27T02:50:11+01:00</lastmod>
         <priority>1.0</priority>
     </url>
     <url>
@@ -19,15 +24,5 @@
         <loc>https://www.peskaya.com/login</loc>
         <lastmod>2025-03-17T02:50:11+01:00</lastmod>
         <priority>1.0</priority>
-    </url>
-    <url>
-        <loc>https://www.peskaya.com/</loc>
-        <lastmod>2025-03-17T02:50:11+01:00</lastmod>
-        <priority>1.0</priority>
-    </url>
-    <url>
-        <loc>https://www.peskaya.com/makepay</loc>
-        <lastmod>2025-03-17T02:50:11+01:00</lastmod>
-        <priority>0.8</priority>
     </url>
 </urlset>
