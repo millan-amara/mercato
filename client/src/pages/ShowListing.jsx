@@ -106,7 +106,7 @@ function ShowListing() {
     );
   }
 
-  if (listingError) {
+  if (listingError) { 
       return <p>Error loading listing. Please try again.</p>;
   }
 
@@ -114,7 +114,7 @@ function ShowListing() {
   return (
     <>
     <Navbar />
-    <main className='mb-24 px-2'>
+    <main className='mb-24 px-2 mt-8'> 
       <Swiper 
             modules={[Navigation, Pagination, Scrollbar, A11y]}
             pagination={{clickable: true}}
@@ -125,19 +125,19 @@ function ShowListing() {
                     <div
                       className="relative flex justify-center" 
                     >
-                      <img src={url.url} className="max-h-80" alt={listing.title} />
+                      <img src={url.url} className="max-h-80 rounded-lg" alt={listing.title} />
                     </div>
                 </SwiperSlide>
             ))}
         </Swiper>
         {user && user._id === listing.author &&
-        <div className='flex justify-center'>
+        <div className='flex justify-center mt-4'> 
           <Link to={`/listings/${listing._id}/edit`} className='bg-green-300 mr-2 rounded-md w-1/3 md:w-1/5 py-2 text-center'>Edit</Link>
           <button onClick={handleDelete} className='bg-orange-400 ml-2 rounded-md w-1/3 md:w-1/5 py-2 text-white'>Delete</button>
         </div>}
 
         <div
-            className="mt-4 flex justify-center"
+            className="mt-4 flex justify-center" 
             onClick={() => {
                 navigator.clipboard.writeText(window.location.href)
                 setSharedLinkCopied(true)
@@ -167,15 +167,15 @@ function ShowListing() {
             </p>
           </div>
           <div>
-            <p>Free shipping</p>
-            <p>Same day delivery</p>
+            <p>{listing.shipping}</p>
+            <p>{listing.delivery}</p>
           </div>
           {/* <div className='mt-4 flex items-center'>
             <FaLocationPin />
             <span className='ml-2'>Deliver to <button className='underline underline-offset-2 text-sm'>Add Location</button> </span>
           </div> */}
           <div className='mt-4'>
-            <p className='text-lg lg:text-2xl text-green-600 font-medium'>In Stock</p>
+            <p className='text-lg lg:text-2xl text-green-600 font-medium'>{listing.stock}</p>
             <p className='bg-slate-200 w-full mt-1 py-2 rounded-md px-1 flex items-center'>
               <span className='w-1/4 md:w-2/5'>Quantity: </span>
               <select name="" id="" className='w-3/4 md:w-3/5 rounded-md py-2 px-1'>
@@ -200,7 +200,7 @@ function ShowListing() {
             <p className='text-xl lg:text-3xl font-medium mb-8 text-center'>You Might Also Like</p>
               <Swiper
                 slidesPerView={3}
-                spaceBetween={10}
+                spaceBetween={15}
                 className="mySwiper"
               >
                 {listings.slice(3, 7).map((listing) => (

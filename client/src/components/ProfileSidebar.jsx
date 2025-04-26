@@ -11,14 +11,15 @@ function ProfileSidebar({ handleTabChange,isOwner,activeTab,profileData,loggedIn
 
   const menus = [
     { key: "1", title: "Requests", path:"posts", icon: <BiSolidDashboard /> },
-    { key: "2", title: "Bids", path:"bids", icon: <FaLanguage /> },
+    
     // { key: "3", title: "Reviews", path:"reviews", icon: <BsPersonCircle /> },
     { key: "4", title: "Edit Profile", path:"editProfile", icon: <MdContactEmergency /> },
     // { title: "Skills & Education", path: "skills", icon: <MdSchool />, spacing: false },
-    { key: "5", title: "Payment Info", path: "paymentInfo", icon: <MdPayment />, spacing: true },
+    // { key: "5", title: "Payment Info", path: "paymentInfo", icon: <MdPayment />, spacing: true },
   ]
 
   const links = [
+    { key: "2", title: "Bids", path:"bids", icon: <FaLanguage /> },
     { key: "6", title: "My Money", path: "earnings", icon: <MdSecurity /> },  
   ]
   
@@ -68,14 +69,14 @@ function ProfileSidebar({ handleTabChange,isOwner,activeTab,profileData,loggedIn
                     ))}
                     </>
                 
-                    // <button onClick={() => handleTabChange('reviews')} key={'reviews'} className={`text-gray-300 w-full ${activeTab === 'reviews' && 'bg-green-700'} text-sm no-underline flex items-center cursor-pointer p-2 hover:bg-green-700 rounded-md`}>
+                    {/* // <button onClick={() => handleTabChange('reviews')} key={'reviews'} className={`text-gray-300 w-full ${activeTab === 'reviews' && 'bg-green-700'} text-sm no-underline flex items-center cursor-pointer p-2 hover:bg-green-700 rounded-md`}>
                     //     <span className='text-2xl block float-left mr-3'>
                     //     <BsPersonCircle /> 
                     //     </span>
                     //     <span name={'reviews'} className='text-base font-medium'>
                     //     Reviews
                     //     </span>
-                    // </button>
+                    // </button> */}
                 
             </ul>
           </div>

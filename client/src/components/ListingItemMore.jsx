@@ -13,7 +13,7 @@ function ListingItemSimilar({ listing }) {
             <img
                 src={listing.imgs[0].url}
                 alt={listing.title}
-                className='w-full h-28 md:w-3/4 md:h-32 mb-4 lg:w-3/4 lg:h-48'
+                className='w-full rounded-md h-40 md:h-48 mb-4 lg:h-80'
             />
 
             <div className="w-full lg:ml-2">
@@ -21,7 +21,7 @@ function ListingItemSimilar({ listing }) {
                     {listing.title.substring(0,50)}...
                 </p>
                 <p className='text-xs font-medium text-green-600 mt-1'>
-                    Same day delivery
+                    {listing.delivery}
                 </p>
                 <p className="mt-1 mb-1">
                     <span className="text-fuchsia-500 font-semibold lg:text-lg">

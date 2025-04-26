@@ -65,7 +65,8 @@ function ListingItem({ listing }) {
         <h3 className="font-semibold text-base text-gray-800 mb-1">
           {listing.title.length > 70 ? listing.title.substring(0, 70) + '...' : listing.title}
         </h3>
-        <p className="text-sm text-green-600 mb-2">Same day delivery</p>
+        {/* <p className="text-sm text-green-600 mb-2">Same day delivery</p> */}
+        <p className="text-sm text-green-600 mb-2">{listing.delivery}</p>
 
         <div className="flex items-center">
           <span className="text-fuchsia-600 font-bold text-lg">

@@ -78,7 +78,7 @@ function Home() {
 
       // Now trigger payment
       const paymentData = {
-        amount: 2,
+        amount: 4000,
         postId: postId
       };
   
