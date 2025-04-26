@@ -4,7 +4,7 @@ import Typed from 'typed.js';
 import { toast } from 'react-toastify';
 import axios from 'axios';
 import { useSelector } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import Navbar from '../components/Navbar';
 import TextField from '@mui/material/TextField';
 import { IoMdSend } from "react-icons/io";
@@ -91,7 +91,8 @@ function Home() {
       <Navbar />
       <div className='flex flex-col md:flex-row md:w-full justify-between h-5/6 pt-2 px-4 text-center'>
         <div className='md:w-1/3 min-h-[3em]'>
-          <div className='grid grid-cols-2 gap-2 md:mt-6 w-full max-w-sm h-56'>
+        <p>If you're looking for something not in our <Link to='/explore' className='underline underline-offset-2'>Explore Page</Link>, create a custom request below.</p>
+          <div className='grid grid-cols-2 gap-2 mt-4 md:mt-6 w-full max-w-sm h-56'>
             {images[currentSet].map((image, index) => (
               <motion.img
                 key={index}
@@ -105,11 +106,12 @@ function Home() {
               />
             ))}
           </div>
-          <div className='grid grid-cols-2 gap-2 md:mt-6 w-full max-w-sm'>
+          <div className='hidden md:grid grid-cols-2 gap-2 md:mt-6 w-full max-w-sm'>
             <img src={ImageOne} alt='Tech 1' className='w-full h-24 object-cover rounded-lg' />
             <img src={ImageTwo} alt='Tech 2' className='w-full h-24 object-cover rounded-lg' />
           </div>
         </div>
+        
         
         <form onSubmit={handleSubmit} className='w-full md:w-2/3 md:px-12 pb-24 flex flex-col items-center justify-center'>
           <textarea
@@ -123,6 +125,7 @@ function Home() {
             style={{ minHeight: '40px', maxHeight: '500px' }}
             required
           />
+          <p className='text-xs mt-4'>By clicking the button below, you accept to pay KES 4,000 for us to go out and manually find you a house. If we cannot find anything matching your request, we refund your fee fully.</p>
 
           <button className='bg-fuchsia-800 text-white px-4 py-2 mt-4 rounded-lg flex items-center'>
             <span className='mr-2'>Submit</span>
