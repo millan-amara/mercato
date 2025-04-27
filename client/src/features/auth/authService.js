@@ -22,6 +22,11 @@ const login = async (userData) => {
     return response.data
 }
 
+const getUser = async () => {
+    const response = await axios.get('/auth/me'); // 👈 Adjust to your backend route for "get current user"
+    return response.data;
+};
+
 //Update user
 const updateUser = async (userData, userId) => {
     const response = await axios.put(`${API_URL}/users/${userId}/updateuser`, userData, { withCredentials: true })
@@ -49,13 +54,21 @@ const fetchOwnBids = async() => {
     return response.data
 }
 
+// Update the user's coins after a successful payment
+const updateUserCoins = async (userId, coins) => {
+    const response = await axios.patch(`${API_URL}/updateCoins/${userId}`, { coins });
+    return response.data;
+}
+
 
 const authService = {
     register,
     login,
     updateUser,
     logout,
+    getUser,
     fetchOwnPosts,
+    updateUserCoins,
 }
 
 export default authService;

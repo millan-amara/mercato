@@ -1,5 +1,6 @@
 const Payment = require('../models/payment');
 const User = require('../models/user');
+const Post = require('../models/post');
 const IntaSend = require('intasend-node');
 const { v4: uuidv4 } = require('uuid');
 const ExpressError = require('../utils/ExpressError');
@@ -78,9 +79,14 @@ module.exports.getPaymentStatus = async (req, res) => {
 
         if (response.invoice.state === COMPLETE) {
             const user = await User.findById(req.user._id);
+            
             if(!user.canReview.includes(req.body.seller)) {
                 user.canReview.push(req.body.seller);
             }
+
+            // Update user's coins balance
+            user.coins = (user.coins || 0) + payment.coins;
+            
             await user.save();
 
             // If this payment is for a Custom Search Post, update post status
@@ -91,13 +97,59 @@ module.exports.getPaymentStatus = async (req, res) => {
                     await post.save();
                 }
             }
+            res.status(200).json({ response: response, success: true, user: user });
+        } else {
+            res.status(200).json({ response: response }); // Payment is not complete yet
         }
-
-        res.status(200).json(response);
     } catch (error) {
         res.status(500).json({ success: false, message: 'Error fetching payment status', error });
     }
 };
+
+
+module.exports.rechargeCoins = async (req, res) => {
+    try {
+        const uniqueId = `ORDER-${uuidv4()}`;
+        let collection = intasend.collection();
+
+        if (!req.user.phone) {
+            return res.status(400).json({ error: "Phone number is required" });
+        }
+    
+        const response = await collection.mpesaStkPush({
+            first_name: req.user.fname || req.user.email,
+            last_name: 'Doe',
+            email: req.user.email,
+            host: 'https://www.peskaya.com',
+            amount: req.body.amount,
+            phone_number: req.user.phone,
+            api_ref: uniqueId,
+        });
+        const invoiceId = response.invoice.invoice_id;
+
+        if (!response) {
+            throw new ExpressError("Failed to initiate payment", 401)
+        }
+
+        const { coins, amount } = req.body;
+
+        const payment = new Payment({
+            amount,
+            coins,
+            invoiceId: invoiceId,
+            author: req.user._id,
+            status: "PROCESSING",
+        });
+
+        await payment.save();
+    
+        res.status(201).json(response);
+
+    } catch (error) {
+        console.error(`STK Push Resp error:`, error.response ? error.response.data : error);
+        res.status(500).json(error)
+    }
+}
 
 module.exports.fetchBusinessPayments = async (req, res) => { 
     const limit = 10;

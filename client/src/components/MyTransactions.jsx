@@ -16,7 +16,7 @@ function MyTransactions({ transactions,onPagination,activePage,items,loadingTran
   return (
     <>
         <div>
-            <h1 className='text-center'>My Transactions</h1>
+            <h1 className='text-center'>My Transactions</h1> 
         </div>
         {loadingTransactions ? (
             <>

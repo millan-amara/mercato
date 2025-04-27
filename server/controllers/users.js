@@ -31,7 +31,7 @@ module.exports.register = async (req, res, next) => {
             email,
             phone: formatPhoneNumber(phone),
             business,
-            coins: 50,
+            coins: 500,
         });
         
             const registeredUser = await User.register(user, password);

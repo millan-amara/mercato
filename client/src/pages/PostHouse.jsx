@@ -107,7 +107,7 @@ function PostHouse() {
   
     try {
 
-      const response = await axios.post(`${API_URL}/houses`, requestBody);
+      const response = await axios.post(`${API_URL}/houses`, requestBody, { withCredentials: true });
       
       if (response.data.error) {
         toast.error(response.data.error);

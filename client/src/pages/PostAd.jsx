@@ -76,7 +76,7 @@ function PostAd() {
     }
   
     try {
-      const response = await axios.post(`${API_URL}/listings`, requestBody);
+      const response = await axios.post(`${API_URL}/listings`, requestBody, { withCredentials: true });
       
       if (response.data.error) {
         toast.error(response.data.error);

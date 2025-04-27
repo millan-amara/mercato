@@ -35,6 +35,17 @@ export const login = createAsyncThunk('auth/login', async (user, thunkAPI) => {
     }
 })
 
+// Fetch latest user data
+export const fetchUser = createAsyncThunk('auth/fetchUser', async (_, thunkAPI) => {
+    try {
+        return await authService.getUser(); // We'll create this method below
+    } catch (error) {
+        const message = error.response?.data?.error?.message || "Failed to fetch user.";
+        return thunkAPI.rejectWithValue(message);
+    }
+});
+
+
 //Update user
 export const updateUser = createAsyncThunk('auth/update', async ({userData, userId}, thunkAPI) => {
     try {
@@ -52,16 +63,27 @@ export const logout = createAsyncThunk('auth/logout', async () => {
     await authService.logout()
 })
 
+// Handle payment update (after payment is complete)
+export const updateUserCoins = createAsyncThunk('auth/updateUserCoins', async ({ userId, coins }, thunkAPI) => {
+    try {
+        const updatedUser = await authService.updateUserCoins(userId, coins);
+        return updatedUser; // This should return the user data with the updated coins
+    } catch (error) {
+        const message = error.response?.data?.error?.message || "Failed to update user coins.";
+        return thunkAPI.rejectWithValue(message);
+    }
+});
+
 
 const userSliceOptions = {
     name: 'auth',
     initialState,
     reducers: {
         reset: (state) => {
-            state.isLoading = false,
-            state.isError = false,
-            state.isSuccess = false,
-            state.message = ''
+            state.isLoading = false;
+            state.isError = false;
+            state.isSuccess = false;
+            state.message = '';
         }
     },
     extraReducers: (builder) => {
@@ -112,7 +134,25 @@ const userSliceOptions = {
             .addCase(logout.fulfilled, (state) => {
                 state.user = null
             })
-
+            .addCase(fetchUser.pending, (state) => {
+                state.isLoading = true;
+            })
+            .addCase(fetchUser.fulfilled, (state, action) => {
+                state.isLoading = false;
+                state.user = action.payload;
+                state.isError = false;
+            })
+            .addCase(fetchUser.rejected, (state, action) => {
+                state.isLoading = false;
+                state.isError = true;
+                state.message = action.payload;
+            })
+            // After payment is complete and user coins are updated
+            .addCase(updateUserCoins.fulfilled, (state, action) => {
+                state.user = action.payload;
+                state.isError = false;
+            })
+            
     }
 }
 

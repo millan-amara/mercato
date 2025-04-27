@@ -7,7 +7,7 @@ import { FaArrowAltCircleLeft, FaCheckCircle } from "react-icons/fa";
 
 
 
-function Success() {
+function SuccessPay() {
   const {user} = useSelector((state) => state.auth);
 
   return (
@@ -41,4 +41,4 @@ function Success() {
   )
 }
 
-export default Success
+export default SuccessPay

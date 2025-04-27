@@ -6,6 +6,7 @@ const PaymentSchema = new Schema({
         type: Number,
         required: true
     },
+    coins: Number,
     cartItems: [],
     address: String,
     status: {

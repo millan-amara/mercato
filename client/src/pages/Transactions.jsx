@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { toast } from 'react-toastify';
+import { useDispatch } from 'react-redux';
+import { updateUser, updateUserCoins } from '../features/auth/authSlice'; 
 import Navbar from '../components/Navbar';
 import MyTransactions from '../components/MyTransactions';
 
@@ -14,6 +16,7 @@ function Transactions() {
     const [loadingStatuses, setLoadingStatuses] = useState({});
     const [issueSubmitted, setIssueSubmitted] = useState(false);
     const [disputed, setDisputed] = useState(null);
+    const dispatch = useDispatch();
 
     const [formData, setFormData] = useState({
         issue: '',
@@ -67,9 +70,22 @@ function Transactions() {
             const response = await axios.get(`${API_URL}/payments/status/${invoiceId}`, { withCredentials: true })
 
             console.log("Payment Status Response:", response.data);
+            
+            if (response.data.success && response.data.user) {
+                // Payment was successful, update the Redux state with the new user data
+                dispatch(updateUser({ userData: response.data.user, userId: response.data.user._id }));
+                toast.success('Payment successful! Your balance has been updated.');
+
+                if (response.data.user.coins !== undefined) {
+                    dispatch(updateUserCoins({ userId: response.data.user._id, coins: response.data.user.coins }));
+                }
+              } else {
+                toast.error('Payment is not yet complete.');
+            }
+
             setTransactionStatuses(prevState => ({
                 ...prevState,
-                [invoiceId]: response.data.invoice.state
+                [invoiceId]: response.data.response.invoice.state
             }));
 
         } catch (error) {

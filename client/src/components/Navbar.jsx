@@ -211,6 +211,7 @@ function Navbar() {
       <div className="hidden md:flex space-x-6 items-center text-sm font-medium">
         <Link to="/" className="hover:text-fuchsia-700 transition">Explore</Link>
         <Link to="/shop" className="hover:text-fuchsia-700 transition">Shop</Link>
+        <Link to={`/${user._id}/coins/recharge`} className="bg-slate-800 text-white hover:text-fuchsia-500 transition px-2 py-1 rounded-md">Coins: {user.coins || 0}</Link>
 
         {user.business && (
           <>
@@ -246,6 +247,7 @@ function Navbar() {
 
         <div className="flex flex-col mt-16 px-6 space-y-4 text-sm">
           <LinkItem icon={<FaMoneyCheck />} label="Transactions" to={`/user/profile/${user._id}/transactions`} />
+          <LinkItem icon={<FaPiggyBank />} label={`Coins: ${user.coins || 0}`} filled to={`/${user._id}/coins/recharge`} />
           {user.business && (
             <>
               <LinkItem icon={<FaDollarSign />} label="My Money" to={`/user/profile/${user._id}/earnings`} />

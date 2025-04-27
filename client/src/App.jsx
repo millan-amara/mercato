@@ -35,6 +35,8 @@ import MyAds from './pages/MyAds.jsx';
 import Shop from './pages/Shop.jsx';
 import Cart from './pages/Cart.jsx';
 import ScrollToTop from './components/Scroll.jsx';
+import RechargeCoins from './pages/RechargeCoins.jsx';
+import { Toaster } from 'sonner';
 
 function App() {
   const { user } = useSelector((state) => state.auth);
@@ -68,6 +70,10 @@ function App() {
       </Route>
       <Route path="/posthouse" element={<PrivateRoute />}>
         <Route path="/posthouse" element={<PostHouse />} />
+      </Route>
+
+      <Route path="/:userId/coins/recharge" element={<PrivateRoute />}>
+        <Route path="/:userId/coins/recharge" element={<RechargeCoins />} />
       </Route>
 
       <Route path='/user/profile/:userId/earnings' element={<BusinessPrivateRoute />} >
@@ -121,6 +127,7 @@ function App() {
     {user && <BottomNavbar user={user} />}
     </Router>
       
+    <Toaster position="top-center" richColors />
     <ToastContainer />
     </>
   )
