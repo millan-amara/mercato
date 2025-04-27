@@ -93,7 +93,7 @@ function MyTransactions({ transactions,onPagination,activePage,items,loadingTran
                                     
                                     </>
                                 ) : (
-                                    pay.status === "RETRY" || transactionStatuses[pay.invoiceId] === "RETRY" ? (
+                                    pay.status === ("RETRY" || "FAILED") || transactionStatuses[pay.invoiceId] === ("RETRY" || "FAILED") ? (
                                         <button disabled className='bg-slate-400 text-center text-white text-xs px-1 py-1 rounded-sm'>payment failed</button>
                                     ) : (
                                         <button onClick={() => checkTransactionStatus(pay.invoiceId)} className="text-center text-white text-xs px-1 py-1 rounded-sm bg-slate-400">

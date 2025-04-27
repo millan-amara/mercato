@@ -79,14 +79,26 @@ function Transactions() {
                 if (response.data.user.coins !== undefined) {
                     dispatch(updateUserCoins({ userId: response.data.user._id, coins: response.data.user.coins }));
                 }
+
+                // Update the statuses immediately after success
+                setTransactionStatuses(prevState => ({
+                    ...prevState,
+                    [invoiceId]: 'COMPLETE', // Set the status to COMPLETE here
+                }));
+
+
               } else {
                 toast.error('Payment is not yet complete.');
+                setTransactionStatuses(prevState => ({
+                    ...prevState,
+                    [invoiceId]: 'PENDING', // Mark as PENDING if the payment is not successful
+                }));
             }
 
-            setTransactionStatuses(prevState => ({
-                ...prevState,
-                [invoiceId]: response.data.response.invoice.state
-            }));
+            // setTransactionStatuses(prevState => ({
+            //     ...prevState,
+            //     [invoiceId]: response.data.response.invoice.state
+            // }));
 
         } catch (error) {
             console.error("Error checking payment status:", error);

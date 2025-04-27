@@ -77,7 +77,7 @@ module.exports.getPaymentStatus = async (req, res) => {
             await payment.save();
         }
 
-        if (response.invoice.state === COMPLETE) {
+        if (response.invoice.state === "COMPLETE") {
             const user = await User.findById(req.user._id);
 
             console.log("Before update:", user.coins);
