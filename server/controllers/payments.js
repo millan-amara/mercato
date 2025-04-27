@@ -79,13 +79,13 @@ module.exports.getPaymentStatus = async (req, res) => {
 
         if (response.invoice.state === COMPLETE) {
             const user = await User.findById(req.user._id);
-            
-            if(!user.canReview.includes(req.body.seller)) {
-                user.canReview.push(req.body.seller);
-            }
 
+            console.log("Before update:", user.coins);
             // Update user's coins balance
             user.coins = (user.coins || 0) + payment.coins;
+
+            // Log user and coins after updating
+            console.log("After update:", user.coins);
             
             await user.save();
 

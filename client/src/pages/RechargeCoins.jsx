@@ -23,18 +23,19 @@ const RechargeCoins = () => {
     }
 
     try {
-      toast.loading('Initiating payment...');
+        const loadingToast = toast.loading('Initiating payment...');
 
       const response = await axios.post(`${API_URL}/payments/recharge`, {
         coins: selectedOption.coins,
         amount: selectedOption.amount,
       }, { withCredentials: true });
 
-      toast.success('Payment initiated! Please complete it on your phone.');
+      toast.success('Payment initiated! Please complete it on your phone.', { id: loadingToast });
       navigate('/success-pay')
 
     } catch (error) {
       console.error(error);
+      toast.dismiss(loadingToast);
       toast.error('Failed to initiate payment. Try again.');
     }
   };
