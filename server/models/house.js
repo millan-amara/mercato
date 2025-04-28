@@ -12,6 +12,11 @@ const HouseSchema = new Schema({
         required: true,
         ref: 'User'
     },
+    userPermissions: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User',
+        required: true
+    }],
     bedrooms: String,
     price: Number,
     title: String,

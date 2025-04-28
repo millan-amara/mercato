@@ -38,7 +38,7 @@ export const login = createAsyncThunk('auth/login', async (user, thunkAPI) => {
 // Fetch latest user data
 export const fetchUser = createAsyncThunk('auth/fetchUser', async (_, thunkAPI) => {
     try {
-        return await authService.getUser(); // We'll create this method below
+        return await authService.getUser();
     } catch (error) {
         const message = error.response?.data?.error?.message || "Failed to fetch user.";
         return thunkAPI.rejectWithValue(message);

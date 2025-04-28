@@ -12,8 +12,8 @@ const RechargeCoins = () => {
 
   const options = [
     { coins: 100, amount: 1 },
-    { coins: 500, amount: 5 },
-    { coins: 1000, amount: 1000 },
+    { coins: 600, amount: 5 },
+    { coins: 1300, amount: 1000 },
   ];
 
   const handleSubmit = async () => {
@@ -57,14 +57,14 @@ const RechargeCoins = () => {
             >
               <div>
                 <p className="font-semibold text-gray-700">{option.coins} Coins</p>
-                <p className="text-sm text-gray-500">{option.amount} KES</p>
+                <p className="text-sm text-gray-500">KES {option.amount}</p>
               </div>
               {selectedOption?.coins === option.coins && (
                 <span className="text-fuchsia-600 font-bold">Selected</span>
               )}
             </div>
           ))}
-        </div>
+        </div> 
 
         <button
           onClick={handleSubmit}

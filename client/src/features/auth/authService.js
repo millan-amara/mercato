@@ -16,15 +16,15 @@ const register = async (userData) => {
 const login = async (userData) => {
     const response = await axios.post(`${API_URL}/login`, userData, { withCredentials: true })
 
-    if(response.data) {
+    if(response.data) { 
         localStorage.setItem('user', JSON.stringify(response.data))
     }
     return response.data
 }
 
 const getUser = async () => {
-    const response = await axios.get('/auth/me'); // 👈 Adjust to your backend route for "get current user"
-    return response.data;
+    const response = await axios.get(`${API_URL}/users/currentuser`);
+    return response.data.data;
 };
 
 //Update user

@@ -2,6 +2,8 @@ import { useState } from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import axios from 'axios';
 import { toast } from 'react-toastify';
+import { useDispatch } from 'react-redux';
+import { fetchUser } from '../features/auth/authSlice';
 import { useQuery, useQueryClient } from '@tanstack/react-query'
 import Navbar from '../components/Navbar';
 import { useSelector } from 'react-redux';
@@ -22,15 +24,6 @@ import MapPicker from '../components/MapPicker';
 
 const API_URL = import.meta.env.VITE_API_URL;
 
-// const fetchHouses = async () => {
-//   const { data } = await axios.get(`${API_URL}/houses/fetchhouses`, {
-//     params: { limit: 9 || '' },
-//     withCredentials: true
-//   });
-
-//   return data.houses || [];
-// };
-
 
 function ShowHouse() {
 
@@ -39,6 +32,9 @@ function ShowHouse() {
     const { houseId } = useParams();
     const {user} = useSelector((state) => state.auth);
     const [sharedLinkCopied, setSharedLinkCopied] = useState(false);
+    const [showRechargeError, setShowRechargeError] = useState(false);
+    const [accessLoading, setAccessLoading] = useState(false);
+    const dispatch = useDispatch();
 
     //Fetch house data
     const { data: house, isLoading: houseLoading, error: houseError } = useQuery({
@@ -49,19 +45,37 @@ function ShowHouse() {
       }
     })
 
-    // React Query Fetch Hook for other houses
-    // const { data: houses = [], isLoading, isError, error } = useQuery({
-    //   queryKey: ['houses'],
-    //   queryFn: fetchHouses,
-    //   keepPreviousData: true, // Preserve previous data during pagination
-    // });
-
     const handleDelete = async (e) => {
       e.preventDefault();
       await axios.delete(`${API_URL}/houses/${houseId}`, { withCredentials: true });
       toast.success('successfully deleted product')
       navigate('/')
     }
+
+    const handleGetAccess = async () => {
+      if (user.coins >= 100 && !accessLoading) { 
+          try {
+            setAccessLoading(true);
+              await axios.put(`${API_URL}/houses/updateaccess/${houseId}`, {}, { withCredentials: true });
+              toast.success('Access granted!');
+              queryClient.invalidateQueries(['house', houseId]); // Invalidate the house data to trigger re-fetch
+          
+              dispatch(fetchUser());
+          
+          } catch (error) {
+            const serverMessage = error.response?.data?.message;
+            if (serverMessage) {
+              toast.error(serverMessage); // Show server's message if available
+            } else {
+              toast.error('Failed to grant access. Please try again.');
+            }
+          } finally {
+            setAccessLoading(false);
+          }
+      } else {
+          setShowRechargeError(true);
+      }
+    }; 
  
 
 
@@ -76,6 +90,8 @@ function ShowHouse() {
   if (houseError) {
       return <p>Error loading house. Please try again.</p>;
   }
+
+  const hasAccess = user && house.userPermissions && house.userPermissions.includes(user._id);
 
 
   return (
@@ -138,66 +154,82 @@ function ShowHouse() {
             <FaTiktok />
             <a href={house.url} target="_blank" rel="noopener noreferrer" className='ml-2 '>Watch House video</a>
           </div>
-          <div className='mt-6'>
-            {user ? (
-              <a href={`https://wa.me/+${house.caretaker}`} target="_blank" rel="noopener noreferrer" className='rounded-md font-semibold flex items-center justify-center bg-black hover:bg-slate-800 text-white w-full mt-2 py-2 lg:py-4'>
-                <FaWhatsapp />
-                <span className='ml-2'>Talk to CareTaker</span>
-              </a>
-            ) : (
-              <Link to='/login' className='rounded-md font-semibold flex flex-col items-center justify-center bg-black hover:bg-slate-800 text-white w-full mt-2 py-2 lg:py-4'>
-                <span className='my-2'>Login to talk to CareTaker</span>
-                <span className='text-xs'>It's <span className='text-fuchsia-500'>free</span> to create an account</span>
-              </Link>
-            )}
 
-          </div>
         </div>
 
-        {user && house.coordinates ? (
-          <div className="my-8 lg:w-1/2 mx-auto">
-            <h2 className="text-lg font-semibold mb-2">Location</h2>
-            <StaticMap lat={house.coordinates.lat} lng={house.coordinates.lng} />
+        {/* Show blurred background with a button to get access */}
+        {user ? (
+          !hasAccess ? (
 
-            <a
-              href={`https://www.google.com/maps/search/?api=1&query=${house.coordinates.lat},${house.coordinates.lng}`}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="bg-fuchsia-700 text-white py-2 px-4 rounded-md hover:bg-fuchsia-800 inline-block mt-2"
-              // bg-fuchsia-700 text-white py-2 px-4 rounded-md hover:bg-fuchsia-800 inline-block mt-2
-            >
-              Open in Google Maps
-            </a>
+            <div className="relative w-full mt-4 lg:w-1/2 mx-auto h-full">
+              {/* Dark overlay on top of the blurred map */}
+              <div className="absolute top-0 left-0 right-0 bottom-0 bg-black bg-opacity-80 z-20"></div> {/* Overlay for dimming */}
 
-          </div>
+              {/* Blurred background - applying the blur effect to the map */}
+              <div className="absolute top-0 left-0 right-0 bottom-0 z-10">
+                <MapPicker className="w-full h-full object-cover filter blur-sm" />
+              </div>
+
+              {/* Content on top of the blurred background */}
+              <div className="relative z-30">
+                <button
+                  onClick={handleGetAccess}
+                  disabled={accessLoading}
+                  className={`bg-fuchsia-700 text-white py-2 px-4 rounded-md w-full mt-36 ${
+                    accessLoading ? 'opacity-50 cursor-not-allowed' : 'hover:bg-fuchsia-800'
+                  }`}
+                >
+                  {accessLoading ? 'Processing...' : 'Get Access for 100 Coins'}
+                </button>
+                {showRechargeError && (
+                  <p className="text-red-500 mt-2 text-center">
+                    You do not have enough coins. Please recharge.
+                  </p>
+                )}
+              </div>
+            </div>
+
+          ) : (
+            <div id='premium' className='lg:w-1/2 mx-auto'>
+              <div className='mt-6'>
+                  <a href={`https://wa.me/+${house.caretaker}`} target="_blank" rel="noopener noreferrer" className='rounded-md font-semibold flex items-center justify-center bg-black hover:bg-slate-800 text-white w-full mt-2 py-2 lg:py-4'>
+                    <FaWhatsapp />
+                    <span className='ml-2'>Talk to CareTaker</span>
+                  </a>
+              </div>
+    
+              {user && house.coordinates ? (
+                <div className="my-8">
+                  <h2 className="text-lg font-semibold mb-2">Location</h2>
+                  <StaticMap lat={house.coordinates.lat} lng={house.coordinates.lng} />
+    
+                  <a
+                    href={`https://www.google.com/maps/search/?api=1&query=${house.coordinates.lat},${house.coordinates.lng}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="bg-fuchsia-700 text-white py-2 px-4 rounded-md hover:bg-fuchsia-800 inline-block mt-2"
+                    // bg-fuchsia-700 text-white py-2 px-4 rounded-md hover:bg-fuchsia-800 inline-block mt-2
+                  >
+                    Open in Google Maps
+                  </a>
+    
+                </div>
+              ) : (
+                <div className='mt-8'>
+                  <MapPicker />
+                </div>
+                
+              )}
+            </div>)
         ) : (
-          <div className='mt-8 md:w-1/2 mx-auto'>
-            <MapPicker />
-          </div>
-          
+          <Link to='/login' className='rounded-md font-semibold flex flex-col items-center justify-center bg-black hover:bg-slate-800 text-white w-full mt-2 py-2 lg:py-4'>
+            <span className='my-2'>Log in to View</span>
+            <span className='text-xs'>It's <span className='text-fuchsia-500'>free</span> to create an account</span>
+          </Link>
         )}
 
-        {/* <div id="similar" className='mt-16 lg:mt-20'>
-          {houses.length > 0 && (
-            <>
-            <p className='text-xl lg:text-3xl font-medium mb-8 text-center'>You Might Also Like</p>
-              <Swiper
-                slidesPerView={3}
-                spaceBetween={10}
-                className="mySwiper"
-              >
-                {houses.slice(3, 7).map((house) => (
-                  <SwiperSlide key={house._id}>
-                    <HouseItemSimilar house={house} />
-                  </SwiperSlide>
-                ))}
-              </Swiper>
-    
-    
-            </>
-          )}
-        </div> */}
-        <div id="specs" className='mt-8 lg:w-1/2 mx-auto'>
+
+        <div id="specs" className='mt-32 lg:w-1/2 mx-auto'>
           <h1 className='text-xl lg:text-3xl font-medium mb-8 text-center'>More Details</h1>
           <div
             className='' 
@@ -206,24 +238,6 @@ function ShowHouse() {
           </div>
 
         </div>
-        {/* <div id="more" className='mt-12 lg:mt-20'>
-
-          {houses.length > 0 && (
-            <>
-            <p className='text-xl lg:text-3xl font-medium mb-8 text-center'>More Products to Explore</p>
-            <div className='px-2 grid grid-cols-2 lg:grid-cols-3 gap-2 md:gap-4 mt-6'>
-            
-              {houses.slice(2, 8).map((house) => (
-                <HouseItemMore 
-                  key={house._id} 
-                  house={house}
-                />
-              ))}
-    
-            </div>
-            </>
-          )}
-        </div> */}
 
     </main>
     <Footer />

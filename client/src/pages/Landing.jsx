@@ -9,7 +9,7 @@ import ImageFour from '../assets/house/bed.jpg';
 import ImageFive from '../assets/house/mattress.jpg';
 import ImageSix from '../assets/house/outdoor.jpg';
 import ImageSeven from '../assets/house/bedroom.jpg';
-import ImageEight from '../assets/images/playstation.jpg';
+import ImageEight from '../assets/house/living.jpg';
 import ImageNine from '../assets/house/chairs.jpg';
 import ImageTen from '../assets/house/bathtub.jpg';
 import ImageEleven from '../assets/house/living.jpg';

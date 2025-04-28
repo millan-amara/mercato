@@ -198,7 +198,21 @@ module.exports.getProfileOwner = async (req, res) => {
 
 module.exports.getCurrentUser = async (req, res) => {
     const user = await User.findById(req.user.id);
-    res.status(200).json(user.canReview)
+    
+    res.status(200).json({
+        success: true,
+        data: {
+            _id: user._id,
+            email: user.email,
+            business: user.business,
+            fname: user.fname,
+            phone: user.phone,
+            website: user.website,
+            rating: user.rating,
+            reviews: user.reviews.length,
+            coins: user.coins,
+        }
+    })
 }
 
 module.exports.updateUser = async (req, res) => {

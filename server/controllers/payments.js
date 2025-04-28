@@ -80,12 +80,11 @@ module.exports.getPaymentStatus = async (req, res) => {
         if (response.invoice.state === "COMPLETE") {
             const user = await User.findById(req.user._id);
 
-            console.log("Before update:", user.coins);
-            // Update user's coins balance
-            user.coins = (user.coins || 0) + payment.coins;
+            if (!user) {
+                return res.status(404).json({ message: "User not found" });
+            }
 
-            // Log user and coins after updating
-            console.log("After update:", user.coins);
+            user.coins = (user.coins || 0) + payment.coins;
             
             await user.save();
 
@@ -102,6 +101,7 @@ module.exports.getPaymentStatus = async (req, res) => {
             res.status(200).json({ response: response }); // Payment is not complete yet
         }
     } catch (error) {
+        console.error("Error:", error); //
         res.status(500).json({ success: false, message: 'Error fetching payment status', error });
     }
 };

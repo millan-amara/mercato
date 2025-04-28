@@ -195,3 +195,48 @@ module.exports.fetchUserHouses = async (req, res) => {
         res.status(500).json({ error: "Server error" });
       }
 }
+
+module.exports.updateHouseAccess = async (req, res) => {
+    try {
+      const houseId = req.params.id;
+  
+      const userId = req.user._id;
+  
+      // Find the user and check their coin balance
+      const user = await User.findById(userId);
+      if (!user) {
+        return res.status(404).json({ message: "User not found" });
+      }
+  
+      if (user.coins < 100) {
+        return res.status(400).json({ message: "Insufficient coins to view the house" });
+      }
+  
+      // Deduct 100 coins from the user's balance
+      user.coins -= 100;
+      await user.save();
+  
+      // Find the house and add the user to the userPermissions array
+      const house = await House.findById(houseId);
+      if (!house) {
+        return res.status(404).json({ message: "House not found" });
+      }
+  
+      // Check if the user already has access to avoid duplication
+      if (house.userPermissions.includes(userId)) {
+        return res.status(400).json({ message: "You already have access to this house" });
+      }
+  
+      // Add the user to the house's userPermissions array
+      house.userPermissions.push(userId);
+      await house.save();
+  
+      // Return a success message
+      return res.status(200).json({ message: "Access granted to house listing" });
+    } catch (error) {
+      console.error(error);
+      return res.status(500).json({ message: "An error occurred while updating access" });
+    }
+  };
+  
+

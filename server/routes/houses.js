@@ -13,6 +13,8 @@ router.route('/')
 router.get('/fetchhouses', catchAsync(houses.fetchHouses));
 router.get('/fetchuserhouses', isLoggedIn, catchAsync(houses.fetchUserHouses));
 
+router.put('/updateaccess/:id', isLoggedIn, catchAsync(houses.updateHouseAccess));
+
 router.get('/:id', catchAsync(houses.showHouse));
 router.put('/:id', [isLoggedIn, isBusiness, isHouseAuthor, upload.array('files')], catchAsync(houses.updateHouse));
 router.delete('/:id', isLoggedIn, isHouseAuthor, catchAsync(houses.deleteHouse));
