@@ -4,6 +4,7 @@ import { useNavigate, Link } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import ImageUpload from '../components/ImageUpload';
 import MapPicker from '../components/MapPicker';
+import InputField from '../components/InputField';
 import Compressor from 'compressorjs';
 import axios from 'axios';
 import ReactQuill from 'react-quill';
@@ -178,7 +179,7 @@ function PostHouse() {
   return (
     <div>
       <Navbar />
-      <div className='flex flex-col justify-center mt-10 pb-24 relative z-0'>
+      {/* <div className='flex flex-col justify-center mt-10 pb-24 relative z-0'>
 
         <form onSubmit={onSubmit} className='w-full mx-2 md:w-1/3 mb-8'>
           <h1 className='text-2xl mb-4 text-center'>Create House</h1>
@@ -256,7 +257,7 @@ function PostHouse() {
             <MapPicker setLatLng={setPin} />
             {pin.lat && <p className="text-sm mt-2">Lat: {pin.lat}, Lng: {pin.lng}</p>}
           </div> */}
-          <div className='mb-5'>     
+          {/* <div className='mb-5'>     
             <label htmlFor="price">Rent Price</label> 
             <input 
               type="number"
@@ -288,7 +289,139 @@ function PostHouse() {
             Create House 
           </button>
         </form>
+      </div> */}
+
+<div className="flex flex-col items-center mt-12 px-4 pb-32 relative z-0">
+  <form onSubmit={onSubmit} className="w-full max-w-2xl bg-white shadow-md rounded-lg p-6">
+    
+    {/* Header */}
+    <div className="mb-6 text-center">
+      <h1 className="text-3xl font-semibold text-gray-800">Create House</h1>
+      <p className="text-sm text-gray-500 mt-2">
+        Earn from posting houses!{' '}
+        <Link className="underline text-fuchsia-600 font-medium" to="/guidelines/postingguides">
+          Tap to learn how
+        </Link>{' '}
+        and see the rules.
+      </p>
+    </div>
+
+    {/* Basic Info Section */}
+    <div className="mb-8">
+      <h2 className="text-lg font-medium text-gray-700 mb-4">Basic Information</h2>
+      <div className="space-y-4">
+        <InputField
+          label="House Title"
+          id="title"
+          placeholder="30,000 2 bedroom master ensuite in Ngong"
+          value={title}
+          onChange={onChange}
+        />
+        <InputField
+          label="Number of Bedrooms"
+          id="bedrooms"
+          type="number"
+          value={bedrooms}
+          onChange={onChange}
+        />
+        <div className="relative">
+          <InputField
+            label="Rent Price (KES)"
+            id="price"
+            type="number"
+            placeholder="Rent per month"
+            value={price}
+            onChange={onChange}
+          />
+          
+        </div>
       </div>
+    </div>
+
+    {/* Caretaker Section */}
+    <div className="mb-8">
+      <h2 className="text-lg font-medium text-gray-700 mb-4">Caretaker Contact</h2>
+      <InputField
+        label="Caretaker's Phone Number"
+        id="caretaker"
+        type="tel"
+        placeholder="07__ ___ ___"
+        value={caretaker}
+        onChange={onChange}
+      />
+    </div>
+
+    {/* Location Section */}
+    <div className="mb-8">
+      <h2 className="text-lg font-medium text-gray-700 mb-4">Location</h2>
+      <InputField
+        label="Location"
+        id="location"
+        value={location}
+        onChange={onChange}
+      />
+      <div className="flex items-center mt-4">
+        <input
+          type="checkbox"
+          checked={useCurrentLocation}
+          onChange={() => setUseCurrentLocation(prev => !prev)}
+          className="h-5 w-5 text-fuchsia-600 focus:ring-fuchsia-500 border-gray-300 rounded"
+        />
+        <label className="ml-2 text-sm text-gray-600">Use my current location</label>
+      </div>
+      {!useCurrentLocation && coords.latitude && coords.longitude && (
+        <div className="mt-6">
+          <MapPicker
+            defaultLocation={{ lat: coords.latitude, lng: coords.longitude }}
+            onChangeLocation={handleLocationChange}
+          />
+        </div>
+      )}
+    </div>
+
+    {/* Media Section */}
+    <div className="mb-8">
+      <h2 className="text-lg font-medium text-gray-700 mb-4">Media</h2>
+      <InputField
+        label="Video URL"
+        id="url"
+        placeholder="TikTok link"
+        value={url}
+        onChange={onChange}
+      />
+      <div className="mt-4">
+        <ImageUpload
+          onSelectFile={onSelectFile}
+          selectedImages={selectedImages}
+          deleteHandler={deleteHandler}
+        />
+      </div>
+    </div>
+
+    {/* Description Section */}
+    <div className="mb-8">
+      <h2 className="text-lg font-medium text-gray-700 mb-4">House Description</h2>
+      <div className="w-full h-80 md:h-72 max-w-screen-md">
+        <ReactQuill
+          theme="snow"
+          value={description}
+          placeholder="Describe any additional house features here...(optional)"
+          className="h-72 mb-12"
+          onChange={setDescription}
+        />
+      </div>
+    </div>
+
+    {/* Submit Button */}
+    <button
+      type="submit"
+      className="mt-4 w-full bg-fuchsia-700 hover:bg-fuchsia-800 text-white font-semibold py-3 rounded-md text-lg transition duration-300"
+    >
+      Create House
+    </button>
+  </form>
+</div>
+
     </div>
   )
 }

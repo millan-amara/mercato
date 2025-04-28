@@ -1,11 +1,12 @@
 import React from "react";
 import Navbar from "../components/Navbar";
+import Footer from "../components/Footer";
 
 const PostingGuidelines = () => {
   return (
     <>
     <Navbar />
-    <div className="max-w-4xl mx-auto p-6 text-gray-800">
+    <div className="max-w-4xl mx-auto mt-4 p-6 text-gray-800">
       <h1 className="text-3xl font-bold mb-6">📋 Posting Guidelines & Revenue Rules</h1>
       
       <p className="mb-8">
@@ -67,16 +68,18 @@ const PostingGuidelines = () => {
       <Section title="🏠 Keeping Listings Fresh">
         <List items={[
           "Mark houses as 'Unavailable' immediately once fully occupied.",
-          "Users and the Peskaya team will help update statuses, but repeated failure to update may lead to refunds and revenue loss."
+          "Users and the Peskaya team will help update statuses."
         ]} />
       </Section>
 
       {/* Closing Note */}
       <h2 className="text-2xl font-semibold mt-10 mb-4">🙌 Thank You!</h2>
-      <p className="mb-24">
+      <p className="mb-16">
         Your honesty and effort make Peskaya great — and it pays off! Together, we are building the most trusted house listing platform.
       </p>
     </div>
+
+    <Footer />
     </>
   );
 };
