@@ -51,11 +51,11 @@ function App() {
       <Route path='/register' element={<Register />} />
       <Route path='/login' element={<Login />} />
       <Route path='/forgot' element={<Forgot />} />
-      <Route path="/shop" element={<Shop />} />
+      {/* <Route path="/shop" element={<Shop />} /> */}
       <Route path="/" element={<Explore />} />
       <Route path="/guidelines/postingguides" element={<PostingGuidelines />} />
       <Route path='/houses/:houseId' element={<ShowHouse />} />
-      <Route path='/listings/:listingId' element={<ShowListing />} />
+      {/* <Route path='/listings/:listingId' element={<ShowListing />} /> */}
       <Route path='/reset-password/:token' element={<ResetPassword />} />
       <Route path='/forgot-password/success' element={<ResetSuccess />} />
       <Route path='/reset-password/failed' element={<ResetFail />} />

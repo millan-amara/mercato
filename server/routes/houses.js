@@ -8,7 +8,7 @@ const {storage} = require('../cloudinary');
 const upload = multer({ storage });
 
 router.route('/')
-    .post([isLoggedIn, isBusiness, upload.array('files')], catchAsync(houses.createHouse))
+    .post([isLoggedIn, upload.array('files')], catchAsync(houses.createHouse))
 
 router.get('/fetchhouses', catchAsync(houses.fetchHouses));
 router.get('/fetchuserhouses', isLoggedIn, catchAsync(houses.fetchUserHouses));

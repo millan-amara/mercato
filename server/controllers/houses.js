@@ -53,7 +53,7 @@ module.exports.fetchHouses = async (req, res) => {
             const foundHouses = await House.aggregate([
                 {
                     $search: {
-                        index: 'adsquery',
+                        index: 'housesquery',
                         text: {
                             path: {
                                 'wildcard' : '*'
