@@ -103,7 +103,7 @@ function ShowHouse() {
             pagination={{clickable: true}}
             className='swiper-container'
         >
-            {house.imgs.map((url, index) => (
+            {house.imgs?.map((url, index) => (
                 <SwiperSlide key={index}>
                     <div
                       className="relative flex justify-center" 
@@ -141,7 +141,7 @@ function ShowHouse() {
             </div>
             <p className="mt-2 mb-1">
               <span className="text-fuchsia-500 font-semibold text-lg lg:text-xl">
-                  Ksh. {house.price.toLocaleString()}
+                  Ksh. {house.price?.toLocaleString()}
               </span>
             </p>
           </div>
