@@ -248,6 +248,7 @@ function Navbar() {
         <div className="flex flex-col mt-16 px-6 space-y-4 text-sm">
           <LinkItem icon={<FaMoneyCheck />} label="Transactions" to={`/user/profile/${user._id}/transactions`} />
           <LinkItem icon={<FaPiggyBank />} label={`Coins: ${user.coins || 0}`} filled to={`/${user._id}/coins/recharge`} />
+    
           {user.business && (
             <>
               <LinkItem icon={<FaDollarSign />} label="My Money" to={`/user/profile/${user._id}/earnings`} />

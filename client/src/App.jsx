@@ -2,7 +2,7 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import {ToastContainer} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import Home from './pages/Home';
+// import Home from './pages/Home';
 import Posts from './pages/Posts';
 import Explore from './pages/Explore.jsx';
 import Login from './pages/Login';
@@ -37,6 +37,7 @@ import Cart from './pages/Cart.jsx';
 import ScrollToTop from './components/Scroll.jsx';
 import RechargeCoins from './pages/RechargeCoins.jsx';
 import { Toaster } from 'sonner';
+import PostingGuidelines from './pages/PostingGuidelines.jsx';
 
 function App() {
   const { user } = useSelector((state) => state.auth);
@@ -52,15 +53,16 @@ function App() {
       <Route path='/forgot' element={<Forgot />} />
       <Route path="/shop" element={<Shop />} />
       <Route path="/" element={<Explore />} />
+      <Route path="/guidelines/postingguides" element={<PostingGuidelines />} />
       <Route path='/houses/:houseId' element={<ShowHouse />} />
       <Route path='/listings/:listingId' element={<ShowListing />} />
       <Route path='/reset-password/:token' element={<ResetPassword />} />
       <Route path='/forgot-password/success' element={<ResetSuccess />} />
       <Route path='/reset-password/failed' element={<ResetFail />} />
 
-      <Route path='/custom-search' element={<PrivateRoute />} >
+      {/* <Route path='/custom-search' element={<PrivateRoute />} >
         <Route path='/custom-search' element={<Home />} />
-      </Route>
+      </Route> */}
       <Route path="/posts" element={<BusinessPrivateRoute />}>
         <Route path="/posts" element={<Posts />} />
       </Route>
