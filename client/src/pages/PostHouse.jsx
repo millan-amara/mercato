@@ -214,6 +214,7 @@ function PostHouse() {
             <input 
               type="text"
               id='url'
+              placeholder='link to TikTok video'
               value={url}
               className="mt-1 focus:ring-2 focus:outline-none appearance-none w-full text-sm leading-6 text-slate-900 rounded-md py-2 pl-2 ring-1 ring-slate-200 shadow-sm" 
               onChange={onChange}
@@ -266,7 +267,7 @@ function PostHouse() {
               theme="snow" 
               required
               value={description}
-              placeholder='Describe any additional house features here...'
+              placeholder='Describe any additional house features here... (optional)'
               className='h-72 mb-12'
               onChange={setDescription}
             />
