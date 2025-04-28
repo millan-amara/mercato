@@ -46,7 +46,7 @@ function EditHouse() {
         });
         setDescription(data.description);
         setSelectedImages(data.imgs || []);
-        setPin({ lat: data.latitude, lng: data.longitude });
+        setPin({ lat: data.coordinates?.lat || null, lng: data.coordinates?.lng || null });
       } catch (error) {
         toast.error('Failed to fetch house');
       }
@@ -89,6 +89,7 @@ function EditHouse() {
 
     try {
       const response = await axios.put(`${API_URL}/houses/${houseId}`, requestBody, { withCredentials: true });
+      console.log(response.data)
       if (response.data.error) {
         toast.error(response.data.error);
       } else {
@@ -196,8 +197,12 @@ function EditHouse() {
           </div>
           <div className="mb-5">
             <label>Pick Location on Map</label>
-            <MapPicker setLatLng={setPin} />
-            {pin.lat && <p className="text-sm mt-2">Lat: {pin.lat}, Lng: {pin.lng}</p>}
+            {pin?.lat && pin?.lng && (
+              <>
+              <MapPicker pin={pin} setLatLng={setPin} />
+              {pin.lat && <p className="text-sm mt-2">Lat: {pin.lat}, Lng: {pin.lng}</p>}
+              </>
+            )}
           </div>
           <div className='w-full h-80 max-w-screen-md mb-8'>
             <ReactQuill theme='snow' value={description} onChange={setDescription} className='h-72 mb-12' />

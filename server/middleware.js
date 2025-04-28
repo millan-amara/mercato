@@ -52,7 +52,7 @@ module.exports.isBusiness = async (req, res, next) => {
             console.log('not allowed to do that')
             const error = new ExpressError('Not allowed to do that', 403)
             return next(error)
-        }
+        } 
         next(); 
     } catch (error) {
         next(error)

@@ -116,7 +116,7 @@ module.exports.deleteHouse = async (req, res) => {
 
 module.exports.updateHouse = async (req, res) => {
     try {
-        const house = await House.findByIdAndUpdate(req.params.id, req.body);
+        const house = await House.findById(req.params.id);
         if (!house) {
             return res.status(404).json({ error: "House not found" });
         }
@@ -128,6 +128,13 @@ module.exports.updateHouse = async (req, res) => {
             throw new ExpressError('Not allowed to do that', 401);
         }
 
+        house.title = req.body.title || house.title;
+        house.bedrooms = req.body.bedrooms || house.bedrooms;
+        house.price = req.body.price || house.price;
+        house.location = req.body.location || house.location;
+        house.url = req.body.url || house.url;
+        house.description = req.body.description || house.description;
+
         // Format phone number if caretaker info is provided
         const formatPhoneNumber = (phone) => {
             if (phone.startsWith('0')) {
@@ -136,7 +143,9 @@ module.exports.updateHouse = async (req, res) => {
             return phone;
         };
 
-        house.caretaker = caretaker ? formatPhoneNumber(caretaker) : house.caretaker;
+        if (caretaker) {
+            house.caretaker = caretaker.startsWith('0') ? '254' + caretaker.slice(1) : caretaker;
+          }
 
         // Update coordinates if latitude and longitude are provided
         if (latitude && longitude) {
@@ -146,11 +155,22 @@ module.exports.updateHouse = async (req, res) => {
             };
         }
 
-        if (req.files) {
+        if (req.files && req.files.length > 0) {
             const houseImages = req.files.map(f => ({ url: f.path, filename: f.filename }));
-            house.imgs = house.imgs.concat(houseImages);
+            house.imgs.push(...houseImages);
         }
     
+        // if (req.body.deleted) {
+        //     const deleteImages = req.body.deleted;
+            
+        //     const images = [...deleteImages]
+           
+        //     for (let filename of images) {
+        //         await cloudinary.uploader.destroy(filename);
+        //     }
+        //     await house.updateOne({ $pull: { imgs: { filename: { $in: deleteImages } } } });
+        // }
+
         if (req.body.deleted) {
             const deleteImages = req.body.deleted;
             
@@ -159,7 +179,7 @@ module.exports.updateHouse = async (req, res) => {
             for (let filename of images) {
                 await cloudinary.uploader.destroy(filename);
             }
-            await house.updateOne({ $pull: { imgs: { filename: { $in: deleteImages } } } });
+            house.imgs = house.imgs.filter(img => !req.body.deleted.includes(img.filename));
         }
 
         await house.save();
@@ -167,7 +187,7 @@ module.exports.updateHouse = async (req, res) => {
         res.status(201).json(house)
     
     } catch (e) {
-        console.error(error);
+        console.error(e);
         res.status(500).json({ error: "Something went wrong" });
     }
 }
