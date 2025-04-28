@@ -154,29 +154,6 @@ function Register() {
             }
           </div>   
         </div>
-        {/* <div className='mb-5 flex items-center justify-between text-sm'>
-          <label htmlFor="business" className='font-semibold mb-2'>Are you a Business?</label>
-          <div className='w-1/3'>
-            <button
-              type='button'
-              className={business === true ? `bg-green-500 px-3 py-1 text-white w-1/2`: `border border-slate-200 px-3 py-1 w-1/2`}
-              id='business-yes'
-              value={true}
-              onClick={onChange}
-            >
-              Yes
-            </button>
-            <button
-              type='button'
-              className={business === false ? `bg-green-500 px-3 py-1 text-white w-1/2` : `border border-slate-200 px-3 py-1 w-1/2`}
-              id='business-no'
-              value={false}
-              onClick={onChange}
-            >
-              No
-            </button>
-          </div>
-        </div> */}
         <div className='text-xs mb-5 flex justify-end font-semibold'>
           <Link to="/login" className='text-fuchsia-600'>Have an account?</Link>
         </div>

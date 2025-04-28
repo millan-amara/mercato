@@ -55,7 +55,7 @@ function ListingItem({ listing }) {
     >
       <div className="w-full aspect-[4/3] mb-2">
         <img
-          src={listing.imgs[0].url}
+          src={listing.imgs[0]?.url}
           alt={listing.title}
           className="w-full max-h-full object-cover rounded-xl"
         />
@@ -63,18 +63,18 @@ function ListingItem({ listing }) {
 
       <div className="flex-grow flex flex-col justify-between">
         <h3 className="font-semibold text-base text-gray-800 mb-1">
-          {listing.title.length > 70 ? listing.title.substring(0, 70) + '...' : listing.title}
+          {listing.title?.length > 70 ? listing.title?.substring(0, 70) + '...' : listing.title}
         </h3>
         {/* <p className="text-sm text-green-600 mb-2">Same day delivery</p> */}
         <p className="text-sm text-green-600 mb-2">{listing.delivery}</p>
 
         <div className="flex items-center">
           <span className="text-fuchsia-600 font-bold text-lg">
-            Ksh. {listing.offerPrice.toLocaleString()}
+            Ksh. {listing.offerPrice?.toLocaleString()}
           </span>
           {listing.actualPrice !== listing.offerPrice && (
             <span className="text-sm line-through text-gray-400 ml-2">
-              Ksh. {listing.actualPrice.toLocaleString()}
+              Ksh. {listing.actualPrice?.toLocaleString()}
             </span>
           )}
         </div>

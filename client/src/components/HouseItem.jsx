@@ -20,7 +20,7 @@ function HouseItem({ house }) {
             <div className="w-1/2 lg:ml-3">
                 <p className="font-medium text-sm md:text-base">
                     {house.title?.length > 60 
-                        ? `${house.title.substr(0, 60)}...` 
+                        ? `${house.title?.substr(0, 60)}...` 
                         : house.title}
                 </p>
 

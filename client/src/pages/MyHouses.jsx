@@ -3,27 +3,27 @@ import { Link } from 'react-router-dom';
 import Navbar from '../components/Navbar';
 import { useQuery } from '@tanstack/react-query';
 import axios from 'axios';
-import ListingItem from '../components/ListingItem.jsx';
+import HousingItem from '../components/HousingItem.jsx';
 import { GrFormPrevious, GrFormNext } from "react-icons/gr";
 import { FaEdit } from 'react-icons/fa';
 
 const API_URL = import.meta.env.VITE_API_URL;
 
-const fetchUserListings = async ({ queryKey }) => {
+const fetchUserHouses = async ({ queryKey }) => {
     const [_key, page] = queryKey;
     const { data } = await axios.get(
-      `${API_URL}/listings/fetchuserlistings?page=${page}&limit=9`
+      `${API_URL}/houses/fetchuserhouses?page=${page}&limit=9`
     );
     return data;
 };
 
-function MyAds() {
+function MyHouses() {
 
     const [currentPage, setCurrentPage] = useState(1);
     
     const { data, isLoading, isError } = useQuery({
-        queryKey: ["userAds", currentPage],
-        queryFn: fetchUserListings,
+        queryKey: ["userHouses", currentPage],
+        queryFn: fetchUserHouses,
         keepPreviousData: true, 
     });
     
@@ -44,14 +44,14 @@ function MyAds() {
           
         </div>
         ) : (
-          data.listings?.length > 0 ? (
+          data.houses?.length > 0 ? (
             <>
             <div className='px-2 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-1 md:gap-2 mt-6'>
             
-              {data.listings?.map((listing) => (
-                <ListingItem 
-                  key={listing._id} 
-                  listing={listing}
+              {data.houses.map((house) => (
+                <HousingItem 
+                  key={house._id} 
+                  house={house}
                 />
               ))}
     
@@ -69,9 +69,9 @@ function MyAds() {
                 </button>
                 <span className='mx-4 font-semibold text-lg'> Page {currentPage} </span>
                 <button 
-                    disabled={!data?.listings.length || !data?.hasMore} 
+                    disabled={!data?.houses?.length || !data?.hasMore} 
                     onClick={() => setCurrentPage((p) => p + 1)}
-                    className={`border border-slate-800 rounded-md py-2 px-2 w-1/4 md:w-1/5 flex justify-center items-center ${!data?.listings.length || !data?.hasMore ? 'bg-slate-100 cursor-not-allowed text-gray-400' : 'hover:text-sm'}`}
+                    className={`border border-slate-800 rounded-md py-2 px-2 w-1/4 md:w-1/5 flex justify-center items-center ${!data?.houses?.length || !data?.hasMore ? 'bg-slate-100 cursor-not-allowed text-gray-400' : 'hover:text-sm'}`}
                 >
                     <span className='mr-1'>Next</span>
                     <GrFormNext />
@@ -81,9 +81,9 @@ function MyAds() {
             </>
           ) : (
             <div className='h-[80dvh] flex flex-col justify-center items-center'>
-                <h1>You have no ads</h1>
-                <Link className='bg-black hover:bg-slate-800 text-white py-2 px-2 w-1/3 md:w-1/5 mt-4 rounded-md text-center flex items-center justify-center'>
-                    <span className='mr-2'>Post Ad</span>
+                <h1>You have no houses</h1>
+                <Link to="/posthouse" className='bg-black hover:bg-slate-800 text-white py-2 px-2 w-1/3 md:w-1/5 mt-4 rounded-md text-center flex items-center justify-center'>
+                    <span className='mr-2'>Post House</span>
                     <FaEdit />
                 </Link>
             </div>
@@ -92,4 +92,4 @@ function MyAds() {
   )
 }
 
-export default MyAds
+export default MyHouses

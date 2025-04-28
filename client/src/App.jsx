@@ -32,6 +32,7 @@ import PostHouse from './pages/PostHouse.jsx';
 import EditHouse from './pages/EditHouse.jsx';
 import EditListing from './pages/EditListing.jsx';
 import MyAds from './pages/MyAds.jsx';
+import MyHouses from './pages/MyHouses.jsx';
 import Shop from './pages/Shop.jsx';
 import Cart from './pages/Cart.jsx';
 import ScrollToTop from './components/Scroll.jsx';
@@ -83,6 +84,9 @@ function App() {
       </Route>
       <Route path='/user/profile/:userId/ads' element={<BusinessPrivateRoute />} >
         <Route path='/user/profile/:userId/ads' element={<MyAds />} />
+      </Route>
+      <Route path='/user/profile/:userId/houses' element={<PrivateRoute />} >
+        <Route path='/user/profile/:userId/houses' element={<MyHouses />} />
       </Route>
       <Route path='/user/profile/:userId/transactions' element={<PrivateRoute />} >
         <Route path='/user/profile/:userId/transactions' element={<Transactions />} />
