@@ -69,9 +69,11 @@ function App() {
       <Route path="/posts" element={<BusinessPrivateRoute />}>
         <Route path="/posts" element={<Posts />} />
       </Route>
-      <Route path="/verifyotp" element={<PrivateRoute />}>
+      {/* UNCOMMENT AFTER AT VERIFICATION.............................................................. */}
+      {/* <Route path="/verifyotp" element={<PrivateRoute />}>
         <Route path="/verifyotp" element={<VerifyPhonePage />} />
-      </Route>
+      </Route> */}
+
 
       <Route path="/postad" element={<PrivateRoute />}>
         <Route path="/postad" element={<PostAd />} />

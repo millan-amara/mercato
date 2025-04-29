@@ -42,11 +42,13 @@ module.exports.register = async (req, res, next) => {
 
         const formattedPhone = formatPhoneNumber(phone);
 
-        const existingUser = await User.findOne({ phone: formattedPhone });
+        //UNCOMMENT AFTER AT VERIFICATION.......................................................
 
-        if (existingUser && existingUser.isVerified) {
-            return next(new ExpressError("Phone number already in use", 400));
-        }
+        // const existingUser = await User.findOne({ phone: formattedPhone });
+
+        // if (existingUser && existingUser.isVerified) {
+        //     return next(new ExpressError("Phone number already in use", 400));
+        // }
 
         const otp = generateOTP();
 
@@ -54,8 +56,8 @@ module.exports.register = async (req, res, next) => {
             email,
             phone: formattedPhone,
             business,
-            coins: 0,
-            isVerified: false,
+            coins: 100, // CHANGE AFTER AT VERIFICATION (TO 0)..............................................
+            isVerified: true, //CHANGE AFTER AT VERIFICATION..............................................
             verificationCode: otp, // Save OTP temporarily in DB
             verificationCodeExpires: Date.now() + 10 * 60 * 1000, // 10 minutes expiry
         });
@@ -63,7 +65,7 @@ module.exports.register = async (req, res, next) => {
         const registeredUser = await User.register(user, password);
 
          // Send SMS with OTP
-        await sendSMS(formattedPhone, `Your PESKAYA verification code is: ${otp}`);
+        // await sendSMS(formattedPhone, `Your PESKAYA verification code is: ${otp}`);
 
         req.login(registeredUser, err => {
             if(err) {

@@ -91,7 +91,8 @@ function Register() {
         const userData = {email,business,phone,password}
         try {
           await dispatch(register(userData)).unwrap();
-          navigate('/verifyotp');
+          navigate('/')
+          // navigate('/verifyotp'); UNCOMMENT AFTER AT VERIFICATION..............................................
         } catch (error) {
           // toast.error(error.message || 'Registration failed');
           console.log(error)
