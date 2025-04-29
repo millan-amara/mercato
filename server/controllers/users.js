@@ -44,7 +44,7 @@ module.exports.register = async (req, res, next) => {
 
         const existingUser = await User.findOne({ phone: formattedPhone });
 
-        if (existingUser) {
+        if (existingUser && existingUser.isVerified) {
             return next(new ExpressError("Phone number already in use", 400));
         }
 
@@ -131,10 +131,16 @@ module.exports.resendOtp = async (req, res, next) => {
     }
   
     try {
-      const user = await User.findOne({ phone });
+      const user = await User.findById(req.user._id);
   
       if (!user) {
         return res.status(400).json({ message: 'User not found' });
+      }
+
+      const existingUser = await User.findOne({ phone: phone });
+
+      if (existingUser && existingUser.isVerified && existingUser._id !== user._id) {
+          return next(new ExpressError("Phone number already in use", 400));
       }
 
       const RESEND_OTP_COOLDOWN_MS = 60 * 1000;
@@ -352,6 +358,11 @@ module.exports.updateUser = async (req, res) => {
                 };
         
                 const formattedPhone = formatPhoneNumber(phone);
+
+                const existingUser = await User.findOne({ phone: formattedPhone });
+                if (existingUser && existingUser.isVerified && existingUser._id !== user._id) {
+                    return next(new ExpressError("Phone number already in use", 400));
+                }
                 user.phone = formattedPhone;
             }
 
