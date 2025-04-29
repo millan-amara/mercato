@@ -160,7 +160,7 @@ function ShowHouse() {
             {house.url ? (
               <a href={house.url} target="_blank" rel="noopener noreferrer" className='ml-2 '>Watch House video</a>
             ) : (
-              <span>No video for this house</span>
+              <span className='ml-2'>No video for this house</span>
             )}
             
           </div>
