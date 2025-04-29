@@ -1,37 +1,38 @@
 import React from 'react'
-import { FaCalendar } from 'react-icons/fa6'
 import { Link } from 'react-router-dom'
 
 
 function HouseItem({ house }) {
     
   return (
-    <li className='flex justify-between items-center mb-3 md:mb-8'> 
-        <Link 
-            to={`/houses/${house._id}`}
-            className='contents'
+    <>
+        <Link
+          to={`/houses/${house._id}`}
+          className="bg-white rounded-2xl shadow-md hover:shadow-xl transition-all duration-300 p-4 flex flex-col justify-between h-full"
         >
+          <div className="w-full aspect-[4/3] mb-2">
             <img
-                src={house.imgs[0]?.url}
-                alt={house.title}
-                className='w-2/5 h-24 lg:w-1/2 lg:h-32 rounded-md md:rounded-lg'
+              src={house.imgs[0]?.url}
+              alt={house.title}
+              className="w-full max-h-full object-cover rounded-xl"
             />
-
-            <div className="w-1/2 lg:ml-3">
-                <p className="font-medium text-sm md:text-base">
-                    {house.title?.length > 60 
-                        ? `${house.title?.substr(0, 60)}...` 
-                        : house.title}
-                </p>
-
-                <p className="mt-1 mb-1">
-                    <span className="text-fuchsia-500 font-semibold lg:text-lg">
-                        Ksh. {house.price?.toLocaleString()}
-                    </span>
-                </p>
+          </div>
+    
+          <div className="flex-grow flex flex-col justify-between">
+            <h3 className="font-semibold text-base text-gray-800 mb-1">
+              {house.title?.length > 70 ? house.title?.substring(0, 70) + '...' : house.title}
+            </h3>
+            {/* <p className="text-sm text-green-600 mb-2">Same day delivery</p> */}
+            <p className="text-sm text-green-600 mb-2">{house.location}</p> 
+    
+            <div className="flex items-center">
+              <span className="text-fuchsia-600 font-bold text-lg">
+                Ksh. {house.price?.toLocaleString()}
+              </span>
             </div>
+          </div>
         </Link>
-    </li>
+    </>
   )
 
 }

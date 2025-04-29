@@ -1,6 +1,5 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { FaShoppingCart } from 'react-icons/fa';
 
 function HousingItem({ house }) {
   return (
@@ -21,17 +20,12 @@ function HousingItem({ house }) {
           {house.title?.length > 70 ? house.title?.substring(0, 70) + '...' : house.title}
         </h3>
         {/* <p className="text-sm text-green-600 mb-2">Same day delivery</p> */}
-        <p className="text-sm text-green-600 mb-2">{house.delivery}</p>
+        <p className="text-sm text-green-600 mb-2">{house.location}</p>
 
         <div className="flex items-center">
           <span className="text-fuchsia-600 font-bold text-lg">
-            Ksh. {house.offerPrice?.toLocaleString()}
+            Ksh. {house.price?.toLocaleString()}
           </span>
-          {house.actualPrice !== house.offerPrice && (
-            <span className="text-sm line-through text-gray-400 ml-2">
-              Ksh. {house.actualPrice?.toLocaleString()}
-            </span>
-          )}
         </div>
       </div>
     </Link>

@@ -9,7 +9,8 @@ function ProfileEdit({ loggedInUser, isOwner }) {
 
     const dispatch = useDispatch();
     const { userId } = useParams();
-    const [loading, setLoading] = useState(false)
+    const [loading, setLoading] = useState(false);
+    const [verifyLoading, setVerifyLoading] = useState(false)
     const [formData, setFormData] = useState({
         fname: '',
         phone: '',
@@ -77,12 +78,16 @@ function ProfileEdit({ loggedInUser, isOwner }) {
       const sendVerification = async (e) => {
         
         try {
+            setVerifyLoading(true);
           await axios.post(`${API_URL}/resend-otp`, {
             phone: user?.phone,
           });
-          navigate('/verifyotp');
+          setVerifyLoading(false);
+            navigate('/verifyotp');
         } catch (error) {
+            setVerifyLoading(false);
           console.error(error);
+          toast.error("Couldn't send verification. Try again in a few minutes");
         } 
       }
 
@@ -104,9 +109,20 @@ function ProfileEdit({ loggedInUser, isOwner }) {
       <div className='mb-5'>
         <div className='flex items-center justify-between'>
             <label htmlFor="phone">Phone Number</label>
-            {!user.isVerified &&
-                <span onClick={sendVerification} className='text-orange-500 text-sm underline underline-offset-2 cursor-pointer'>Verify Phone</span>
-            }
+            {!user.isVerified && (
+                <button
+                    type='button'
+                    onClick={verifyLoading ? null : sendVerification}
+                    disabled={verifyLoading}
+                    className={`text-orange-500 text-sm underline underline-offset-2 cursor-pointer flex items-center gap-2
+                        ${verifyLoading ? 'opacity-60 cursor-not-allowed' : ''}`}
+                >
+                    {verifyLoading && (
+                        <span className='w-4 h-4 border-2 border-slate-300 border-t-transparent rounded-full animate-spin'></span>
+                    )}
+                    <span>{verifyLoading ? 'Sending...' : 'Verify Phone'}</span>
+                </button>
+            )}
         </div>
 
         <input 

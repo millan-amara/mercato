@@ -18,6 +18,7 @@ function PostHouse() {
 
   const [selectedImages, setSelectedImages] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [verifyLoading, setVerifyLoading] = useState(false)
   const [formData, setFormData] = useState({
     title: '',
     bedrooms: '',
@@ -176,12 +177,16 @@ function PostHouse() {
 
   const sendVerification = async (e) => {
     try {
+      setVerifyLoading(true);
       await axios.post(`${API_URL}/resend-otp`, {
         phone: user?.phone,
       });
+      setVerifyLoading(false);
       navigate('/verifyotp');
     } catch (error) {
+      setVerifyLoading(false);
       console.error(error);
+      toast.error("Couldn't send verification. Try again in a few minutes");
     } 
   }
 
@@ -194,9 +199,25 @@ function PostHouse() {
       <Navbar />
 
     <div className="flex flex-col items-center mt-12 px-4 pb-32 relative z-0">
-      {user && !user.isVerified &&
-        <p className='font-semibold'>Please <button onClick={sendVerification} className='text-orange-500'>verify your phone</button> number first.</p>
-      }
+      {user && !user.isVerified && (
+        <p className='font-semibold flex items-center gap-2 flex-wrap'>
+          Please{' '}
+          <button
+            type="button"
+            onClick={verifyLoading ? null : sendVerification}
+            disabled={verifyLoading}
+            className={`text-orange-500 underline underline-offset-2 text-sm flex items-center gap-2
+              ${verifyLoading ? 'opacity-60 cursor-not-allowed' : ''}`}
+          >
+            {verifyLoading && (
+              <span className="w-3 h-3 border-2 border-slate-300 border-t-transparent rounded-full animate-spin"></span>
+            )}
+            {verifyLoading ? 'Sending...' : 'verify your phone'}
+          </button>{' '}
+          number first.
+        </p>
+      )}
+
         <form onSubmit={onSubmit} className="w-full max-w-2xl bg-white shadow-md rounded-lg p-6">
         
         {/* Header */}
