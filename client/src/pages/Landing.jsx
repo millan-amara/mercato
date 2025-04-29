@@ -39,7 +39,7 @@ function Landing() {
             className="absolute inset-0 bg-cover bg-center bg-no-repeat opacity-10"
             style={{ backgroundImage: `url(${BackImage})` }}
         ></div>
-        {/* <div className='flex flex-col md:flex-row w-full'>
+        <div className='flex flex-col md:flex-row w-full'>
             <motion.div 
                 initial={{ opacity: 0, y: -30 }} 
                 animate={{ opacity: 1, y: 0 }} 
@@ -54,7 +54,7 @@ function Landing() {
                     <div className='h-1/2 py-4'>
                         <div>
                             <h1 className='text-2xl'>Looking For A House to Rent?</h1>
-                            <p className='text-lg'>Or maybe some decor for your home?</p>
+                            {/* <p className='text-lg'>Or maybe some decor for your home?</p> */}
                         </div>
                     </div>
 
@@ -98,7 +98,7 @@ function Landing() {
                 </div>
 
             </div>
-        </div> */}
+        </div>
 
     </div>
   )

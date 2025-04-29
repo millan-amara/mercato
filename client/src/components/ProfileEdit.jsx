@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
-import { useParams } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
+import { useParams, useNavigate } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
 import { updateUser } from '../features/auth/authSlice';
+import axios from 'axios';
 
 function ProfileEdit({ loggedInUser, isOwner }) {
 
@@ -14,8 +15,11 @@ function ProfileEdit({ loggedInUser, isOwner }) {
         phone: '',
         website: '',
     });
+    const { user } = useSelector((state) => state.auth);
 
-    const {fname,phone,website,tiktok} = formData;
+    const {fname,phone,website,} = formData;
+    const API_URL = import.meta.env.VITE_API_URL;
+    const navigate = useNavigate();
 
     useEffect(() => {
         setFormData({
@@ -55,7 +59,6 @@ function ProfileEdit({ loggedInUser, isOwner }) {
             phone,
             website,
         }
-    
         try {
             if(loggedInUser._id === userId) {
                 await dispatch(updateUser({ userData, userId })).unwrap();
@@ -69,8 +72,19 @@ function ProfileEdit({ loggedInUser, isOwner }) {
             setLoading(false);
             toast.error('Failed to update user');
         }
-
     }
+
+      const sendVerification = async (e) => {
+        
+        try {
+          await axios.post(`${API_URL}/resend-otp`, {
+            phone: user?.phone,
+          });
+          navigate('/verifyotp');
+        } catch (error) {
+          console.error(error);
+        } 
+      }
 
 
   return (
@@ -85,19 +99,24 @@ function ProfileEdit({ loggedInUser, isOwner }) {
             value={fname}
             className="mt-1 focus:ring-2 focus:outline-none appearance-none w-full text-sm leading-6 text-slate-900 rounded-md py-2 pl-2 ring-1 ring-slate-200 shadow-sm" 
             onChange={onChange}
-            required
         />
       </div>
-      <div className='mb-5'>     
-        <label htmlFor="phone">Phone Number</label> 
+      <div className='mb-5'>
+        <div className='flex items-center justify-between'>
+            <label htmlFor="phone">Phone Number</label>
+            {!user.isVerified &&
+                <span onClick={sendVerification} className='text-orange-500 text-sm underline underline-offset-2 cursor-pointer'>Verify Phone</span>
+            }
+        </div>
+
         <input 
             type="text" 
-            id='phone'
+            id='phone' 
             value={phone}
             placeholder='0712345678'
             className="mt-1 focus:ring-2 focus:outline-none appearance-none w-full text-sm leading-6 text-slate-900 rounded-md py-2 pl-2 ring-1 ring-slate-200 shadow-sm" 
+            disabled={loggedInUser.isVerified}
             onChange={onChange}
-            required
         />
       </div>
       <div className='mb-5'>     
@@ -109,32 +128,8 @@ function ProfileEdit({ loggedInUser, isOwner }) {
             placeholder='www.genpay.com'
             className="mt-1 focus:ring-2 focus:outline-none appearance-none w-full text-sm leading-6 text-slate-900 rounded-md py-2 pl-2 ring-1 ring-slate-200 shadow-sm" 
             onChange={onChange}
-            required
         />
       </div>
-        {/* <div className='mb-8 flex items-center justify-between text-sm'>
-            <label htmlFor="business" className='font-semibold mb-2'>Are you a Business?</label>
-            <div className='w-1/3'>
-            <button
-                type='button'
-                className={business === true ? `bg-green-500 px-3 py-1 text-white w-1/2`: `border border-slate-200 px-3 py-1 w-1/2`}
-                id='business-yes'
-                value={true}
-                onClick={onChange}
-            >
-                Yes
-            </button>
-            <button
-                type='button'
-                className={business === false ? `bg-green-500 px-3 py-1 text-white w-1/2` : `border border-slate-200 px-3 py-1 w-1/2`}
-                id='business-no'
-                value={false}
-                onClick={onChange}
-            >
-                No
-            </button>
-            </div>
-        </div> */}
 
         <button onClick={onSubmit} type='submit' className="flex justify-center bg-fuc bg-black hover:bg-slate-800 w-full text-white text-bold rounded-md py-3">
             <span>Edit profile</span>

@@ -12,6 +12,8 @@ router.route('/register')
     .post(catchAsync(users.register));
 
 router.post('/login', catchAsync(users.login));
+router.post('/verify-otp', catchAsync(users.verifyOtp));
+router.post('/resend-otp', catchAsync(users.resendOtp));
 
 router.get('/logged-in', catchAsync(users.loggedIn));
 router.get('/logout', isLoggedIn, catchAsync(users.logout));

@@ -24,6 +24,9 @@ const login = async (userData) => {
 
 const getUser = async () => {
     const response = await axios.get(`${API_URL}/users/currentuser`);
+    if(response.data) {
+        localStorage.setItem('user', JSON.stringify(response.data.data))
+    }
     return response.data.data;
 };
 

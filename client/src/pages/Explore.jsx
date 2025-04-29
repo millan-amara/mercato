@@ -67,11 +67,11 @@ function Explore() {
           
         </div>
         ) : (
-          data.houses.length > 0 ? (
+          data.houses?.length > 0 ? (
             <>
             <div className='px-2 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-1 md:gap-2 mt-4'>
             
-              {data.houses.map((house) => (
+              {data.houses?.map((house) => (
                 <HouseItem 
                   key={house._id} 
                   house={house}

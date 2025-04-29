@@ -12,7 +12,7 @@ const UserSchema = new Schema({
         type: Boolean,
         default: 'false',
     },
-    business: Boolean,
+    business: Boolean, 
     reviews: [
         {
             type: Schema.Types.ObjectId,
@@ -27,10 +27,17 @@ const UserSchema = new Schema({
     mpesa: {},
     fname: String,
     coins: Number,
-    phone: String,
+    phone: {
+        type: String,
+        required: true,
+        unique: true
+    },
     website: String,
     resetPasswordToken: String,
     resetPasswordExpires: Date,
+    verificationCode: String,
+    verificationCodeExpires: Date,
+    otpLastSentAt: Date,
 }, {
     timestamps: true,
 });

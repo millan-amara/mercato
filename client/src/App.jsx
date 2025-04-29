@@ -39,6 +39,8 @@ import ScrollToTop from './components/Scroll.jsx';
 import RechargeCoins from './pages/RechargeCoins.jsx';
 import { Toaster } from 'sonner';
 import PostingGuidelines from './pages/PostingGuidelines.jsx';
+import VerifyOtp from './pages/VerifyOtp.jsx';
+import VerifyPhonePage from './pages/VerifyPhonePage.jsx';
 
 function App() {
   const { user } = useSelector((state) => state.auth);
@@ -66,6 +68,9 @@ function App() {
       </Route> */}
       <Route path="/posts" element={<BusinessPrivateRoute />}>
         <Route path="/posts" element={<Posts />} />
+      </Route>
+      <Route path="/verifyotp" element={<PrivateRoute />}>
+        <Route path="/verifyotp" element={<VerifyPhonePage />} />
       </Route>
 
       <Route path="/postad" element={<PrivateRoute />}>

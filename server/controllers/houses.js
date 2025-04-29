@@ -231,6 +231,10 @@ module.exports.updateHouseAccess = async (req, res) => {
       if (user.coins < 100) {
         return res.status(400).json({ message: "Insufficient coins to view the house" });
       }
+
+      if (!user.isVerified) {
+        return res.status(400).json({ message: "Please verify your phone number first." });
+      }
   
       // Deduct 100 coins from the user's balance
       user.coins -= 100;

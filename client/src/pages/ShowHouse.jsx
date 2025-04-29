@@ -2,11 +2,10 @@ import { useState } from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import axios from 'axios';
 import { toast } from 'react-toastify';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { fetchUser } from '../features/auth/authSlice';
 import { useQuery, useQueryClient } from '@tanstack/react-query'
 import Navbar from '../components/Navbar';
-import { useSelector } from 'react-redux';
 import StaticMap from '../components/StaticMap';
 import Footer from '../components/Footer';
 
@@ -55,12 +54,17 @@ function ShowHouse() {
     const handleGetAccess = async () => {
       if (user.coins >= 100 && !accessLoading) { 
           try {
-            setAccessLoading(true);
+            if(user.isVerified) {
+              setAccessLoading(true);
               await axios.put(`${API_URL}/houses/updateaccess/${houseId}`, {}, { withCredentials: true });
               toast.success('Access granted!');
               queryClient.invalidateQueries(['house', houseId]); // Invalidate the house data to trigger re-fetch
           
-              dispatch(fetchUser());
+              dispatch(fetchUser()); 
+            } else {
+              toast.error('Please verify your phone number on profile page')
+            }
+
           
           } catch (error) {
             const serverMessage = error.response?.data?.message;

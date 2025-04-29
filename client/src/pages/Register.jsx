@@ -4,7 +4,6 @@ import { useSelector, useDispatch } from 'react-redux';
 import { reset, register } from '../features/auth/authSlice';
 import { useNavigate, Link } from 'react-router-dom';
 import { FaUser, FaLock, FaEye, FaEyeSlash } from "react-icons/fa";
-import BackImage from '../assets/back.png'
 
 function Register() {
   
@@ -82,7 +81,7 @@ function Register() {
       } else if (password === '') {
         toast.error('Please enter your password')
       } else if (phone === '') {
-        toast.error('Please enter your password')
+        toast.error('Please enter your phone')
       } else if(confirmPassword === '') {
         toast.error('Please enter your password')
       } else if(password !== confirmPassword) {
@@ -90,13 +89,20 @@ function Register() {
       } else {
 
         const userData = {email,business,phone,password}
-        dispatch(register(userData))
+        try {
+          await dispatch(register(userData)).unwrap();
+          navigate('/verifyotp');
+        } catch (error) {
+          // toast.error(error.message || 'Registration failed');
+          console.log(error)
+        }
+        
 
       }
   }
 
   if(isLoading) {
-    return <h1>Signing you up...!</h1>
+    return <div className='flex h-screen items-center justify-center'><p>Signing you up...!</p></div>
   }
 
   return (

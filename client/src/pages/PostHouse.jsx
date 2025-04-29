@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useSelector } from 'react-redux';
 import Navbar from '../components/Navbar';
 import { useNavigate, Link } from 'react-router-dom';
 import { toast } from 'react-toastify';
@@ -8,11 +9,12 @@ import InputField from '../components/InputField';
 import Compressor from 'compressorjs';
 import axios from 'axios';
 import ReactQuill from 'react-quill';
-import 'react-quill/dist/quill.snow.css';
+import 'react-quill/dist/quill.snow.css'; 
 
 function PostHouse() {
   const [coords, setCoords] = useState({ latitude: null, longitude: null });
   const [useCurrentLocation, setUseCurrentLocation] = useState(true);
+  const { user } = useSelector((state) => state.auth);
 
   const [selectedImages, setSelectedImages] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -172,139 +174,42 @@ function PostHouse() {
     }))
   }
 
+  const sendVerification = async (e) => {
+    try {
+      await axios.post(`${API_URL}/resend-otp`, {
+        phone: user?.phone,
+      });
+      navigate('/verifyotp');
+    } catch (error) {
+      console.error(error);
+    } 
+  }
+
   if(loading) {
-    return <h1>Just a moment...</h1>
+    return <h1>Just a moment...</h1> 
   }
 
   return (
     <div>
       <Navbar />
-      {/* <div className='flex flex-col justify-center mt-10 pb-24 relative z-0'>
 
-        <form onSubmit={onSubmit} className='w-full mx-2 md:w-1/3 mb-8'>
-          <h1 className='text-2xl mb-4 text-center'>Create House</h1>
-
-          <div>
-            <p>Earn from posting houses! <Link className='underline text-fuchsia-600' to="/guidelines/postingguides">Tap to learn how</Link> and see the rules.</p>
-          </div>
-
-          <div className='mb-5 mt-8'>     
-            <label htmlFor="title">House Title</label> 
-            <input 
-                type="text" 
-                id='title'
-                value={title}
-                placeholder='30,000 2 bedroom master ensuite in Ngong'
-                className="mt-1 focus:ring-2 focus:outline-none appearance-none w-full text-sm leading-6 text-slate-900 rounded-md py-2 pl-2 ring-1 ring-slate-200 shadow-sm" 
-                onChange={onChange}
-            />
-          </div>
-          <div className='mb-5 flex flex-col text-sm'>
-            <label htmlFor="caretaker">Caretaker's Phone Number</label>
-              <input 
-                className='mt-1 focus:ring-2 focus:outline-none appearance-none w-full text-sm leading-6 text-slate-900 rounded-md py-2 pl-2 ring-1 ring-slate-200 shadow-sm' 
-                type="number" name="caretaker" id="caretaker" value={caretaker} onChange={onChange} placeholder='07...' />
-          </div>
-          <div className='mb-5'>     
-            <label htmlFor="bedrooms">Number of Bedrooms</label> 
-            <input 
-                type="number" 
-                id='bedrooms'
-                value={bedrooms}
-                className="mt-1 focus:ring-2 focus:outline-none appearance-none w-full text-sm leading-6 text-slate-900 rounded-md py-2 pl-2 ring-1 ring-slate-200 shadow-sm" 
-                onChange={onChange}
-            />
-          </div>
-          <div className='mb-5'>     
-            <label htmlFor="url">Video URL</label> 
-            <input 
-              type="text"
-              id='url'
-              placeholder='link to TikTok video'
-              value={url}
-              className="mt-1 focus:ring-2 focus:outline-none appearance-none w-full text-sm leading-6 text-slate-900 rounded-md py-2 pl-2 ring-1 ring-slate-200 shadow-sm" 
-              onChange={onChange}
-            />
-          </div>
-          <div className='mb-5'>     
-            <label htmlFor="location">Location</label> 
-            <input 
-              type="text"
-              id='location'
-              value={location}
-              className="mt-1 focus:ring-2 focus:outline-none appearance-none w-full text-sm leading-6 text-slate-900 rounded-md py-2 pl-2 ring-1 ring-slate-200 shadow-sm" 
-              onChange={onChange}
-            />
-          </div>
-          <div className="my-4">
-            <label>
-              <input
-                type="checkbox"
-                checked={useCurrentLocation}
-                onChange={() => setUseCurrentLocation(prev => !prev)}
-              />
-              Use my current location
-            </label>
-          </div>
-          {!useCurrentLocation && coords.latitude && coords.longitude && (
-            <MapPicker
-              defaultLocation={{ lat: coords.latitude, lng: coords.longitude }}
-              onChangeLocation={handleLocationChange}
-            />
-          )}
-          {/* <div className="mb-5">
-            <label>Pick Location on Map</label>
-            <MapPicker setLatLng={setPin} />
-            {pin.lat && <p className="text-sm mt-2">Lat: {pin.lat}, Lng: {pin.lng}</p>}
-          </div> */}
-          {/* <div className='mb-5'>     
-            <label htmlFor="price">Rent Price</label> 
-            <input 
-              type="number"
-              id='price'
-              value={price}
-              placeholder='rent per month'
-              className="mt-1 focus:ring-2 focus:outline-none appearance-none w-full text-sm leading-6 text-slate-900 rounded-md py-2 pl-2 ring-1 ring-slate-200 shadow-sm" 
-              onChange={onChange}
-            />
-          </div>
-          <div className='w-full h-80 md:h-72 max-w-screen-md mb-8'>
-            <ReactQuill 
-              theme="snow" 
-              required
-              value={description}
-              placeholder='Describe any additional house features here... (optional)'
-              className='h-72 mb-12'
-              onChange={setDescription}
-            />
-          </div>
-
-          <ImageUpload
-            onSelectFile={onSelectFile}
-            selectedImages={selectedImages}
-            deleteHandler={deleteHandler}
-          />
-
-          <button type='submit' className="bg-fuchsia-700 hover:bg-fuchsia-800 w-full text-white text-bold rounded-md py-3">
-            Create House 
-          </button>
-        </form>
-      </div> */}
-
-<div className="flex flex-col items-center mt-12 px-4 pb-32 relative z-0">
-  <form onSubmit={onSubmit} className="w-full max-w-2xl bg-white shadow-md rounded-lg p-6">
-    
-    {/* Header */}
-    <div className="mb-6 text-center">
-      <h1 className="text-3xl font-semibold text-gray-800">Create House</h1>
-      <p className="text-sm text-gray-500 mt-2">
-        Earn from posting houses!{' '}
-        <Link className="underline text-fuchsia-600 font-medium" to="/guidelines/postingguides">
-          Tap to learn how
-        </Link>{' '}
-        and see the rules.
-      </p>
-    </div>
+    <div className="flex flex-col items-center mt-12 px-4 pb-32 relative z-0">
+      {user && !user.isVerified &&
+        <p className='font-semibold'>Please <button onClick={sendVerification} className='text-orange-500'>verify your phone</button> number first.</p>
+      }
+        <form onSubmit={onSubmit} className="w-full max-w-2xl bg-white shadow-md rounded-lg p-6">
+        
+        {/* Header */}
+        <div className="mb-6 text-center">
+          <h1 className="text-3xl font-semibold text-gray-800">Create House</h1>
+          <p className="text-sm text-gray-500 mt-2">
+            Post a house and earn!{' '}
+            <Link className="underline text-fuchsia-600 font-medium" to="/guidelines/postingguides">
+              Tap to learn how
+            </Link>{' '}
+            and see the rules.
+          </p>
+        </div>
 
     {/* Basic Info Section */}
     <div className="mb-8">
