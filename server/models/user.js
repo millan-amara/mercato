@@ -37,7 +37,10 @@ const UserSchema = new Schema({
     resetPasswordExpires: Date,
     verificationCode: String,
     verificationCodeExpires: Date,
-    otpLastSentAt: Date,
+    otpLastSentAt: {
+        type: Date,
+        default: null,
+    }
 }, {
     timestamps: true,
 });

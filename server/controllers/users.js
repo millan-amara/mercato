@@ -153,6 +153,7 @@ module.exports.resendOtp = async (req, res, next) => {
       // Set new OTP and expiration
       user.verificationCode = newOtp;
       user.verificationCodeExpires = Date.now() + 10 * 60 * 1000; // 10 minutes expiry
+      user.otpLastSentAt = new Date();
       await user.save();
   
       // Send the OTP
