@@ -17,11 +17,10 @@ const BottomNavbar = ({ user }) => {
 
   return (
     <div className="fixed z-10 bottom-0 left-0 w-full bg-white shadow-md border-t flex justify-around items-center py-3 md:hidden">
-      {/* <Link to="/posthouse" className={`flex flex-col items-center ${isActive('/posthouse') ? activeClasses : normalClasses}`}>
+      <Link to="/posthouse" className={`flex flex-col items-center ${isActive('/posthouse') ? activeClasses : normalClasses}`}>
         <PlusSquare className="text-xl" />
         <span className="text-xs">Post</span>
-      </Link> */}
-      {/* UNCOMMENT AFTER AT VERIFICATION............................................................................................... */}
+      </Link>
 
       {user.business && (
         <Link to="/posts" className={`flex flex-col items-center ${isActive('/posts') ? activeClasses : normalClasses}`}>

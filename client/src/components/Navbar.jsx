@@ -53,7 +53,7 @@ function Navbar() {
           </>
         )}
 
-        {/* <Link to={`/user/profile/${user._id}/houses`} className="hover:text-fuchsia-700 transition">My Houses</Link> UNCOMMENT AFTER AT VERIFICATION........................ */}
+        <Link to={`/user/profile/${user._id}/houses`} className="hover:text-fuchsia-700 transition">My Houses</Link>
         <Link to={`/user/profile/${user._id}/transactions`} className="hover:text-fuchsia-700 transition">Transactions</Link>
 
         <Link to={`/user/profile/${user._id}`} className="hover:bg-fuchsia-100 p-2 rounded-full transition">
@@ -80,7 +80,7 @@ function Navbar() {
         <div className="flex flex-col mt-16 px-6 space-y-4 text-sm">
           <LinkItem icon={<FaMoneyCheck />} label="Transactions" to={`/user/profile/${user._id}/transactions`} />
           <LinkItem icon={<FaPiggyBank />} label={`Coins: ${user.coins || 0}`} filled to={`/${user._id}/coins/recharge`} />
-          {/* <LinkItem icon={<FaList />} label="My Houses" to={`/user/profile/${user._id}/houses`} /> UNCOMMENT AFTER AT VERIFICATION........................ */}
+          <LinkItem icon={<FaList />} label="My Houses" to={`/user/profile/${user._id}/houses`} />
     
           {user.business && (
             <>
