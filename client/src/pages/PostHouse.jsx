@@ -223,13 +223,15 @@ function PostHouse() {
         {/* Header */}
         <div className="mb-6 text-center">
           <h1 className="text-3xl font-semibold text-gray-800">Create House</h1>
-          <p className="text-sm text-gray-500 mt-2">
+          {/* <p className="text-sm text-gray-500 mt-2">
             Post a house and earn!{' '}
             <Link className="underline text-fuchsia-600 font-medium" to="/guidelines/postingguides">
               Tap to learn how
             </Link>{' '}
             and see the rules.
-          </p>
+          </p> */}
+
+          {/* UNCOMMENT AFTER AT VERIFICATION............................................................................................. */}
         </div>
 
     {/* Basic Info Section */}
