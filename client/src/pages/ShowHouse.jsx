@@ -157,7 +157,12 @@ function ShowHouse() {
           </div>
           <div className='mt-4 flex items-center text-green-600 underline underline-offset-2 hover:text-green-500'>
             <FaTiktok />
-            <a href={house.url} target="_blank" rel="noopener noreferrer" className='ml-2 '>Watch House video</a>
+            {house.url ? (
+              <a href={house.url} target="_blank" rel="noopener noreferrer" className='ml-2 '>Watch House video</a>
+            ) : (
+              <span>No video for this house</span>
+            )}
+            
           </div>
 
         </div>

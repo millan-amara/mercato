@@ -227,8 +227,10 @@ module.exports.updateHouseAccess = async (req, res) => {
       if (!user) {
         return res.status(404).json({ message: "User not found" });
       }
+
+      if (user.coins < 0) {
   
-      if (user.coins < 100) {
+    //   if (user.coins < 100) { UNCOMMENT AFTER AT VERIFICATION ...................................................................
         return res.status(400).json({ message: "Insufficient coins to view the house" });
       }
 
@@ -237,7 +239,8 @@ module.exports.updateHouseAccess = async (req, res) => {
       }
   
       // Deduct 100 coins from the user's balance
-      user.coins -= 100;
+    //   user.coins -= 100; UNCOMMENT AFTER AT VERIFICATION ...................................................................
+      user.coins -= 0;
       await user.save();
   
       // Find the house and add the user to the userPermissions array
