@@ -34,10 +34,10 @@ const BottomNavbar = ({ user }) => {
         <span className="text-xs">Explore</span>
       </Link>
 
-      {/* <Link to="/shop" className={`flex flex-col items-center ${isActive('/shop') ? activeClasses : normalClasses}`}>
+      <Link to="/shop" className={`flex flex-col items-center ${isActive('/shop') ? activeClasses : normalClasses}`}>
         <ShoppingCartIcon className="text-xl" />
         <span className="text-xs">Shop</span>
-      </Link> */}
+      </Link>
 
       <Link to={`/user/profile/${user._id}`} className={`flex flex-col items-center ${isActive(`/user/profile/${user._id}`) ? activeClasses : normalClasses}`}>
         <UserRound className="text-xl" />
