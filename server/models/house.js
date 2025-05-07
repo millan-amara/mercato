@@ -25,6 +25,10 @@ const HouseSchema = new Schema({
     location: String,
     caretaker: String,
     imgs: [ImageSchema],
+    video: {
+        url: String,
+        filename: String
+    },
     coordinates: {
         lat: Number,
         lng: Number

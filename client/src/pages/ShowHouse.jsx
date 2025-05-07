@@ -155,15 +155,24 @@ function ShowHouse() {
             <FaLocationPin />
             <span className='ml-2'>{house.location}</span>
           </div>
-          <div className='mt-4 flex items-center text-green-600 underline underline-offset-2 hover:text-green-500'>
-            <FaTiktok />
-            {house.url ? (
-              <a href={house.url} target="_blank" rel="noopener noreferrer" className='ml-2 '>Watch House video</a>
-            ) : (
+
+          {house.video?.url ? (
+            <div className="mt-6 flex justify-center">
+              <video
+                src={house.video.url}
+                controls
+                preload="none"
+                className="w-full max-w-md rounded-lg shadow-md"
+                poster={`https://res.cloudinary.com/dcj3qavxy/video/upload/so_1/${house.video.filename.split('.')[0]}.jpg`} // Optional thumbnail
+              >
+                Your browser does not support the video tag.
+              </video>
+            </div>
+          ) : (
+            <div className='mt-4 flex items-center text-green-600 underline underline-offset-2 hover:text-green-500'>
               <span className='ml-2'>No video for this house</span>
-            )}
-            
-          </div>
+            </div>
+          )}
 
         </div>
 

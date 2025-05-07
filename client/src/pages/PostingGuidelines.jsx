@@ -16,10 +16,8 @@ const PostingGuidelines = () => {
       {/* Section: Content Requirements */}
       <Section title="📸 Content Requirements">
         <List items={[
-          "Take good quality, landscape (horizontal) photos of the interior of the house.",
-          "Record a portrait (vertical) video of the house.",
-          "Post the video on TikTok as a Collab/Co-post with Peskaya.",
-          "Include the TikTok video URL when submitting your listing."
+          "Take good quality photos of the interior of the house.",
+          "Record a video of the house.",
         ]} />
       </Section>
 
@@ -35,7 +33,7 @@ const PostingGuidelines = () => {
       {/* Section: Contact Details */}
       <Section title="📞 Contact Details">
         <List items={[
-          "Provide the caretaker’s or landlord’s phone number for each house you post."
+          "Provide the caretaker’s, landlord’s, or your phone number for each house you post. So that users can confirm house availability"
         ]} />
       </Section>
 

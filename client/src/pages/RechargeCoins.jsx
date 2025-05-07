@@ -11,9 +11,9 @@ const RechargeCoins = () => {
   const navigate = useNavigate();
 
   const options = [
-    { coins: 100, amount: 1 },
-    { coins: 600, amount: 5 },
-    { coins: 1300, amount: 1000 },
+    { coins: 150, amount: 150 },
+    { coins: 750, amount: 600 },
+    { coins: 2000, amount: 1800 },
   ];
 
   const handleSubmit = async () => {

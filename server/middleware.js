@@ -3,6 +3,27 @@ const Post = require('./models/post');
 const House = require('./models/house');
 const Listing = require('./models/listing');
 const ExpressError = require('./utils/ExpressError');
+const { imageUpload, videoUpload, dynamicStorage } = require('./cloudinary/index');
+const multer = require('multer');
+
+const upload = multer({ storage: dynamicStorage }).fields([
+    { name: 'files', maxCount: 6 },
+    { name: 'video', maxCount: 1 }
+]);
+
+module.exports.uploadMiddleware = (req, res, next) => {
+    upload(req, res, (err) => {
+        if (err) {
+            console.error("Upload error:", err);
+            return res.status(400).json({ error: err.message });
+        }
+        console.log("Request files:", req.files);
+        next();
+    });
+};
+  
+
+
 
 module.exports.isLoggedIn = (req, res, next) => {
     if (!req.isAuthenticated()) {
@@ -59,3 +80,6 @@ module.exports.isBusiness = async (req, res, next) => {
     }
 
 }
+
+
+  

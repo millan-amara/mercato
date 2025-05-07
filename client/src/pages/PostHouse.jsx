@@ -35,6 +35,8 @@ function PostHouse() {
 
   const navigate = useNavigate();
   const [description, setDescription] = useState("");
+  const [videoFile, setVideoFile] = useState(null);
+  const [videoError, setVideoError] = useState("");
 
 
   const compressImage = (file) => {
@@ -63,6 +65,7 @@ function PostHouse() {
         },
         (err) => {
           console.error("Location access denied:", err);
+          toast.error("Location access denied");
           setUseCurrentLocation(false); // fallback to manual
         }
       );
@@ -75,6 +78,10 @@ function PostHouse() {
 
   const onSubmit = async (e) => {
     e.preventDefault();
+    if (videoError) {
+      toast.error("Please fix the video upload error before submitting.");
+      return;
+    }
     setLoading(true);
   
     if (selectedImages.length > 6) {  // Fix: Use selectedImages instead of images
@@ -102,6 +109,10 @@ function PostHouse() {
     compressedImages.forEach((image) => {
       requestBody.append("files", image); // Assuming backend expects 'files'
     });
+
+    if (videoFile) {
+      requestBody.append("video", videoFile); // 'video' should match backend field name
+    }
   
     // Debugging: Log FormData entries
     for (const pair of requestBody.entries()) {
@@ -191,7 +202,9 @@ function PostHouse() {
   }
 
   if(loading) {
-    return <h1>Just a moment...</h1> 
+    return <div className='h-screen flex justify-center items-center'>
+        <span className='animate-pulse text-lg font-semibold'>This will take a minute... Don't close the page</span>
+      </div> 
   }
 
   return (
@@ -223,15 +236,14 @@ function PostHouse() {
         {/* Header */}
         <div className="mb-6 text-center">
           <h1 className="text-3xl font-semibold text-gray-800">Create House</h1>
-          {/* <p className="text-sm text-gray-500 mt-2">
+          <p className="text-sm text-gray-500 mt-2">
             Post a house and earn!{' '}
             <Link className="underline text-fuchsia-600 font-medium" to="/guidelines/postingguides">
               Tap to learn how
             </Link>{' '}
             and see the rules.
-          </p> */}
+          </p>
 
-          {/* UNCOMMENT AFTER AT VERIFICATION............................................................................................. */}
         </div>
 
     {/* Basic Info Section */}
@@ -286,6 +298,8 @@ function PostHouse() {
         label="Location"
         id="location"
         value={location}
+        placeholder="Kasarani"
+        required
         onChange={onChange}
       />
       <div className="flex items-center mt-4">
@@ -310,13 +324,52 @@ function PostHouse() {
     {/* Media Section */}
     <div className="mb-8">
       <h2 className="text-lg font-medium text-gray-700 mb-4">Media</h2>
-      <InputField
+      {/* <InputField
         label="Video URL"
         id="url"
         placeholder="TikTok link"
         value={url}
         onChange={onChange}
-      />
+      /> */}
+      <div className="mt-4">
+        <label className="block text-sm font-medium text-gray-700 mb-2">Upload a Video</label>
+        <input
+          type="file"
+          accept="video/*"
+          onChange={(e) => {
+            const file = e.target.files[0];
+            if (file) {
+              if (file.size > 100 * 1024 * 1024) {
+                setVideoError("Video must be under 100MB.");
+                setVideoFile(null);
+              } else {
+                setVideoError("");
+                setVideoFile(file);
+              }
+            }
+          }}
+          className="block w-full text-sm text-gray-700"
+        />
+
+        {videoFile && !videoError && (
+          <p className="text-sm text-gray-500 mt-2">
+            Selected video size: {(videoFile.size / (1024 * 1024)).toFixed(2)} MB
+          </p>
+        )}
+
+        {videoError && (
+          <p className="text-red-500 text-sm mt-2">{videoError}</p>
+        )}
+
+
+        {videoFile && (
+          <video
+            controls
+            src={URL.createObjectURL(videoFile)}
+            className="mt-4 w-full max-w-md rounded"
+          />
+        )}
+      </div>
       <div className="mt-4">
         <ImageUpload
           onSelectFile={onSelectFile}
@@ -343,9 +396,10 @@ function PostHouse() {
     {/* Submit Button */}
     <button
       type="submit"
+      disabled={loading}
       className="mt-4 w-full bg-fuchsia-700 hover:bg-fuchsia-800 text-white font-semibold py-3 rounded-md text-lg transition duration-300"
     >
-      Create House
+      {loading ? "Posting..." : "Create House"}
     </button>
   </form>
 </div>

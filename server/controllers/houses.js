@@ -1,6 +1,6 @@
 const User = require('../models/user');
 const House = require('../models/house');
-const { cloudinary } = require("../cloudinary");
+const { cloudinary } = require("../cloudinary/index");
 const ExpressError = require('../utils/ExpressError');
 
 module.exports.createHouse = async (req, res) => {
@@ -29,9 +29,27 @@ module.exports.createHouse = async (req, res) => {
             },
             author: req.user._id
         });
-        if(req.files) {
-            house.imgs = req.files.map(f => ({ url: f.path, filename: f.filename }));
+    
+        if (req.files) {
+            console.log(`REQ FILES: ${req.files.video}`)
+            // Handle images
+            if (req.files['files']) {
+                house.imgs = req.files['files'].map(f => ({ 
+                    url: f.path, // Cloudinary URL
+                    filename: f.filename // Cloudinary public_id
+                }));
+            }
+            
+            // Handle video
+            if (req.files['video']) {
+                const videoFile = req.files['video'][0];
+                house.video = {
+                    url: videoFile.path, // Cloudinary URL
+                    filename: videoFile.filename // Cloudinary public_id
+                };
+            }
         }
+
     
         await house.save();
 
