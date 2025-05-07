@@ -20,7 +20,7 @@ function EditHouse() {
     bedrooms: '',
     price: '',
     url: '',
-    location: '',
+    location: '', 
     caretaker: '',
     images: [],
     deleteImages: [],
@@ -28,6 +28,9 @@ function EditHouse() {
   const [description, setDescription] = useState('');
   const [selectedImages, setSelectedImages] = useState([]);
   const [pin, setPin] = useState({ lat: null, lng: null });
+  const [uploadedVideo, setUploadedVideo] = useState(null);
+  const [videoFile, setVideoFile] = useState(null);
+  const [videoError, setVideoError] = useState("");
 
   useEffect(() => {
     const fetchHouse = async () => {
@@ -45,6 +48,7 @@ function EditHouse() {
           deleteImages: [],
         });
         setDescription(data.description);
+        setUploadedVideo(data.video);
         setSelectedImages(data.imgs || []);
         setPin({ lat: data.coordinates?.lat || null, lng: data.coordinates?.lng || null });
       } catch (error) {
@@ -57,6 +61,10 @@ function EditHouse() {
 
   const onSubmit = async (e) => {
     e.preventDefault();
+    if (videoError) {
+      toast.error("Please fix the video upload error before submitting.");
+      return;
+    }
     setLoading(true);
 
     if (selectedImages.length > 6) {
@@ -81,6 +89,10 @@ function EditHouse() {
         formData.deleteImages.forEach((image) => {
           requestBody.append('deleted', `${image.filename}`);
         });
+    }
+
+    if (videoFile) {
+      requestBody.append("video", videoFile); // 'video' should match backend field name
     }
 
     requestBody.append('latitude', pin.lat);
@@ -159,7 +171,7 @@ function EditHouse() {
 
   if (loading) {
     return <div className='flex h-[100dvh] items-center justify-center'>
-        <h1>Just a moment. Updating...</h1>
+        <h1 className='animate-pulse text-lg'>Don't close the page. Updating...</h1>
     </div>
   }
 
@@ -176,10 +188,6 @@ function EditHouse() {
           <div className='mb-5'>
             <label htmlFor='bedrooms'>Number of Bedrooms</label>
             <input type='text' id='bedrooms' value={formData.bedrooms} onChange={onChange} className='mt-1 focus:ring-2 focus:outline-none appearance-none w-full text-sm leading-6 text-slate-900 rounded-md py-2 pl-2 ring-1 ring-slate-200 shadow-sm' />
-          </div>
-          <div className='mb-5'>
-            <label htmlFor='url'>Video URL</label>
-            <input type='text' id='url' value={formData.url} onChange={onChange} className='mt-1 focus:ring-2 focus:outline-none appearance-none w-full text-sm leading-6 text-slate-900 rounded-md py-2 pl-2 ring-1 ring-slate-200 shadow-sm' />
           </div>
           <div className='mb-5'>
             <label htmlFor='location'>Location</label>
@@ -206,6 +214,45 @@ function EditHouse() {
           </div>
           <div className='w-full h-80 max-w-screen-md mb-8'>
             <ReactQuill theme='snow' value={description} onChange={setDescription} className='h-72 mb-12' />
+          </div>
+          <div className="pt-4">
+            <label className="block text-sm font-medium text-gray-700 mb-2">Upload a Video</label>
+            <input
+              type="file"
+              accept="video/*"
+              onChange={(e) => {
+                const file = e.target.files[0];
+                if (file) {
+                  if (file.size > 100 * 1024 * 1024) {
+                    setVideoError("Video must be under 100MB.");
+                    setVideoFile(null);
+                  } else {
+                    setVideoError("");
+                    setVideoFile(file);
+                  }
+                }
+              }}
+              className="block w-full text-sm text-gray-700"
+            />
+
+            {videoFile && !videoError && (
+              <p className="text-sm text-gray-500 mt-2">
+                Selected video size: {(videoFile.size / (1024 * 1024)).toFixed(2)} MB
+              </p>
+            )}
+
+            {videoError && (
+              <p className="text-red-500 text-sm mt-2">{videoError}</p>
+            )}
+
+
+            {videoFile && (
+              <video
+                controls
+                src={URL.createObjectURL(videoFile) || videoFile}
+                className="mt-4 w-full max-w-md rounded"
+              />
+            )}
           </div>
           <ImageEdit onSelectFile={onSelectFile} selectedImages={selectedImages} deleteHandler={deleteHandler} removeHandler={removeHandler} />
           <button type='submit' className='bg-fuchsia-700 hover:bg-fuchsia-800 w-full text-white text-bold rounded-md py-3'>

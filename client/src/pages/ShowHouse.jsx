@@ -53,7 +53,7 @@ function ShowHouse() {
 
     const handleGetAccess = async () => {
       // if (user.coins >= 100 && !accessLoading) { // UNCOMMENT AFTER AT VERIFICATION...................................................
-      if (user.coins >= 0 && !accessLoading) {
+      if (user.coins >= 150 && !accessLoading) {
           try {
             if(user.isVerified) {
               setAccessLoading(true);
@@ -199,7 +199,7 @@ function ShowHouse() {
                   }`}
                 >
                   {/* {accessLoading ? 'Processing...' : 'Get Access for 100 Coins'} UNCOMMENT AFTER AT VERIFICATION.................................... */}
-                  {accessLoading ? 'Processing...' : 'Get Access for Free'}
+                  {accessLoading ? 'Processing...' : 'Get Access for 150 coins'}
                 </button>
                 {showRechargeError && (
                   <p className="text-red-500 mt-2 text-center">

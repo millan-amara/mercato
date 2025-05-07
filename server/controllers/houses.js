@@ -173,10 +173,29 @@ module.exports.updateHouse = async (req, res) => {
             };
         }
 
-        if (req.files && req.files.length > 0) {
-            const houseImages = req.files.map(f => ({ url: f.path, filename: f.filename }));
-            house.imgs.push(...houseImages);
+        if (req.files) {
+            // Handle images
+            if (req.files['files']) {
+                house.imgs.push(req.files['files'].map(f => ({ 
+                    url: f.path, // Cloudinary URL
+                    filename: f.filename // Cloudinary public_id
+                })));
+            }
+            
+            // Handle video
+            if (req.files['video']) {
+                const videoFile = req.files['video'][0];
+                house.video = {
+                    url: videoFile.path, // Cloudinary URL
+                    filename: videoFile.filename // Cloudinary public_id
+                };
+            }
         }
+
+        // if (req.files && req.files.length > 0) {
+        //     const houseImages = req.files.map(f => ({ url: f.path, filename: f.filename }));
+        //     house.imgs.push(...houseImages);
+        // }
     
         // if (req.body.deleted) {
         //     const deleteImages = req.body.deleted;
@@ -246,7 +265,7 @@ module.exports.updateHouseAccess = async (req, res) => {
         return res.status(404).json({ message: "User not found" });
       }
 
-      if (user.coins < 0) {
+      if (user.coins < 150) {
   
     //   if (user.coins < 100) { UNCOMMENT AFTER AT VERIFICATION ...................................................................
         return res.status(400).json({ message: "Insufficient coins to view the house" });
@@ -258,7 +277,7 @@ module.exports.updateHouseAccess = async (req, res) => {
   
       // Deduct 100 coins from the user's balance
     //   user.coins -= 100; UNCOMMENT AFTER AT VERIFICATION ...................................................................
-      user.coins -= 0;
+      user.coins -= 150;
       await user.save();
   
       // Find the house and add the user to the userPermissions array

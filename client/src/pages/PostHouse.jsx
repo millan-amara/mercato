@@ -37,6 +37,7 @@ function PostHouse() {
   const [description, setDescription] = useState("");
   const [videoFile, setVideoFile] = useState(null);
   const [videoError, setVideoError] = useState("");
+  const [submitClicked, setSubmitClicked] = useState(false);
 
 
   const compressImage = (file) => {
@@ -65,7 +66,7 @@ function PostHouse() {
         },
         (err) => {
           console.error("Location access denied:", err);
-          toast.error("Location access denied");
+          toast.error("Please turn on location access");
           setUseCurrentLocation(false); // fallback to manual
         }
       );
@@ -78,6 +79,7 @@ function PostHouse() {
 
   const onSubmit = async (e) => {
     e.preventDefault();
+    setSubmitClicked(true);
     if (videoError) {
       toast.error("Please fix the video upload error before submitting.");
       return;
@@ -324,13 +326,7 @@ function PostHouse() {
     {/* Media Section */}
     <div className="mb-8">
       <h2 className="text-lg font-medium text-gray-700 mb-4">Media</h2>
-      {/* <InputField
-        label="Video URL"
-        id="url"
-        placeholder="TikTok link"
-        value={url}
-        onChange={onChange}
-      /> */}
+
       <div className="mt-4">
         <label className="block text-sm font-medium text-gray-700 mb-2">Upload a Video</label>
         <input
@@ -362,7 +358,7 @@ function PostHouse() {
         )}
 
 
-        {videoFile && (
+        {videoFile && !submitClicked && (
           <video
             controls
             src={URL.createObjectURL(videoFile)}

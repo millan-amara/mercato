@@ -14,7 +14,7 @@ router.get('/fetchuserhouses', isLoggedIn, catchAsync(houses.fetchUserHouses));
 router.put('/updateaccess/:id', isLoggedIn, catchAsync(houses.updateHouseAccess));
 
 router.get('/:id', catchAsync(houses.showHouse));
-router.put('/:id', [isLoggedIn, multer().fields([]), uploadMiddleware, isHouseAuthor], catchAsync(houses.updateHouse));
+router.put('/:id', [isLoggedIn, uploadMiddleware, isHouseAuthor], catchAsync(houses.updateHouse));
 router.delete('/:id', isLoggedIn, isHouseAuthor, catchAsync(houses.deleteHouse));
 
 module.exports = router;
